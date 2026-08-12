@@ -1,0 +1,87 @@
+/* ================================================================
+   DESIGN TOKENS — Professional Academic Portfolio
+   Clean white background, deep navy accent, no dark mode
+   ================================================================ */
+
+:root {
+  /* ── Premium Academic / Technology Palette ── */
+
+  --white: #FFFFFF;
+  --off-white: #F6F7F5;
+  --surface: #ECEFEB;
+
+  --border: #D8DDD8;
+  --border-light: #E7EAE7;
+
+  /* Primary — Graphite */
+  --primary: #1C2523;
+  --primary-light: #2E3A37;
+  --primary-muted: #64716D;
+
+  /* Accent — Deep Emerald */
+  --accent: #176B5B;
+  --accent-hover: #125448;
+  --accent-light: rgba(23, 107, 91, 0.08);
+
+  /* Highlight — Champagne */
+  --gold: #B89B5E;
+  --gold-light: rgba(184, 155, 94, 0.10);
+
+  /* Text */
+  --text-primary: #18201E;
+  --text-secondary: #53605C;
+  --text-muted: #7D8884;
+
+  /* Backgrounds */
+  --bg-primary: #FFFFFF;
+  --bg-surface: #F6F7F5;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(15, 33, 55, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 33, 55, 0.06);
+  --shadow-hover: 0 8px 24px rgba(15, 33, 55, 0.08);
+
+  /* ── Typography ── */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --fs-hero: clamp(3.5rem, 5.5vw, 5rem);
+  --fs-h1: clamp(2.25rem, 3.8vw, 3rem);
+  --fs-h2: clamp(1.75rem, 2.8vw, 2.25rem);
+  --fs-h3: 1.25rem;
+
+  --fs-body: 1rem;
+  --fs-small: 0.9375rem;
+  --fs-badge: 0.75rem;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-section: 5rem;
+
+  /* ── Layout ── */
+  --container-max: 1120px;
+  --container-padding: 1.5rem;
+  --nav-height: 64px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 500ms;
+}
