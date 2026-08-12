@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+studio/node_modules/
+package-lock.json
+studio/package-lock.json
+
+# Sanity build outputs & temp check files
+studio/.sanity/
+studio/sanity-check.tar.gz
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -138,7 +138,7 @@ async function loadPublications() {
 function renderPubCard(p, codeNum) {
   const pdfLinkHtml = p.pdfUrl ? `<a href="${p.pdfUrl}" target="_blank" rel="noopener" class="pub-doi" style="margin-left:0.75rem;">PDF 📄</a>` : '';
   const doiLinkHtml = p.doi ? `<a href="${p.doi.startsWith('http') ? p.doi : 'https://doi.org/' + p.doi}" target="_blank" rel="noopener" class="pub-doi">DOI ↗</a>` : '';
-  
+
   return `
     <div class="pub-card">
       <span class="pub-number">${escapeHtml(codeNum)}</span>
@@ -156,45 +156,173 @@ function renderPubCard(p, codeNum) {
 // ----------------------------------------------------------------
 // 5. INVITED TALKS & WORKSHOPS
 // ----------------------------------------------------------------
+// ================================================================
+// LOAD TALKS FROM SANITY
+// ================================================================
 async function loadTalks() {
   const featuredContainer = document.getElementById('talks-featured');
   const moreContainer = document.getElementById('talks-more');
+
   if (!featuredContainer) return;
 
   try {
     const items = await sanityFetch(Q.TALKS_QUERY);
-    if (!items || items.length === 0) return;
 
-    const featured = items.filter(t => t.featured !== false).slice(0, 8);
-    const more = items.slice(8);
-
-    featuredContainer.innerHTML = featured.map(renderTalkCard).join('');
-    if (moreContainer && more.length > 0) {
-      moreContainer.innerHTML = more.map(renderTalkCard).join('');
+    if (!items || items.length === 0) {
+      console.warn('[Sanity Talks] No talks found');
+      return;
     }
 
-    // Populate Year Filter dropdown dynamically
-    const years = [...new Set(items.map(t => t.year).filter(Boolean))].sort((a, b) => b - a);
-    const filterSelect = document.getElementById('talk-year-filter');
+    console.log(`[Sanity Talks] Loaded ${items.length} talks`);
+
+    // ============================================================
+    // FEATURED TALKS
+    //
+    // First use talks explicitly marked featured.
+    // If there are fewer than 9, fill the remaining slots
+    // with other talks so Featured ALWAYS has 9 cards.
+    // ============================================================
+
+    const explicitlyFeatured = items.filter(
+      t => t.featured === true
+    );
+
+    const featured = explicitlyFeatured.slice(0, 9);
+
+    // Fill remaining featured slots if fewer than 9 are marked
+    // as featured in Sanity.
+    if (featured.length < 9) {
+      const featuredIds = new Set(
+        featured.map(t => t._id)
+      );
+
+      const remaining = items.filter(
+        t => !featuredIds.has(t._id)
+      );
+
+      featured.push(
+        ...remaining.slice(0, 9 - featured.length)
+      );
+    }
+
+    // ============================================================
+    // MORE TALKS
+    //
+    // Everything NOT already used in Featured.
+    // Nothing gets skipped.
+    // ============================================================
+
+    const featuredIds = new Set(
+      featured.map(t => t._id)
+    );
+
+    const more = items.filter(
+      t => !featuredIds.has(t._id)
+    );
+
+    console.log(
+      `[Sanity Talks] Featured: ${featured.length}, More: ${more.length}, Total: ${items.length}`
+    );
+
+    // ============================================================
+    // RENDER FEATURED
+    // ============================================================
+
+    featuredContainer.innerHTML = featured
+      .map(renderTalkCard)
+      .join('');
+
+    // ============================================================
+    // RENDER MORE
+    // ============================================================
+
+    if (moreContainer) {
+      moreContainer.innerHTML = more
+        .map(renderTalkCard)
+        .join('');
+    }
+
+    // ============================================================
+    // YEAR FILTER
+    // Build dropdown from ALL talks
+    // ============================================================
+
+    const years = [
+      ...new Set(
+        items
+          .map(t => t.year)
+          .filter(Boolean)
+      )
+    ].sort(
+      (a, b) => Number(b) - Number(a)
+    );
+
+    const filterSelect =
+      document.getElementById('talk-year-filter');
+
     if (filterSelect) {
-      filterSelect.innerHTML = `<option value="all">All Years</option>` +
-        years.map(y => `<option value="${y}">${y}</option>`).join('');
+      filterSelect.innerHTML =
+        `<option value="all">All Years</option>` +
+        years
+          .map(
+            year =>
+              `<option value="${year}">${year}</option>`
+          )
+          .join('');
     }
+
+    // ============================================================
+    // TOTAL COUNT
+    // ============================================================
+
+    const countSpan =
+      document.getElementById('talk-count');
+
+    if (countSpan) {
+      countSpan.textContent = items.length;
+    }
+
+    // ============================================================
+    // INITIALIZE YEAR FILTER
+    // Must happen AFTER Sanity cards are rendered.
+    // ============================================================
+
+    if (window.initTalksYearFilter) {
+      window.initTalksYearFilter();
+    }
+
   } catch (err) {
-    console.warn('[Sanity Talks] Using static fallback:', err.message);
+    console.warn(
+      '[Sanity Talks] Using static fallback:',
+      err.message
+    );
   }
 }
 
+
+// ================================================================
+// RENDER TALK CARD
+// ================================================================
 function renderTalkCard(t) {
   return `
-    <div class="talk-card" data-year="${t.year || ''}">
-      <div class="talk-topic">"${escapeHtml(t.title || '')}"</div>
-      <div class="talk-venue">${escapeHtml(t.venue || '')}</div>
-      <div class="talk-date">${escapeHtml(t.dateString || '')}</div>
+    <div
+      class="talk-card"
+      data-year="${escapeHtml(String(t.year || ''))}"
+    >
+      <div class="talk-topic">
+        "${escapeHtml(t.title || '')}"
+      </div>
+
+      <div class="talk-venue">
+        ${escapeHtml(t.venue || '')}
+      </div>
+
+      <div class="talk-date">
+        ${escapeHtml(t.dateString || '')}
+      </div>
     </div>
   `;
 }
-
 // ----------------------------------------------------------------
 // 6. ACHIEVEMENTS & AWARDS
 // ----------------------------------------------------------------

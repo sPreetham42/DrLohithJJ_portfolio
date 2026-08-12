@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initContactForm();
   initGoogleScholarSync();
-  initTalksYearFilter();
 
   // Load CMS data from Sanity
   initSanityData().catch(err => {
-    console.warn('[Sanity Loader] Fallback to static HTML content:', err.message);
+    console.warn(
+      '[Sanity Loader] Fallback to static HTML content:',
+      err.message
+    );
   });
 });
 
@@ -79,32 +81,88 @@ function initScrollReveal() {
 // ================================================================
 // TALKS YEAR FILTER
 // ================================================================
+// ================================================================
+// TALKS YEAR FILTER
+// ================================================================
 function initTalksYearFilter() {
   const yearFilter = document.getElementById('talk-year-filter');
   const countSpan = document.getElementById('talk-count');
+  const featuredContainer = document.getElementById('talks-featured');
+  const moreContainer = document.getElementById('talks-more');
+
   if (!yearFilter) return;
+
+  // Prevent duplicate event listeners
+  if (yearFilter.dataset.initialized === 'true') return;
+  yearFilter.dataset.initialized = 'true';
 
   yearFilter.addEventListener('change', (e) => {
     const selectedYear = e.target.value;
-    const talkCards = document.querySelectorAll('.talk-card');
+
+    // Get ALL talks from both containers
+    const talkCards = document.querySelectorAll(
+      '#talks-featured .talk-card, #talks-more .talk-card'
+    );
+
     let visibleCount = 0;
 
-    talkCards.forEach(card => {
-      const cardYear = card.getAttribute('data-year') || card.querySelector('.talk-date')?.textContent;
-      if (selectedYear === 'all' || (cardYear && cardYear.includes(selectedYear))) {
-        card.style.display = '';
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
+    // ============================================================
+    // ALL YEARS
+    // ============================================================
+    if (selectedYear === 'all') {
 
+      // Show only featured cards initially
+      if (featuredContainer) {
+        featuredContainer.querySelectorAll('.talk-card').forEach(card => {
+          card.style.display = '';
+        });
+      }
+
+      // Hide the additional talks again
+      if (moreContainer) {
+        moreContainer.classList.remove('show');
+
+        moreContainer.querySelectorAll('.talk-card').forEach(card => {
+          card.style.display = '';
+        });
+      }
+
+      // Count ALL talks, not just visible talks
+      visibleCount = talkCards.length;
+    }
+
+    // ============================================================
+    // SPECIFIC YEAR
+    // ============================================================
+    else {
+
+      // Show the "more" container because matching talks
+      // may be inside it.
+      if (moreContainer) {
+        moreContainer.classList.add('show');
+      }
+
+      talkCards.forEach(card => {
+        const cardYear = card.getAttribute('data-year');
+
+        if (cardYear === selectedYear) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Update count
     if (countSpan) {
       countSpan.textContent = visibleCount;
     }
   });
 }
 
+// Expose globally for loader.js
+window.initTalksYearFilter = initTalksYearFilter;
 // ================================================================
 // MOBILE MENU
 // ================================================================

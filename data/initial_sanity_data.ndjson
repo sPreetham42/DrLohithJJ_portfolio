@@ -40,6 +40,26 @@
 {"_id": "talk-6", "_type": "talk", "title": "Introduction to Cryptology — DST-SERB Workshop", "venue": "NIT Tiruchirappalli", "dateString": "Jan 2023", "year": 2023, "featured": true, "order": 6}
 {"_id": "talk-7", "_type": "talk", "title": "Blockchain and its Applications — 2-Day Workshop", "venue": "Manipal Institute of Technology, Manipal", "dateString": "Nov 2023", "year": 2023, "featured": true, "order": 7}
 {"_id": "talk-8", "_type": "talk", "title": "Blockchain Technologies and Applications — ATAL FDP", "venue": "Manipal Institute of Technology", "dateString": "Dec 2021", "year": 2021, "featured": true, "order": 8}
+{"_id": "talk-9", "_type": "talk", "title": "Blockchain & AWS — 3-Day FDP", "venue": "Reva University, Bengaluru", "dateString": "Jul 2022", "year": 2022, "featured": true, "order": 9}
+{"_id": "talk-10", "_type": "talk", "title": "Blockchain & IOT Applications — FDP", "venue": "MSRUAS, Bengaluru", "dateString": "Aug 2022", "year": 2022, "featured": false, "order": 10}
+{"_id": "talk-11", "_type": "talk", "title": "Blockchain & Smart Contracts — 2-Day Workshop", "venue": "AIT, Chikkamagaluru", "dateString": "Apr 2022", "year": 2022, "featured": false, "order": 11}
+{"_id": "talk-12", "_type": "talk", "title": "Blockchain & Smart Contracts — 2-Day Workshop", "venue": "SVIT, Bengaluru", "dateString": "May 2022", "year": 2022, "featured": false, "order": 12}
+{"_id": "talk-13", "_type": "talk", "title": "Introduction to Cryptocurrency & Blockchain", "venue": "RVCE, Bengaluru", "dateString": "May 2022", "year": 2022, "featured": false, "order": 13}
+{"_id": "talk-14", "_type": "talk", "title": "Blockchain and its Applications — 2-Day Workshop", "venue": "Alva's College of Engineering, Moodbidre", "dateString": "Nov 2023", "year": 2023, "featured": false, "order": 14}
+{"_id": "talk-15", "_type": "talk", "title": "Cybersecurity and its Attacks", "venue": "SJCIT, Chikkaballapura & DSCE, Bengaluru", "dateString": "Dec 2023 — Jan 2024", "year": 2024, "featured": false, "order": 15}
+{"_id": "talk-16", "_type": "talk", "title": "Hands-on Ethereum Smart Contracts — ATAL FDP", "venue": "Bangalore Institute of Technology", "dateString": "Nov 2020", "year": 2020, "featured": false, "order": 16}
+{"_id": "talk-17", "_type": "talk", "title": "Hands-on Smart Contracts — AICTE STTP", "venue": "Sona College of Engineering, Salem", "dateString": "Jan 2021", "year": 2021, "featured": false, "order": 17}
+{"_id": "talk-18", "_type": "talk", "title": "Blockchain and Use Cases — ATAL FDP", "venue": "BNMIT, Bengaluru", "dateString": "Jan 2021", "year": 2021, "featured": false, "order": 18}
+{"_id": "talk-19", "_type": "talk", "title": "Lightweight Cryptography for IoT & Blockchain — ATAL FDP", "venue": "UIT RGPV, Bhopal", "dateString": "Jul 2021", "year": 2021, "featured": false, "order": 19}
+{"_id": "talk-20", "_type": "talk", "title": "Cyber Security & Blockchain — One Week FDP", "venue": "VVCE, Mysuru", "dateString": "Apr 2022", "year": 2022, "featured": false, "order": 20}
+{"_id": "talk-21", "_type": "talk", "title": "Blockchain Technology — FDP", "venue": "MLWCE, Hyderabad (YouTube Available)", "dateString": "Mar 2023", "year": 2023, "featured": false, "order": 21}
+{"_id": "talk-22", "_type": "talk", "title": "Current Trends in Blockchain & CyberSecurity — FDP", "venue": "BMSCE, Bengaluru", "dateString": "Mar 2023", "year": 2023, "featured": false, "order": 22}
+{"_id": "talk-23", "_type": "talk", "title": "Blockchain & Smart Contracts — Value Added Course", "venue": "P.A. College of Engineering, Mangaluru", "dateString": "Oct 2024", "year": 2024, "featured": false, "order": 23}
+{"_id": "talk-24", "_type": "talk", "title": "Transforming AI With Healthcare — EWASH Conference", "venue": "VTU PG Center, Muddenahalli", "dateString": "Dec 2024", "year": 2024, "featured": false, "order": 24}
+{"_id": "talk-25", "_type": "talk", "title": "Session Chair — ICIIICEE 2025", "venue": "BNMIT, Bengaluru", "dateString": "Jan 2025", "year": 2025, "featured": false, "order": 25}
+{"_id": "talk-26", "_type": "talk", "title": "Deploying Smart Contracts", "venue": "Vishwakarma Institute of Technology, Pune", "dateString": "Feb 2025", "year": 2025, "featured": false, "order": 26}
+{"_id": "talk-27", "_type": "talk", "title": "Blockchain & Smart Contracts — 2-Day VAC", "venue": "Cambridge Institute of Technology, Bengaluru", "dateString": "Mar 2025", "year": 2025, "featured": false, "order": 27}
+{"_id": "talk-28", "_type": "talk", "title": "Blockchain & Hands-on Smart Contracts", "venue": "RNSIT, Bengaluru", "dateString": "Oct 2025", "year": 2025, "featured": false, "order": 28}
 {"_id": "social-linkedin", "_type": "socialLink", "platform": "LinkedIn", "url": "https://www.linkedin.com/in/dr-lohith-j-j-2680aa50/", "icon": "linkedin", "visible": true, "order": 1}
 {"_id": "social-scholar", "_type": "socialLink", "platform": "Google Scholar", "url": "https://scholar.google.com/citations?hl=en&user=dmSdWtEAAAAJ", "icon": "scholar", "visible": true, "order": 2}
 {"_id": "social-youtube", "_type": "socialLink", "platform": "YouTube", "url": "https://www.youtube.com/watch?v=-F7Y4MLHsm8", "icon": "youtube", "visible": true, "order": 3}

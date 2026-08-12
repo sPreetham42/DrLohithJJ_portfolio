@@ -688,14 +688,14 @@
           <div class="talk-venue">Manipal Institute of Technology</div>
           <div class="talk-date">Dec 2021</div>
         </div>
-      </div>
-      <!-- More talks (hidden by default) -->
-      <div class="talks-grid talks-hidden" id="talks-more">
         <div class="talk-card">
           <div class="talk-topic">"Blockchain & AWS" — 3-Day FDP</div>
           <div class="talk-venue">Reva University, Bengaluru</div>
           <div class="talk-date">Jul 2022</div>
         </div>
+      </div>
+      <!-- More talks (hidden by default) -->
+      <div class="talks-grid talks-hidden" id="talks-more">
         <div class="talk-card">
           <div class="talk-topic">"Blockchain & IOT Applications" — FDP</div>
           <div class="talk-venue">MSRUAS, Bengaluru</div>
@@ -792,10 +792,21 @@
           <div class="talk-date">Oct 2025</div>
         </div>
       </div>
-      <div style="text-align:center;">
-        <button class="talks-toggle" id="talks-toggle"
-          onclick="document.getElementById('talks-more').classList.toggle('show');this.classList.toggle('expanded');this.querySelector('span').textContent=this.classList.contains('expanded')?'Show Less':'Show All 60+ Talks';">
-          <span>Show All 60+ Talks</span>
+      <div style="text-align: center;">
+        <button class="talks-toggle" id="talks-toggle" type="button" onclick="
+      const more = document.getElementById('talks-more');
+      const btn = this;
+
+      more.classList.toggle('show');
+      btn.classList.toggle('expanded');
+
+      btn.querySelector('span').textContent =
+        btn.classList.contains('expanded')
+          ? 'Show Less'
+          : 'Show All';
+    ">
+          <span>Show All</span>
+
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9" />
