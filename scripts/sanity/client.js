@@ -5,7 +5,7 @@
 
 // MANUAL CONFIGURATION REQUIRED: Replace with your actual Sanity Project ID
 export const SANITY_CONFIG = {
-  projectId: 'YOUR_SANITY_PROJECT_ID', // e.g. 'abc123xyz'
+  projectId: '12ok6v8i',
   dataset: 'production',
   apiVersion: '2023-01-01',
   useCdn: true,
