@@ -22,6 +22,114 @@ section {
   padding: var(--space-section) 0;
 }
 
+/* ============================================================
+   HERO DIVIDER + SOCIAL LINKS
+   ============================================================ */
+
+/* ============================================================
+   HERO SOCIAL LINKS
+   ============================================================ */
+
+.hero-divider-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: var(--space-xl);
+}
+
+/* Small animated accent bar */
+.hero-divider-social .hero-divider {
+  display: block;
+  width: 40px;
+  height: 3px;
+  min-width: 40px;
+  flex-shrink: 0;
+
+  background: var(--accent);
+  border-radius: 2px;
+
+  margin: 0;
+
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+
+  animation: heroBarGrow 0.6s var(--ease-out) 0.5s forwards;
+}
+
+/* Social icon container */
+.hero-social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  opacity: 0;
+  transform: translateY(14px);
+
+  animation: heroSocialFade 0.6s var(--ease-out) 0.7s forwards;
+}
+
+/* Individual icons */
+.hero-social-link {
+  width: auto;
+  height: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 0;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.hero-social-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.hero-social-link:hover {
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   HERO SOCIAL ANIMATIONS
+   ============================================================ */
+
+@keyframes heroBarGrow {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes heroSocialFade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ===== Scroll-reveal ===== */
 .reveal {
   opacity: 0;
@@ -330,22 +438,10 @@ section {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--navy-muted);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   opacity: 0;
   transform: translateY(16px);
   animation: fadeUp 0.6s var(--ease-out) 0.35s forwards;
-}
-
-.hero-divider {
-  width: 40px;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
-  margin-bottom: var(--space-xl);
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: lineGrow 0.5s var(--ease-out) 0.5s forwards;
 }
 
 .hero-description {
@@ -881,36 +977,39 @@ section {
 
 .skill-category h3 {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: var(--fw-bold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-primary);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
 }
 
 .skill-tag {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: var(--fw-semibold);
-  padding: 5px 10px;
-  border-radius: var(--radius-sm);
+  padding: 8px 15px;
+  border-radius: var(--radius-md);
   background: var(--bg-surface);
   color: var(--text-secondary);
   border: 1px solid var(--border);
   transition: all var(--duration-fast) var(--ease-in-out);
+  line-height: 1.4;
 }
 
 .skill-tag:hover {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 33, 55, 0.12);
 }
 
 .memberships {

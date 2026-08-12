@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Expose scroll reveal refresh for dynamic elements
-window.refreshScrollReveal = function() {
+window.refreshScrollReveal = function () {
   const revealElements = document.querySelectorAll('.reveal, .reveal-children');
   if (window._revealObserver) {
     revealElements.forEach(el => window._revealObserver.observe(el));
@@ -171,32 +171,32 @@ function initContactForm() {
       body: formData,
       headers: { 'Accept': 'application/json' }
     })
-    .then(response => {
-      if (response.ok) {
-        btn.innerHTML = `
+      .then(response => {
+        if (response.ok) {
+          btn.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           Message Sent!
         `;
-        btn.style.background = '#0F2137';
+          btn.style.background = '#0F2137';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+            btn.disabled = false;
+            form.reset();
+          }, 3000);
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(() => {
+        btn.innerHTML = `⚠ Failed — Try Again`;
+        btn.style.background = '#b91c1c';
         setTimeout(() => {
           btn.innerHTML = originalText;
           btn.style.background = '';
           btn.disabled = false;
-          form.reset();
         }, 3000);
-      } else {
-        throw new Error('Form submission failed');
-      }
-    })
-    .catch(() => {
-      btn.innerHTML = `⚠ Failed — Try Again`;
-      btn.style.background = '#b91c1c';
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.background = '';
-        btn.disabled = false;
-      }, 3000);
-    });
+      });
   });
 }
 
@@ -231,3 +231,67 @@ function initGoogleScholarSync() {
       console.warn('[Scholar Sync] Using baseline values:', err.message);
     });
 }
+
+/* ============================================================
+   HERO STATS — SMOOTH COUNT-UP
+   ============================================================ */
+
+function initHeroCounters() {
+  const counters = document.querySelectorAll(
+    '.hero-stat-number[data-count]'
+  );
+
+  counters.forEach((counter, index) => {
+    const target = Number(counter.dataset.count);
+
+    if (!Number.isFinite(target)) return;
+
+    const hasPlus = counter.textContent.includes('+');
+
+    // Start from zero
+    counter.textContent = hasPlus ? '0+' : '0';
+
+    // Stagger each counter slightly
+    const delay = 950 + (index * 180);
+
+    // Count-up duration
+    const duration = 3500;
+
+    setTimeout(() => {
+      const startTime = performance.now();
+
+      function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Smooth ease-out
+        const easedProgress =
+          1 - Math.pow(1 - progress, 3);
+
+        const currentValue = Math.floor(
+          easedProgress * target
+        );
+
+        counter.textContent = hasPlus
+          ? `${currentValue}+`
+          : `${currentValue}`;
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          counter.textContent = hasPlus
+            ? `${target}+`
+            : `${target}`;
+        }
+      }
+
+      requestAnimationFrame(animate);
+
+    }, delay);
+  });
+}
+
+document.addEventListener(
+  'DOMContentLoaded',
+  initHeroCounters
+);
