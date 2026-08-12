@@ -54,17 +54,24 @@
       <div class="hero-content">
         <h1 class="hero-name">
           Dr. Lohith J.J.
-          <span class="hero-credential">PhD (NIT Trichy)</span>
+          <span class="hero-credential">Ph.D. (NIT Trichy)</span>
         </h1>
 
         <p class="hero-eyebrow">Professor & Head of Department — CSE(IOT & Cybersecurity including Blockchain
           technology) </p>
         <div class="hero-divider"></div>
         <p class="hero-description" style="font-size:1.1rem;max-width:540px;line-height:1.75;margin-bottom:1rem;">
-          A highly accomplished Computer Science professional with <strong style="color:var(--text-primary);">19+ years</strong> in academia and research. Recognized expert in <strong style="color:var(--text-primary);">Blockchain Technology</strong>, <strong style="color:var(--text-primary);">Machine Learning</strong>, <strong style="color:var(--text-primary);">Computer Networks</strong>, and <strong style="color:var(--text-primary);">Cyber Security</strong>.
+          A highly accomplished Computer Science professional with <strong style="color:var(--text-primary);">19+
+            years</strong> in academia and research. Recognized expert in <strong
+            style="color:var(--text-primary);">Blockchain Technology</strong>, <strong
+            style="color:var(--text-primary);">Machine Learning</strong>, <strong
+            style="color:var(--text-primary);">Computer Networks</strong>, and <strong
+            style="color:var(--text-primary);">Cyber Security</strong>.
         </p>
         <p class="hero-description" style="font-size:1.05rem;max-width:540px;line-height:1.75;">
-          Ph.D. from NIT Tiruchirappalli. Currently leading the Dept. of AI &amp; ML at Nagarjuna College of Engineering &amp; Technology, Bengaluru. Resource person at 40+ AICTE-sponsored workshops across NITs and premier institutions. Guest Faculty at BITS WILP since 2011.
+          Ph.D. from NIT Tiruchirappalli. Currently leading the Dept. of CSE(IoT &amp; Cybersecurity including
+          Blockchain technology) at Nagarjuna College of Engineering &amp; Technology, Bengaluru. Resource person at 60+
+          AICTE-sponsored workshops across NITs and premier institutions. Guest Faculty at BITS WILP since 2011.
         </p>
         <div class="hero-actions">
           <a href="#publications" class="btn btn-primary">Explore Research <svg xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +88,7 @@
             <div class="hero-stat-label">Years Experience</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-number stat-citations">168+</div>
+            <div class="hero-stat-number stat-citations">170+</div>
             <div class="hero-stat-label">Citations</div>
           </div>
           <div class="hero-stat">
@@ -115,7 +122,7 @@
         <!-- Employment Timeline -->
         <div class="reveal">
           <h3 class="subsection-title">Employment History</h3>
-          <div class="timeline">
+          <div class="timeline" id="experience-timeline">
             <div class="timeline-item">
               <div class="timeline-dot"></div>
               <div class="timeline-year">June 2026 — Present</div>
@@ -156,7 +163,7 @@
           </div>
         </div>
         <!-- Education -->
-        <div class="reveal">
+        <div class="reveal" id="education-list">
           <h3 class="subsection-title">Education</h3>
           <div class="edu-card">
             <div class="edu-degree">Ph.D. in Computer Science</div>
@@ -199,7 +206,7 @@
         <p class="section-subtitle">Selected professional highlights across research, mentoring, and institutional
           leadership.</p>
       </div>
-      <div class="achievements-grid reveal-children">
+      <div class="achievements-grid reveal-children" id="achievements-grid">
         <div class="achievement-card">
           <div class="achievement-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2">
@@ -354,7 +361,7 @@
       <!-- SCIE Journals -->
       <div class="pub-section reveal">
         <h3 class="pub-section-title">Journal Articles <span class="badge">4 SCIE</span></h3>
-        <div class="pub-list">
+        <div class="pub-list" id="journals-list">
           <div class="pub-card"><span class="pub-number">J1</span>
             <div class="pub-title">Enhancing Oyente: Four New Vulnerability Detections for Improved Smart Contract
               Security Analysis</div>
@@ -406,7 +413,7 @@
       <!-- Conference Proceedings -->
       <div class="pub-section reveal">
         <h3 class="pub-section-title">Conference Proceedings <span class="badge">IEEE</span></h3>
-        <div class="pub-list">
+        <div class="pub-list" id="conferences-list">
           <div class="pub-card"><span class="pub-number">C1</span>
             <div class="pub-title">Vulnerabilities in Smart Contracts: A Detailed Survey of Detection and Mitigation
               Methodologies</div>
@@ -453,13 +460,16 @@
       <!-- Scholar bar -->
       <div class="stats-bar reveal" style="margin-top:var(--space-2xl);justify-content:space-between;">
         <div style="display:flex;align-items:center;gap:2rem;">
-          <div class="stat-item"><span class="stat-number stat-citations">168+</span><span class="stat-label">Total Citations</span></div>
+          <div class="stat-item"><span class="stat-number stat-citations">168+</span><span class="stat-label">Total
+              Citations</span></div>
           <div class="stat-divider"></div>
           <div class="stat-item"><span class="stat-number">4</span><span class="stat-label">SCIE Papers</span></div>
           <div class="stat-divider"></div>
-          <div class="stat-item"><span class="stat-number">6</span><span class="stat-label">IEEE Conferences</span></div>
+          <div class="stat-item"><span class="stat-number">6</span><span class="stat-label">IEEE Conferences</span>
+          </div>
         </div>
-        <a href="https://scholar.google.com/citations?hl=en&user=dmSdWtEAAAAJ" target="_blank" class="btn btn-ghost" style="font-size:11px;">Google Scholar ↗</a>
+        <a href="https://scholar.google.com/citations?hl=en&user=dmSdWtEAAAAJ" target="_blank" class="btn btn-ghost"
+          style="font-size:11px;">Google Scholar ↗</a>
       </div>
     </div>
   </section>
@@ -472,7 +482,7 @@
         <div class="divider-line"></div>
         <h2 class="section-title">Technical Skills</h2>
       </div>
-      <div class="skills-layout reveal">
+      <div class="skills-layout reveal" id="skills-layout">
         <div class="skill-category">
           <h3>Domain Expertise</h3>
           <div class="skill-tags"><span class="skill-tag">Blockchain</span><span
@@ -491,7 +501,8 @@
         </div>
         <div class="skill-category">
           <h3>Administration</h3>
-          <div class="skill-tags"><span class="skill-tag">NBA Coordinator (UG)</span><span class="skill-tag">NIRF
+          <div class="skill-tags"><span class="skill-tag">OBE & GAPC v4
+              Expert</span><span class="skill-tag">NBA Coordinator (UG)</span><span class="skill-tag">NIRF
               Cell
               Member</span><span class="skill-tag">BOS & BOE Chairman</span><span class="skill-tag">Syllabus
               Design</span><span class="skill-tag">FDP/Workshop Convener</span><span class="skill-tag">Hostel
@@ -541,6 +552,31 @@
           IITs, and premier engineering colleges across India.</p>
       </div>
       <!-- Featured talks (first 8) -->
+      <!-- Talk Filters -->
+      <div class="talk-filters reveal">
+
+        <div class="talk-filter-group">
+          <label for="talk-year-filter">Filter by Year</label>
+
+          <select id="talk-year-filter" class="talk-year-filter">
+            <option value="all">All Years</option>
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+          </select>
+        </div>
+
+        <div class="talk-filter-result">
+          <span id="talk-count">8</span> talks shown
+        </div>
+
+      </div>
+
+      <!-- Featured talks -->
       <div class="talks-grid reveal-children" id="talks-featured">
         <div class="talk-card">
           <div class="talk-topic">"Blockchain Technology in Education"</div>
@@ -690,8 +726,8 @@
         <button class="talks-toggle" id="talks-toggle"
           onclick="document.getElementById('talks-more').classList.toggle('show');this.classList.toggle('expanded');this.querySelector('span').textContent=this.classList.contains('expanded')?'Show Less':'Show All 60+ Talks';">
           <span>Show All 60+ Talks</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </button>
@@ -712,8 +748,7 @@
           <p class="section-subtitle" style="margin-bottom: var(--space-xl);">
             Open to research collaborations, FDP/workshop invitations, industry consulting, and student mentoring.
           </p>
-          <form class="contact-form" id="contact-form"
-            action="https://formspree.io/f/xrpzqwwp" method="POST">
+          <form class="contact-form" id="contact-form" action="https://formspree.io/f/xrpzqwwp" method="POST">
             <!-- Formspree: email subject line -->
             <input type="hidden" name="_subject" value="New message from Portfolio Website" />
             <!-- Formspree: honeypot spam filter -->
@@ -746,21 +781,22 @@
           <div>
             <h2 class="section-title">Let's Connect</h2>
             <p class="section-subtitle" style="margin-bottom: var(--space-xl);">
-              Whether it's a funded project, a blockchain workshop, or an exploratory conversation about research directions — I'm happy to discuss. Reach out via any channel below.
+              Whether it's a funded project, a blockchain workshop, or an exploratory conversation about research
+              directions — I'm happy to discuss. Reach out via any channel below.
             </p>
           </div>
           <div class="contact-details">
             <div class="contact-detail-item">
-              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2">
+              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg></div>
               <div class="contact-detail-text"><span>Email</span><span>lohithjj@gmail.com</span></div>
             </div>
             <div class="contact-detail-item">
-              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2">
+              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg></div>
@@ -768,16 +804,16 @@
               </div>
             </div>
             <div class="contact-detail-item">
-              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2">
+              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
                   <path
                     d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg></div>
               <div class="contact-detail-text"><span>Phone</span><span>+91-9886745882</span></div>
             </div>
             <div class="contact-detail-item">
-              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2">
+              <div class="contact-detail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg></div>
@@ -813,7 +849,13 @@
   <!-- ============================================================ FOOTER ============================================================ -->
   <footer class="footer">
     <div class="container">
-      <p class="footer-text">&copy; 2026 Dr. Lohith J.J. All rights reserved.</p>
+      <p class="footer-text">
+        &copy; 2026 Dr. Lohith J.J. All rights reserved.
+        <span class="footer-built-by">
+          Built by
+          <a href="https://www.linkedin.com/in/preetham-s64/" target="_blank" rel="noopener noreferrer">Preetham S</a>
+        </span>
+      </p>
       <div class="footer-links">
         <a href="#hero" class="footer-link">Home</a>
         <a href="#publications" class="footer-link">Research</a>
@@ -823,7 +865,7 @@
     </div>
   </footer>
 
-  <script src="scripts/main.js"></script>
+  <script type="module" src="scripts/main.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,4 @@
-// ================================================================
-// Portfolio — Main JavaScript
-// Handles: Navbar scroll, Scroll reveal, Mobile menu, Smooth scroll, Contact form
-// ================================================================
+import { initSanityData } from './sanity/loader.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -10,7 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initContactForm();
   initGoogleScholarSync();
+  initTalksYearFilter();
+
+  // Load CMS data from Sanity
+  initSanityData().catch(err => {
+    console.warn('[Sanity Loader] Fallback to static HTML content:', err.message);
+  });
 });
+
+// Expose scroll reveal refresh for dynamic elements
+window.refreshScrollReveal = function() {
+  const revealElements = document.querySelectorAll('.reveal, .reveal-children');
+  if (window._revealObserver) {
+    revealElements.forEach(el => window._revealObserver.observe(el));
+  }
+};
 
 // ================================================================
 // NAVBAR SCROLL EFFECT
@@ -50,11 +61,11 @@ function initNavbar() {
 function initScrollReveal() {
   const revealElements = document.querySelectorAll('.reveal, .reveal-children');
 
-  const observer = new IntersectionObserver((entries) => {
+  window._revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        window._revealObserver.unobserve(entry.target);
       }
     });
   }, {
@@ -62,7 +73,36 @@ function initScrollReveal() {
     rootMargin: '0px 0px -40px 0px'
   });
 
-  revealElements.forEach(el => observer.observe(el));
+  revealElements.forEach(el => window._revealObserver.observe(el));
+}
+
+// ================================================================
+// TALKS YEAR FILTER
+// ================================================================
+function initTalksYearFilter() {
+  const yearFilter = document.getElementById('talk-year-filter');
+  const countSpan = document.getElementById('talk-count');
+  if (!yearFilter) return;
+
+  yearFilter.addEventListener('change', (e) => {
+    const selectedYear = e.target.value;
+    const talkCards = document.querySelectorAll('.talk-card');
+    let visibleCount = 0;
+
+    talkCards.forEach(card => {
+      const cardYear = card.getAttribute('data-year') || card.querySelector('.talk-date')?.textContent;
+      if (selectedYear === 'all' || (cardYear && cardYear.includes(selectedYear))) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    if (countSpan) {
+      countSpan.textContent = visibleCount;
+    }
+  });
 }
 
 // ================================================================

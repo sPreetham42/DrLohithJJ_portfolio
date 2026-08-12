@@ -1,0 +1,93 @@
+export default {
+  name: 'profile',
+  title: 'Profile & Hero Bio',
+  type: 'document',
+  fields: [
+    {
+      name: 'name',
+      title: 'Full Name',
+      type: 'string',
+      description: 'Your name as displayed on the website (e.g. Dr. Lohith J.J.)',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'credential',
+      title: 'Academic Credential Tag',
+      type: 'string',
+      description: 'Short degree/institution tag shown next to name (e.g. Ph.D. (NIT Trichy))',
+    },
+    {
+      name: 'designation',
+      title: 'Current Job Title / Eyebrow',
+      type: 'string',
+      description: 'Main designation line under your name (e.g. Professor & Head of Department — CSE(IOT & Cybersecurity including Blockchain technology))',
+    },
+    {
+      name: 'yearsExperience',
+      title: 'Years of Experience',
+      type: 'number',
+      description: 'Total years in academia and research (e.g. 19)',
+    },
+    {
+      name: 'heroDescriptionLine1',
+      title: 'Hero Bio — Paragraph 1',
+      type: 'text',
+      rows: 3,
+      description: 'First paragraph of your homepage intro bio',
+    },
+    {
+      name: 'heroDescriptionLine2',
+      title: 'Hero Bio — Paragraph 2',
+      type: 'text',
+      rows: 3,
+      description: 'Second paragraph of your homepage intro bio',
+    },
+    {
+      name: 'profilePhoto',
+      title: 'Profile Photo',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'High resolution headshot photo displayed on top right of hero section',
+    },
+    {
+      name: 'currentInstitution',
+      title: 'Current Institution',
+      type: 'string',
+      description: 'e.g. Nagarjuna College of Engineering & Technology, Bengaluru',
+    },
+    {
+      name: 'emailPrimary',
+      title: 'Primary Email',
+      type: 'string',
+    },
+    {
+      name: 'emailSecondary',
+      title: 'Secondary Email (e.g. WILP Email)',
+      type: 'string',
+    },
+    {
+      name: 'phone',
+      title: 'Phone Number',
+      type: 'string',
+    },
+    {
+      name: 'address',
+      title: 'Location / Address',
+      type: 'string',
+    },
+    {
+      name: 'additionalRoles',
+      title: 'Additional Academic Roles',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of guest faculty and advisory roles (e.g. Guest Faculty at BITS WILP Programme)',
+    },
+    {
+      name: 'professionalMemberships',
+      title: 'Professional Memberships',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of society memberships (e.g. Computer Society of India (CSI) — Life Member)',
+    },
+  ],
+}

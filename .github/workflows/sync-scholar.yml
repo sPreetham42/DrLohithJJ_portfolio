@@ -26,6 +26,10 @@ jobs:
         run: pip install scholarly
 
       - name: Run sync script
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          SANITY_DATASET: 'production'
         run: python scripts/sync_scholar.py
 
       - name: Check for changes

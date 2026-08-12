@@ -121,6 +121,53 @@ def fetch_openalex():
         return None
 
 
+def push_to_sanity(data):
+    """Pushes updated Scholar metrics to Sanity scholarStats singleton document via write token."""
+    project_id = os.environ.get('SANITY_PROJECT_ID')
+    write_token = os.environ.get('SANITY_WRITE_TOKEN')
+    dataset = os.environ.get('SANITY_DATASET', 'production')
+
+    if not project_id or not write_token:
+        print("[SANITY] SANITY_PROJECT_ID or SANITY_WRITE_TOKEN not configured in environment. Skipping Sanity push.")
+        return
+
+    url = f"https://{project_id}.api.sanity.io/v2023-01-01/data/mutate/{dataset}"
+    payload = {
+        "mutations": [
+            {
+                "createOrReplace": {
+                    "_id": "scholarStats",
+                    "_type": "scholarStats",
+                    "citations": data["citations"],
+                    "hIndex": data["h_index"],
+                    "i10Index": data["i10_index"],
+                    "sciePapersCount": 4,
+                    "ieeeConferencesCount": 6,
+                    "lastUpdated": data["last_updated"],
+                    "source": data.get("source", "sync_scholar")
+                }
+            }
+        ]
+    }
+
+    try:
+        import urllib.request
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode('utf-8'),
+            headers={
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {write_token}'
+            },
+            method='POST'
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            res_data = json.loads(resp.read().decode())
+            print(f"[SANITY SUCCESS] Mutated scholarStats document: {res_data}")
+    except Exception as e:
+        print(f"[SANITY ERROR] Failed to push metrics to Sanity: {e}")
+
+
 def main():
     existing = load_existing()
     print(f"[Existing] Citations: {existing.get('citations', 0)}")
@@ -144,13 +191,14 @@ def main():
     # Add timestamp
     result['last_updated'] = datetime.now(timezone.utc).isoformat()
 
-    # Write output
+    # Write local JSON fallback
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, 'w') as f:
         json.dump(result, f, indent=2)
+    print(f"[SUCCESS] Saved local fallback to {OUTPUT_PATH}")
 
-    print(f"[SUCCESS] Saved to {OUTPUT_PATH}")
-    print(json.dumps(result, indent=2))
+    # Push to Sanity CMS
+    push_to_sanity(result)
 
 
 if __name__ == '__main__':
