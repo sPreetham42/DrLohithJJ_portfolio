@@ -1025,27 +1025,31 @@ section {
 .membership-badge {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  padding: 8px 14px;
+  gap: 10px;
+  padding: 12px 20px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: var(--fw-semibold);
   color: var(--text-secondary);
   background: var(--bg-primary);
   transition: all var(--duration-fast) var(--ease-in-out);
+  line-height: 1.4;
 }
 
 .membership-badge:hover {
   border-color: var(--accent);
   color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(15, 33, 55, 0.12);
 }
 
 .membership-badge svg {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   color: var(--navy-muted);
+  flex-shrink: 0;
 }
 
 /* ================================================================
