@@ -26,10 +26,6 @@ section {
    HERO DIVIDER + SOCIAL LINKS
    ============================================================ */
 
-/* ============================================================
-   HERO SOCIAL LINKS
-   ============================================================ */
-
 .hero-divider-social {
   display: flex;
   align-items: center;
@@ -37,53 +33,40 @@ section {
   margin-bottom: var(--space-xl);
 }
 
-/* Small animated accent bar */
 .hero-divider-social .hero-divider {
   display: block;
   width: 40px;
   height: 3px;
   min-width: 40px;
   flex-shrink: 0;
-
   background: var(--accent);
   border-radius: 2px;
-
   margin: 0;
-
   opacity: 0;
   transform: scaleX(0);
   transform-origin: left center;
-
   animation: heroBarGrow 0.6s var(--ease-out) 0.5s forwards;
 }
 
-/* Social icon container */
 .hero-social-links {
   display: flex;
   align-items: center;
   gap: 12px;
-
   opacity: 0;
   transform: translateY(14px);
-
   animation: heroSocialFade 0.6s var(--ease-out) 0.7s forwards;
 }
 
-/* Individual icons */
 .hero-social-link {
   width: auto;
   height: auto;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   color: var(--text-secondary);
   border: none;
   border-radius: 0;
-
   text-decoration: none;
-
   transition:
     color 0.25s ease,
     transform 0.25s ease;
@@ -131,10 +114,12 @@ section {
 }
 
 /* ===== Scroll-reveal ===== */
+
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity var(--duration-slow) var(--ease-out),
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
     transform var(--duration-slow) var(--ease-out);
 }
 
@@ -146,7 +131,8 @@ section {
 .reveal-children>* {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity var(--duration-slow) var(--ease-out),
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
     transform var(--duration-slow) var(--ease-out);
 }
 
@@ -204,6 +190,7 @@ section {
 }
 
 /* ===== Section Headers ===== */
+
 .section-eyebrow {
   font-family: var(--font-mono);
   font-size: var(--fs-badge);
@@ -256,6 +243,7 @@ section {
 /* ================================================================
    NAVIGATION — Minimal top bar
    ================================================================ */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -302,7 +290,6 @@ section {
 .nav-links .nav-link {
   font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.01em;
 }
 
 .nav-link {
@@ -338,7 +325,8 @@ section {
   width: 100%;
 }
 
-/* Mobile */
+/* Mobile navigation */
+
 .nav-mobile-toggle {
   display: none;
   flex-direction: column;
@@ -353,7 +341,8 @@ section {
   height: 1.5px;
   background: var(--text-primary);
   border-radius: 1px;
-  transition: transform var(--duration-normal) var(--ease-out),
+  transition:
+    transform var(--duration-normal) var(--ease-out),
     opacity var(--duration-fast) var(--ease-out);
 }
 
@@ -372,6 +361,7 @@ section {
 /* ================================================================
    HERO — Asymmetric editorial layout
    ================================================================ */
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -383,7 +373,6 @@ section {
   overflow: hidden;
 }
 
-/* Decorative left accent stripe */
 .hero::before {
   content: '';
   position: absolute;
@@ -500,6 +489,7 @@ section {
 }
 
 /* Stats strip */
+
 .hero-stats-strip {
   margin-top: var(--space-2xl);
   padding-top: var(--space-xl);
@@ -540,6 +530,7 @@ section {
 }
 
 /* ===== Buttons ===== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -599,8 +590,9 @@ section {
 }
 
 /* ================================================================
-   CAREER TIMELINE — Side-by-side with accent line
+   CAREER TIMELINE
    ================================================================ */
+
 .career {
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-light);
@@ -726,8 +718,9 @@ section {
 }
 
 /* ================================================================
-   ACHIEVEMENTS — Horizontal scroll cards
+   ACHIEVEMENTS
    ================================================================ */
+
 .achievements {
   background: var(--bg-surface);
   border-top: 1px solid var(--border-light);
@@ -791,8 +784,9 @@ section {
 }
 
 /* ================================================================
-   PUBLICATIONS — Numbered list cards
+   PUBLICATIONS
    ================================================================ */
+
 .publications {
   background: var(--bg-primary);
 }
@@ -912,6 +906,7 @@ section {
 }
 
 /* Stats bar */
+
 .stats-bar {
   padding: var(--space-lg);
   background: var(--bg-surface);
@@ -954,8 +949,9 @@ section {
 }
 
 /* ================================================================
-   SKILLS — 2×2 grid of tag clouds
+   SKILLS
    ================================================================ */
+
 .skills {
   background: var(--bg-surface);
   border-top: 1px solid var(--border-light);
@@ -1053,8 +1049,9 @@ section {
 }
 
 /* ================================================================
-   CAREER & EDUCATION
+   TALKS
    ================================================================ */
+
 .talks {
   background: var(--bg-primary);
   border-bottom: 1px solid var(--border-light);
@@ -1152,6 +1149,7 @@ section {
 /* ================================================================
    TALK YEAR FILTER BAR
    ================================================================ */
+
 .talk-filters {
   display: flex;
   align-items: center;
@@ -1189,7 +1187,8 @@ section {
   padding: 8px 36px 8px 14px;
   cursor: pointer;
   outline: none;
-  transition: border-color var(--duration-fast) var(--ease-in-out),
+  transition:
+    border-color var(--duration-fast) var(--ease-in-out),
     box-shadow var(--duration-fast) var(--ease-in-out);
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1225,6 +1224,7 @@ section {
 /* ================================================================
    CONTACT
    ================================================================ */
+
 .contact {
   background: var(--bg-surface);
   border-top: 1px solid var(--border-light);
@@ -1402,6 +1402,7 @@ section {
 /* ================================================================
    FOOTER
    ================================================================ */
+
 .footer {
   background: var(--accent);
   padding: var(--space-xl) 0;
@@ -1433,9 +1434,26 @@ section {
   color: #fff;
 }
 
+.footer-built-by {
+  margin-left: 8px;
+  opacity: 0.55;
+  font-size: 0.9em;
+}
+
+.footer-built-by a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.footer-built-by a:hover {
+  opacity: 0.75;
+}
+
 /* ================================================================
    KEYFRAMES
    ================================================================ */
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -1473,7 +1491,9 @@ section {
 /* ================================================================
    RESPONSIVE
    ================================================================ */
+
 @media (max-width: 900px) {
+
   .hero .container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -1492,9 +1512,48 @@ section {
     justify-content: center;
   }
 
+  /* ============================================================
+     MOBILE HERO IMAGE
+     ============================================================ */
+
   .hero-visual {
-    display: none;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+
+    /* Remove desktop positioning */
+    transform: none;
+
+    /* Show immediately on mobile */
+    opacity: 1;
+    animation: none;
+
+    width: 100%;
+    margin-top: var(--space-xl);
   }
+
+  .hero-photo-frame {
+    width: min(300px, 82vw);
+    height: min(370px, 105vw);
+
+    /* Remove desktop offsets */
+    margin: 0 auto;
+
+    padding: 8px;
+  }
+
+  .hero-photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  /* ============================================================
+     OTHER RESPONSIVE ELEMENTS
+     ============================================================ */
 
   .hero-stats-strip {
     flex-wrap: wrap;
@@ -1544,7 +1603,12 @@ section {
   }
 }
 
+/* ================================================================
+   SMALL MOBILE
+   ================================================================ */
+
 @media (max-width: 600px) {
+
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -1562,20 +1626,10 @@ section {
     gap: var(--space-md);
     text-align: center;
   }
-}
 
-.footer-built-by {
-  margin-left: 8px;
-  opacity: 0.55;
-  font-size: 0.9em;
-}
-
-.footer-built-by a {
-  color: inherit;
-  text-decoration: none;
-  transition: opacity 0.25s ease;
-}
-
-.footer-built-by a:hover {
-  opacity: 0.75;
+  /* Smaller profile image on very small screens */
+  .hero-photo-frame {
+    width: min(280px, 82vw);
+    height: min(350px, 105vw);
+  }
 }
