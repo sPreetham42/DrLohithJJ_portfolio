@@ -1633,3 +1633,68 @@ section {
     height: min(350px, 105vw);
   }
 }
+
+/* ============================================================
+   MOBILE HERO PHOTO FIX
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .hero .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-visual {
+    display: flex !important;
+    position: relative !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+
+    margin: 30px 0 0 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+    opacity: 1 !important;
+
+    animation: none !important;
+  }
+
+  .hero-photo-frame {
+    display: block !important;
+    position: relative !important;
+
+    width: 280px !important;
+    height: 350px !important;
+
+    margin: 0 auto !important;
+    padding: 8px !important;
+
+    transform: none !important;
+    opacity: 1 !important;
+
+    box-sizing: border-box !important;
+  }
+
+  .hero-photo-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    object-fit: cover !important;
+    object-position: top !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+}
