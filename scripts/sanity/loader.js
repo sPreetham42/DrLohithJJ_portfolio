@@ -168,8 +168,11 @@ async function loadTalks() {
   try {
     const items = await sanityFetch(Q.TALKS_QUERY);
 
-    if (!items || items.length === 0) {
-      console.warn('[Sanity Talks] No talks found');
+    if (!items || items.length < 50) {
+      console.warn(`[Sanity Talks] Sanity API returned ${items ? items.length : 0} items, which is fewer than static fallback (53+). Preserving full static HTML markup.`);
+      if (window.initTalksYearFilter) {
+        window.initTalksYearFilter();
+      }
       return;
     }
 
@@ -332,7 +335,10 @@ async function loadAwards() {
 
   try {
     const items = await sanityFetch(Q.AWARDS_QUERY);
-    if (!items || items.length === 0) return;
+    if (!items || items.length < 20) {
+      console.warn(`[Sanity Awards] Sanity API returned ${items ? items.length : 0} items, preserving 25 static achievement cards.`);
+      return;
+    }
 
     container.innerHTML = items.map(a => `
       <div class="achievement-card">

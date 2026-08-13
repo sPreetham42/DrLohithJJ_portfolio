@@ -1,0 +1,1162 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Your name as displayed on the website (e.g. Dr. Lohith J.J.)",
+        "name": "name",
+        "type": "string",
+        "title": "Full Name"
+      },
+      {
+        "description": "Short degree/institution tag shown next to name (e.g. Ph.D. (NIT Trichy))",
+        "name": "credential",
+        "type": "string",
+        "title": "Academic Credential Tag"
+      },
+      {
+        "description": "Main designation line under your name (e.g. Professor & Head of Department — CSE(IOT & Cybersecurity including Blockchain technology))",
+        "name": "designation",
+        "type": "string",
+        "title": "Current Job Title / Eyebrow"
+      },
+      {
+        "description": "Total years in academia and research (e.g. 19)",
+        "name": "yearsExperience",
+        "type": "number",
+        "title": "Years of Experience"
+      },
+      {
+        "rows": 3,
+        "description": "First paragraph of your homepage intro bio",
+        "name": "heroDescriptionLine1",
+        "type": "text",
+        "title": "Hero Bio — Paragraph 1"
+      },
+      {
+        "rows": 3,
+        "description": "Second paragraph of your homepage intro bio",
+        "name": "heroDescriptionLine2",
+        "type": "text",
+        "title": "Hero Bio — Paragraph 2"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "High resolution headshot photo displayed on top right of hero section",
+        "name": "profilePhoto",
+        "type": "image"
+      },
+      {
+        "description": "e.g. Nagarjuna College of Engineering & Technology, Bengaluru",
+        "name": "currentInstitution",
+        "type": "string"
+      },
+      {
+        "name": "emailPrimary",
+        "type": "string",
+        "title": "Primary Email"
+      },
+      {
+        "name": "emailSecondary",
+        "type": "string",
+        "title": "Secondary Email (e.g. WILP Email)"
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "title": "Phone Number"
+      },
+      {
+        "name": "address",
+        "type": "string",
+        "title": "Location / Address"
+      },
+      {
+        "description": "List of guest faculty and advisory roles (e.g. Guest Faculty at BITS WILP Programme)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "additionalRoles",
+        "type": "array",
+        "title": "Additional Academic Roles"
+      },
+      {
+        "description": "List of society memberships (e.g. Computer Society of India (CSI) — Life Member)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "professionalMemberships",
+        "type": "array"
+      }
+    ],
+    "name": "profile",
+    "type": "document",
+    "title": "Profile & Hero Bio"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Ph.D. in Computer Science",
+        "name": "degree",
+        "type": "string",
+        "title": "Degree / Qualification"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. National Institute of Technology (NIT), Tiruchirappalli",
+        "name": "institution",
+        "type": "string",
+        "title": "University / Institution"
+      },
+      {
+        "description": "e.g. 2017 — 2024",
+        "name": "year",
+        "type": "string",
+        "title": "Year Range"
+      },
+      {
+        "rows": 2,
+        "description": "Thesis title or grade details (e.g. Thesis: \"Blockchain-Based Smart Contract Security...\")",
+        "name": "thesis",
+        "type": "text",
+        "title": "Thesis / Specialization Details"
+      },
+      {
+        "initialValue": 10,
+        "description": "Lower numbers display first (1 = top)",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "education",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Professor & Head, Dept. of IoT & CyberSecurity including Blockchain Technology",
+        "name": "role",
+        "type": "string",
+        "title": "Job Position / Role"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Nagarjuna College of Engineering & Technology, Bengaluru",
+        "name": "organization",
+        "type": "string",
+        "title": "College / Organization"
+      },
+      {
+        "description": "e.g. June 2026 or Aug 2009",
+        "name": "startYear",
+        "type": "string",
+        "title": "Start Date / Year"
+      },
+      {
+        "description": "e.g. Present or May 2024",
+        "name": "endYear",
+        "type": "string",
+        "title": "End Date / Year"
+      },
+      {
+        "initialValue": false,
+        "name": "isCurrent",
+        "type": "boolean",
+        "title": "Currently Working Here?"
+      },
+      {
+        "initialValue": 10,
+        "description": "Lower numbers display first (1 = latest position at the top)",
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "experience",
+    "type": "document",
+    "title": "Employment Experience"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Blockchain Architecture & Smart Contract Security",
+        "name": "title",
+        "type": "string",
+        "title": "Topic / Research Area Title"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "researchInterest",
+    "type": "document",
+    "title": "Research Interests"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Paper Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. L. J.J. and K. Singh",
+        "name": "authors",
+        "type": "string",
+        "title": "Authors List"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. International Journal of Information Technology, vol. 16(6), pp. 3389–3399",
+        "name": "venue",
+        "type": "string",
+        "title": "Journal / Conference Name & Volume"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "SCIE / Scopus Journal",
+              "value": "journal"
+            },
+            {
+              "title": "IEEE Conference Proceeding",
+              "value": "conference"
+            },
+            {
+              "title": "Book Chapter / Textbook",
+              "value": "book"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "journal",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "journal",
+                  "conference",
+                  "book"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publicationType",
+        "type": "string"
+      },
+      {
+        "description": "e.g. 2024",
+        "name": "year",
+        "type": "number",
+        "title": "Year of Publication"
+      },
+      {
+        "description": "e.g. https://doi.org/10.1007/s41870-024-01909-8",
+        "name": "doi",
+        "type": "string",
+        "title": "DOI URL or Number"
+      },
+      {
+        "options": {
+          "accept": ".pdf"
+        },
+        "description": "Single-click PDF upload directly from your computer",
+        "name": "pdfFile",
+        "type": "file",
+        "title": "Upload Full Paper PDF"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "externalLink",
+        "type": "url",
+        "title": "External Link / Publisher URL"
+      },
+      {
+        "description": "e.g. J1, J2, C1, C2",
+        "name": "codeNumber",
+        "type": "string",
+        "title": "Paper Code Number"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured Paper"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "publication",
+    "type": "document",
+    "title": "Publications & Papers"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Project Title"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text",
+        "title": "Short Summary"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Project Image"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "technologies",
+        "type": "array",
+        "title": "Technologies Used"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "projectLink",
+        "type": "url",
+        "title": "Project Link / Demo URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "githubLink",
+        "type": "url",
+        "title": "GitHub Code Repository URL"
+      },
+      {
+        "of": [
+          {
+            "to": [
+              {
+                "type": "collaborator"
+              }
+            ],
+            "type": "reference",
+            "title": "Reference to collaborators"
+          }
+        ],
+        "name": "collaborators",
+        "type": "array"
+      },
+      {
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "initialValue": false,
+        "name": "featured",
+        "type": "boolean",
+        "title": "Featured Project?"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "project",
+    "type": "document",
+    "title": "Research Projects"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Excellence in Research Award or Best Resource Person — Golden Award 2024",
+        "name": "title",
+        "type": "string",
+        "title": "Award / Honor Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. National Education Brilliance 2024, New Delhi",
+        "name": "organization",
+        "type": "string",
+        "title": "Issuing Organization / Event"
+      },
+      {
+        "description": "e.g. 2024",
+        "name": "year",
+        "type": "string"
+      },
+      {
+        "rows": 2,
+        "name": "description",
+        "type": "text",
+        "title": "Brief Details / Context"
+      },
+      {
+        "name": "certificateFile",
+        "type": "file",
+        "title": "Upload Certificate PDF / Image File"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "award",
+    "type": "document",
+    "title": "Achievements & Awards"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Certification Name"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "issuingOrganization",
+        "type": "string"
+      },
+      {
+        "name": "year",
+        "type": "string",
+        "title": "Year / Date Issued"
+      },
+      {
+        "name": "credentialId",
+        "type": "string",
+        "title": "Credential ID"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "credentialLink",
+        "type": "url",
+        "title": "Verification Link URL"
+      },
+      {
+        "name": "certificateFile",
+        "type": "file",
+        "title": "Upload Certificate Document (PDF/File)"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "certification",
+    "type": "document",
+    "title": "Certifications"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Full Name"
+      },
+      {
+        "name": "designation",
+        "type": "string",
+        "title": "Designation / Title"
+      },
+      {
+        "name": "institution",
+        "type": "string",
+        "title": "Institution / Organization"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "profileImage",
+        "type": "image",
+        "title": "Profile Photo"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "profileLink",
+        "type": "url",
+        "title": "Website / Profile URL"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "researchAreas",
+        "type": "array",
+        "title": "Research Focus Areas"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "collaborator",
+    "type": "document",
+    "title": "Collaborators"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Student Name"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Ph.D., M.Tech, B.Tech",
+        "name": "program",
+        "type": "string",
+        "title": "Academic Program"
+      },
+      {
+        "name": "researchArea",
+        "type": "string",
+        "title": "Research Area / Thesis Topic"
+      },
+      {
+        "name": "year",
+        "type": "string",
+        "title": "Graduation Year / Batch"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Ongoing",
+              "value": "ongoing"
+            },
+            {
+              "title": "Graduated / Completed",
+              "value": "completed"
+            }
+          ]
+        },
+        "initialValue": "completed",
+        "name": "status",
+        "type": "string",
+        "title": "Current Status"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "profileLink",
+        "type": "url",
+        "title": "LinkedIn / Portfolio URL"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "student",
+    "type": "document",
+    "title": "Mentored Students"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. \"Blockchain Technology in Education\" or \"Deploying Smart Contracts\"",
+        "name": "title",
+        "type": "string",
+        "title": "Topic / Talk Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. UGC Malaviya Mission Teacher Centre, Bengaluru University",
+        "name": "venue",
+        "type": "string",
+        "title": "Venue / Event / College"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Jan 2026 or Dec 2024 — Jan 2025",
+        "name": "dateString",
+        "type": "string",
+        "title": "Display Date Label"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Numeric year used for filter dropdown (e.g. 2026, 2025, 2024)",
+        "name": "year",
+        "type": "number",
+        "title": "Filter Year"
+      },
+      {
+        "initialValue": true,
+        "description": "If checked, shows in main visible grid. If unchecked, shows under \"Show All Talks\" list.",
+        "name": "featured",
+        "type": "boolean",
+        "title": "Show in Featured Top Grid?"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "talk",
+    "type": "document",
+    "title": "Invited Talks & Workshops"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. Domain Expertise, Practical Tools, Administration, Languages & Misc.",
+        "name": "category",
+        "type": "string",
+        "title": "Category Name"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "List of individual skill pills (e.g. Blockchain, Cryptography, Solidity, Metamask)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "skills",
+        "type": "array",
+        "title": "Skill Tags"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "skillCategory",
+    "type": "document",
+    "title": "Skills & Categories"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "e.g. LinkedIn, Google Scholar, YouTube, GitHub, ORCID",
+        "name": "platform",
+        "type": "string",
+        "title": "Platform Name"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "url",
+        "type": "url",
+        "title": "Profile URL"
+      },
+      {
+        "description": "e.g. linkedin, scholar, youtube, github, orcid",
+        "name": "icon",
+        "type": "string",
+        "title": "Icon Name / Key"
+      },
+      {
+        "initialValue": true,
+        "name": "visible",
+        "type": "boolean",
+        "title": "Visible on Website?"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number",
+        "title": "Display Order"
+      }
+    ],
+    "name": "socialLink",
+    "type": "document",
+    "title": "Social & Academic Profile Links"
+  },
+  {
+    "fields": [
+      {
+        "initialValue": 168,
+        "description": "Automatically updated daily by GitHub Actions workflow (or edit manually)",
+        "name": "citations",
+        "type": "number",
+        "title": "Total Citations"
+      },
+      {
+        "initialValue": 7,
+        "name": "hIndex",
+        "type": "number",
+        "title": "h-index"
+      },
+      {
+        "initialValue": 5,
+        "name": "i10Index",
+        "type": "number",
+        "title": "i10-index"
+      },
+      {
+        "initialValue": 4,
+        "name": "sciePapersCount",
+        "type": "number",
+        "title": "SCIE Papers Count"
+      },
+      {
+        "initialValue": 6,
+        "name": "ieeeConferencesCount",
+        "type": "number",
+        "title": "IEEE Conferences Count"
+      },
+      {
+        "name": "lastUpdated",
+        "type": "datetime",
+        "title": "Last Updated Date / Time"
+      },
+      {
+        "description": "e.g. google_scholar, openalex, baseline",
+        "name": "source",
+        "type": "string",
+        "title": "Data Source"
+      }
+    ],
+    "name": "scholarStats",
+    "type": "document",
+    "title": "Google Scholar Statistics"
+  }
+]

@@ -42,13 +42,7 @@ export default defineConfig({
             S.documentTypeListItem('publication').title('Publications & Papers'),
             S.documentTypeListItem('talk').title('Invited Talks & Workshops'),
             S.documentTypeListItem('award').title('Achievements & Awards'),
-            S.documentTypeListItem('project').title('Research Projects'),
             S.documentTypeListItem('skillCategory').title('Skills & Categories'),
-            S.documentTypeListItem('certification').title('Certifications'),
-            S.documentTypeListItem('collaborator').title('Collaborators'),
-            S.documentTypeListItem('student').title('Mentored Students'),
-            S.documentTypeListItem('socialLink').title('Social & Academic Links'),
-            S.documentTypeListItem('researchInterest').title('Research Interests'),
           ])
     }),
     visionTool()
