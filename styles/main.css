@@ -1416,38 +1416,80 @@ section {
 
 .footer-text {
   font-size: var(--fs-badge);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-divider {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.85em;
+  user-select: none;
+}
+
+.footer-built-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--fw-medium);
+}
+
+.footer-author-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: all var(--duration-fast) var(--ease-out);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.footer-author-link .footer-link-icon {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  opacity: 0.85;
+  transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-fast);
+}
+
+.footer-author-link:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.65);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.footer-author-link:hover .footer-link-icon {
+  opacity: 1;
+  transform: translate(1.5px, -1.5px);
 }
 
 .footer-links {
   display: flex;
   gap: var(--space-lg);
+  align-items: center;
 }
 
 .footer-link {
   font-size: var(--fs-badge);
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   transition: color var(--duration-fast);
+  text-decoration: none;
 }
 
 .footer-link:hover {
   color: #fff;
-}
-
-.footer-built-by {
-  margin-left: 8px;
-  opacity: 0.55;
-  font-size: 0.9em;
-}
-
-.footer-built-by a {
-  color: inherit;
-  text-decoration: none;
-  transition: opacity 0.25s ease;
-}
-
-.footer-built-by a:hover {
-  opacity: 0.75;
 }
 
 /* ================================================================
@@ -1625,6 +1667,10 @@ section {
     flex-direction: column;
     gap: var(--space-md);
     text-align: center;
+  }
+
+  .footer-text {
+    justify-content: center;
   }
 
   /* Smaller profile image on very small screens */
