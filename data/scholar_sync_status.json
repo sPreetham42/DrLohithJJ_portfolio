@@ -1,0 +1,22 @@
+{
+  "status": "partial_no_token",
+  "source": "google_scholar",
+  "startedAt": "2026-08-18T12:02:10.307858+00:00",
+  "completedAt": "2026-08-18T12:02:15.545992+00:00",
+  "durationMs": 5238,
+  "citations": 172,
+  "hIndex": 8,
+  "i10Index": 8,
+  "sanityUpdated": false,
+  "sanityPersistence": "SKIPPED (missing write token)",
+  "sanityCitations": 168,
+  "sanityHIndex": 7,
+  "sanityI10Index": 5,
+  "citationDifference": 4,
+  "hIndexDifference": 1,
+  "i10IndexDifference": 3,
+  "sanityError": "SANITY_WRITE_TOKEN not set in environment",
+  "error": null,
+  "isDryRun": false,
+  "lastSyncDate": "2026-08-18T12:02:15.545992+00:00"
+}
