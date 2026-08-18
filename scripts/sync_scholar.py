@@ -4,10 +4,10 @@ Runs via GitHub Actions daily or locally in diagnostic mode.
 Saves results to data/scholar.json and data/scholar_sync_status.json.
 
 Strategy:
-  1. Primary:  scholarly library (scrapes Google Scholar server-side with strict 12s timeout)
-  2. Fallback: OpenAlex API (parallelized REST API fetch, reliable aggregator)
+  1. Primary:  scholarly library (isolated in killable child subprocess with hard 15s timeout)
+  2. Fallback: OpenAlex API (parallelized REST API queries across author IDs)
   3. Safety:   Never overwrite with lower numbers (prevents bad scrapes)
-  4. Verification: Write -> Read-Back verification against live Sanity document
+  4. Verification: Write -> Read-Back verification against live Sanity production document
   5. Diagnostics: Structured status reporting, non-zero exits on failure, dry-run mode.
 """
 
@@ -16,6 +16,7 @@ import concurrent.futures
 import json
 import os
 import socket
+import subprocess
 import sys
 import time
 import urllib.parse
@@ -58,6 +59,27 @@ def log(msg):
     print(f"[{datetime.now(timezone.utc).strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
+def get_sanity_config():
+    """
+    Safely resolves Sanity project configuration with bulletproof fallbacks
+    even if environment variables contain empty strings from unset GitHub secrets.
+    """
+    raw_project_id = os.environ.get('SANITY_PROJECT_ID', '')
+    raw_dataset = os.environ.get('SANITY_DATASET', '')
+    
+    project_id = raw_project_id.strip() if raw_project_id else '12ok6v8i'
+    if not project_id:
+        project_id = '12ok6v8i'
+        
+    dataset = raw_dataset.strip() if raw_dataset else 'production'
+    if not dataset:
+        dataset = 'production'
+        
+    write_token = os.environ.get('SANITY_WRITE_TOKEN', '').strip() or None
+    
+    return project_id, dataset, write_token
+
+
 def load_existing_fallback():
     """Load existing scholar.json to compare against."""
     try:
@@ -71,8 +93,7 @@ def load_existing_fallback():
 
 def fetch_sanity_current():
     """Fetch current scholarStats document directly from Sanity query API."""
-    project_id = os.environ.get('SANITY_PROJECT_ID', '12ok6v8i')
-    dataset = os.environ.get('SANITY_DATASET', 'production')
+    project_id, dataset, _ = get_sanity_config()
     query = '*[_type == "scholarStats" && _id == "scholarStats"][0]'
     url = f"https://{project_id}.api.sanity.io/v2023-01-01/data/query/{dataset}?query={urllib.parse.quote(query)}"
 
@@ -82,43 +103,45 @@ def fetch_sanity_current():
             data = json.loads(resp.read().decode('utf-8'))
             result = data.get('result')
             return result
+    except urllib.error.HTTPError as e:
+        log(f"[SANITY READ ERROR] HTTP {e.code} ({e.reason}) from {url}")
+        return None
     except Exception as e:
-        log(f"[SANITY READ] Could not fetch current Sanity document: {e}")
+        log(f"[SANITY READ ERROR] Could not fetch current Sanity document ({url}): {e}")
         return None
 
 
-def fetch_google_scholar():
-    """Primary: Use scholarly library to scrape Google Scholar with a strict 12-second bounded timeout."""
-    log(f"[Google Scholar] Connecting for author ID: {SCHOLAR_USER_ID} (max 12s timeout)...")
-
-    def _scrape():
+def run_scholar_worker(author_id):
+    """
+    Isolated worker process executing inside a dedicated child subprocess.
+    If this process stalls on anti-scraping challenges or dropped sockets,
+    the parent process forcibly terminates it without blocking the workflow.
+    """
+    try:
         from scholarly import scholarly
         try:
             scholarly.set_timeout(8)
         except Exception:
             pass
 
-        author = scholarly.search_author_id(SCHOLAR_USER_ID)
+        author = scholarly.search_author_id(author_id)
         if not author:
-            raise ValueError(f"Author {SCHOLAR_USER_ID} not found on Google Scholar")
+            print(json.dumps({"error": f"Author ID {author_id} not found on Google Scholar"}))
+            sys.exit(1)
 
         author = scholarly.fill(author, sections=['basics', 'indices'])
         citedby = author.get('citedby', 0) or 0
-        h_index = 0
-        i10_index = 0
+        h_index = author.get('hindex', 0) or 0
+        i10_index = author.get('i10index', 0) or 0
 
-        if 'hindex' in author:
-            h_index = author['hindex']
-        if 'i10index' in author:
-            i10_index = author['i10index']
-
-        if hasattr(author, 'hindex'):
+        if hasattr(author, 'hindex') and author.hindex:
             h_index = author.hindex
-        if hasattr(author, 'i10index'):
+        if hasattr(author, 'i10index') and author.i10index:
             i10_index = author.i10index
 
         publications = author.get('publications', [])
-        return {
+
+        result = {
             "citations": int(citedby),
             "h_index": int(h_index),
             "i10_index": int(i10_index),
@@ -126,24 +149,68 @@ def fetch_google_scholar():
             "source": "google_scholar",
             "error": None
         }
-
-    try:
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-            future = executor.submit(_scrape)
-            result = future.result(timeout=12)
-            log(f"[Google Scholar] OK — Citations: {result['citations']}, h-index: {result['h_index']}, i10-index: {result['i10_index']}, papers: {result['papers_count']}")
-            return result
-    except concurrent.futures.TimeoutError:
-        err = "Google Scholar request timed out after 12s (anti-scraping protection or network block)"
-        log(f"[Google Scholar] {err}")
-        return {"error": err}
+        print(json.dumps(result))
+        sys.exit(0)
     except ImportError:
-        err = "scholarly package not installed in current Python environment"
-        log(f"[Google Scholar] {err}")
-        return {"error": err}
+        print(json.dumps({"error": "scholarly package not installed in environment"}))
+        sys.exit(1)
     except Exception as e:
-        err = str(e)
-        log(f"[Google Scholar] Connection failed: {err}")
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+
+
+def fetch_google_scholar():
+    """
+    Primary: Scrapes Google Scholar inside an isolated child subprocess with a hard 15s timeout.
+    If the child process exceeds 15 seconds, it is forcibly killed via SIGKILL / TerminateProcess.
+    This guarantees the parent sync script immediately regains control with 0 hanging threads.
+    """
+    log(f"[Google Scholar] Connecting for author ID: {SCHOLAR_USER_ID} (hard subprocess timeout: 15s)...")
+    
+    cmd = [sys.executable, os.path.abspath(__file__), '--scrape-scholar-worker', SCHOLAR_USER_ID]
+    
+    try:
+        proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        )
+        
+        try:
+            stdout_data, stderr_data = proc.communicate(timeout=15)
+        except subprocess.TimeoutExpired:
+            log("[Google Scholar] Hard timeout reached after 15s; terminating scraper subprocess...")
+            proc.kill()
+            try:
+                proc.communicate(timeout=3)
+            except Exception:
+                pass
+            err = "Google Scholar scraper timed out after 15s (anti-scraping block or dropped socket)"
+            log(f"[Google Scholar] {err}")
+            log("[Google Scholar] Falling back to OpenAlex / cache fallback.")
+            return {"error": err}
+            
+        if proc.returncode == 0 and stdout_data.strip():
+            try:
+                data = json.loads(stdout_data.strip())
+                if data.get('error'):
+                    log(f"[Google Scholar] Scraper reported error: {data['error']}")
+                    return {"error": data['error']}
+                log(f"[Google Scholar] OK — Citations: {data['citations']}, h-index: {data['h_index']}, i10-index: {data['i10_index']}, papers: {data.get('papers_count', 0)}")
+                return data
+            except json.JSONDecodeError:
+                err = f"Failed to parse scraper JSON output: {stdout_data[:200]}"
+                log(f"[Google Scholar] {err}")
+                return {"error": err}
+        else:
+            err = stderr_data.strip() or f"Scraper process exited with code {proc.returncode}"
+            log(f"[Google Scholar] Connection failed: {err}")
+            return {"error": err}
+            
+    except Exception as e:
+        err = f"Subprocess invocation failed: {e}"
+        log(f"[Google Scholar] {err}")
         return {"error": err}
 
 
@@ -185,7 +252,7 @@ def fetch_openalex():
                     max_i10_index = max(max_i10_index, i10)
                     successful_fetches += 1
                 except Exception as e:
-                    log(f"[OpenAlex] Profile {aid} fetch warning: {e}")
+                    log(f"[OpenAlex] Profile {aid} warning: {e}")
 
         if successful_fetches == 0:
             err = "All OpenAlex profile fetches failed"
@@ -213,9 +280,7 @@ def push_to_sanity_with_verification(data):
     Pushes updated Scholar metrics to Sanity scholarStats singleton document,
     then executes an immediate Read-Back Verification query to ensure persistence.
     """
-    project_id = os.environ.get('SANITY_PROJECT_ID', '12ok6v8i')
-    write_token = os.environ.get('SANITY_WRITE_TOKEN')
-    dataset = os.environ.get('SANITY_DATASET', 'production')
+    project_id, dataset, write_token = get_sanity_config()
 
     if not write_token:
         msg = "SANITY_WRITE_TOKEN not set in environment"
@@ -515,6 +580,11 @@ def run_pipeline(dry_run=False, verbose=False):
 
 
 def main():
+    # Handle worker mode for subprocess isolation
+    if len(sys.argv) > 2 and sys.argv[1] == '--scrape-scholar-worker':
+        run_scholar_worker(sys.argv[2])
+        return
+
     parser = argparse.ArgumentParser(description="Google Scholar Sync & Diagnostic Tool")
     parser.add_argument('--dry-run', '-d', action='store_true', help="Run in diagnostic mode without mutating Sanity or overwriting scholar.json")
     parser.add_argument('--verbose', '-v', action='store_true', help="Output verbose details")
