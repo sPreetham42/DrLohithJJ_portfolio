@@ -1,52 +1,67 @@
 /* ================================================================
-   DESIGN TOKENS — Professional Academic Portfolio
-   Clean white background, deep navy accent, no dark mode
+   DESIGN TOKENS — High-End Academic & Research Portfolio
+   Distinctive Academic / Technology Visual Identity
    ================================================================ */
 
 :root {
-  /* ── Premium Academic / Technology Palette ── */
+  /* ── Core Palette (User-Specified) ── */
+  --emerald: #0B6B5A;          /* Deep Emerald — primary */
+  --emerald-hover: #085446;
+  --emerald-light: rgba(11, 107, 90, 0.08);
+  --emerald-glow: rgba(11, 107, 90, 0.18);
 
-  --white: #FFFFFF;
-  --off-white: #F6F7F5;
-  --surface: #ECEFEB;
+  --navy: #172A3A;             /* Dark Navy — headings/deep accents */
+  --navy-light: rgba(23, 42, 58, 0.06);
+  --navy-muted: #485A68;
 
-  --border: #D8DDD8;
-  --border-light: #E7EAE7;
+  --gold: #C49A4A;             /* Muted Gold — premium highlight/accent */
+  --gold-hover: #B08738;
+  --gold-light: rgba(196, 154, 74, 0.12);
+  --gold-glow: rgba(196, 154, 74, 0.25);
 
-  /* Primary — Graphite */
-  --primary: #1C2523;
-  --primary-light: #2E3A37;
-  --primary-muted: #64716D;
+  --sage: #DCEDE7;             /* Soft Sage — subtle backgrounds/highlights */
+  --sage-subtle: rgba(220, 237, 231, 0.45);
+  --sage-border: #C8DFD8;
 
-  /* Accent — Deep Emerald */
-  --accent: #176B5B;
-  --accent-hover: #125448;
-  --accent-light: rgba(23, 107, 91, 0.08);
+  --ivory: #FAF9F5;            /* Warm Ivory — main page background */
+  --white: #FFFFFF;            /* White — cards/content surfaces */
 
-  /* Highlight — Champagne */
-  --gold: #B89B5E;
-  --gold-light: rgba(184, 155, 94, 0.10);
+  --text-primary: #17201E;     /* Main text */
+  --text-secondary: #4A5854;
+  --text-muted: #65736F;       /* Muted text */
 
-  /* Text */
-  --text-primary: #18201E;
-  --text-secondary: #53605C;
-  --text-muted: #7D8884;
+  /* ── Semantic Aliases ── */
+  --primary: var(--emerald);
+  --primary-light: var(--emerald-light);
+  --primary-muted: var(--text-muted);
 
-  /* Backgrounds */
-  --bg-primary: #FFFFFF;
-  --bg-surface: #F6F7F5;
+  --accent: var(--emerald);
+  --accent-hover: var(--emerald-hover);
+  --accent-light: var(--emerald-light);
+  --accent-glow: var(--emerald-glow);
+  --accent-gold: var(--gold);
 
-  /* ── Shadows ── */
-  --shadow-sm: 0 1px 3px rgba(15, 33, 55, 0.04);
-  --shadow-md: 0 4px 12px rgba(15, 33, 55, 0.06);
-  --shadow-hover: 0 8px 24px rgba(15, 33, 55, 0.08);
+  --bg-primary: var(--ivory);
+  --bg-surface: var(--white);
+  --bg-surface-sage: var(--sage-subtle);
+  --bg-card: var(--white);
+
+  --border: #DDE4E0;
+  --border-light: #EAEFEA;
+  --border-color: var(--border);
+
+  /* ── Shadows (Tinted Navy / Depth) ── */
+  --shadow-sm: 0 1px 3px rgba(23, 42, 58, 0.04), 0 1px 2px rgba(23, 42, 58, 0.02);
+  --shadow-md: 0 4px 16px rgba(23, 42, 58, 0.06), 0 1px 4px rgba(23, 42, 58, 0.03);
+  --shadow-hover: 0 8px 24px rgba(23, 42, 58, 0.09), 0 2px 6px rgba(23, 42, 58, 0.04);
+  --shadow-lg: 0 14px 40px rgba(23, 42, 58, 0.12), 0 4px 12px rgba(23, 42, 58, 0.05);
 
   /* ── Typography ── */
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'Manrope', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  --fs-hero: clamp(3.5rem, 5.5vw, 5rem);
+  --fs-hero: clamp(3.2rem, 5.5vw, 4.8rem);
   --fs-h1: clamp(2.25rem, 3.8vw, 3rem);
   --fs-h2: clamp(1.75rem, 2.8vw, 2.25rem);
   --fs-h3: 1.25rem;
@@ -69,14 +84,15 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: 4rem;
-  --space-section: 5rem;
+  --space-section: 5.5rem;
 
   /* ── Layout ── */
   --container-max: 1120px;
   --container-padding: 1.5rem;
   --nav-height: 64px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
 
   /* ── Motion ── */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -84,4 +100,6 @@
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 500ms;
+
+  --radius-icon: 6px;
 }
