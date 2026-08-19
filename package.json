@@ -16,8 +16,17 @@
     "test:phase4": "node scripts/test_suite_phase4.js",
     "test:phase5": "node scripts/test_suite_phase5.js",
     "test:phase6": "node scripts/test_suite_phase6.js",
+    "test:session-repo": "node scripts/test_session_repository.js",
+    "test:auth-handlers": "node scripts/test_auth_handlers.js",
+    "test:session-middleware": "node scripts/test_session_middleware.js",
+    "test:auth-dispatcher": "node scripts/test_auth_dispatcher.js",
+    "test:oauth-e2e": "node scripts/test_oauth_e2e_integration.js",
+    "test:admin-spa-auth": "node scripts/test_admin_spa_auth.js",
+    "test:unified-routing": "node scripts/test_suite_unified_routing.js",
     "build:admin": "vite build admin",
-    "test": "npm run test:phase1 && npm run test:phase2 && npm run test:phase3 && npm run test:phase4 && npm run test:phase5 && npm run test:phase6"
+    "build:site": "node scripts/build_unified_site.js",
+    "build": "npm run build:site",
+    "test": "npm run test:phase1 && npm run test:phase2 && npm run test:phase3 && npm run test:phase4 && npm run test:phase5 && npm run test:phase6 && npm run test:unified-routing && npm run test:session-repo && npm run test:auth-handlers && npm run test:session-middleware && npm run test:auth-dispatcher && npm run test:oauth-e2e && npm run test:admin-spa-auth"
   },
   "dependencies": {
     "lucide-react": "^1.32.0",

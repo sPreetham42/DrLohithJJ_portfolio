@@ -1,4 +1,4 @@
-// JavaScript export matching client.ts for Node test runner
+// JavaScript export matching client.ts for Node test runner & bundler
 
 export class ApiClientError extends Error {
   constructor(status, code, message, details) {
@@ -10,14 +10,37 @@ export class ApiClientError extends Error {
   }
 }
 
+const authExpiryListeners = new Set();
+
+export function onAuthExpired(listener) {
+  authExpiryListeners.add(listener);
+  return () => authExpiryListeners.delete(listener);
+}
+
+function notifyAuthExpired() {
+  authExpiryListeners.forEach(listener => {
+    try {
+      listener();
+    } catch (err) {
+      console.error('[AUTH_EXPIRY_LISTENER]', err);
+    }
+  });
+}
+
 const API_BASE = '/api/v1';
 
 async function request(path, options = {}) {
   const url = `${API_BASE}${path}`;
   const headers = new Headers(options.headers || {});
+  const method = (options.method || 'GET').toUpperCase();
   
   if (!headers.has('Content-Type') && options.body && typeof options.body === 'string') {
     headers.set('Content-Type', 'application/json');
+  }
+
+  // Set CSRF protection header for state-changing admin requests
+  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+    headers.set('X-Admin-Request', '1');
   }
 
   const res = await fetch(url, {
@@ -34,6 +57,9 @@ async function request(path, options = {}) {
   } catch (err) {}
 
   if (!res.ok) {
+    if (res.status === 401 && path !== '/auth/me') {
+      notifyAuthExpired();
+    }
     const code = data?.error?.code || `HTTP_${res.status}`;
     const message = data?.error?.message || `Request failed with status ${res.status}`;
     const details = data?.error?.details || null;
@@ -84,4 +110,9 @@ export const adminApi = {
   updateSocialLink: (id, data, version) => request(`/admin/social-links/${encodeURIComponent(id)}`, { method: 'PUT', body: JSON.stringify({ version, data }) }),
   deleteSocialLink: (id, version) => request(`/admin/social-links/${encodeURIComponent(id)}?version=${version}`, { method: 'DELETE' }),
   getPresignedUrl: (filename, mimeType) => request('/admin/assets/presigned-url', { method: 'POST', body: JSON.stringify({ filename, mimeType }) })
+};
+
+export const authApi = {
+  getMe: () => request('/auth/me'),
+  logout: () => request('/auth/logout', { method: 'POST' })
 };

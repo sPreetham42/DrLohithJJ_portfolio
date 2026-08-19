@@ -1,5 +1,5 @@
 import { ApiError, NotFoundError } from './errors.js';
-import { authenticateAdmin } from './middleware/access.js';
+import { authenticateAdmin } from './middleware/auth.js';
 import {
   handleHealth,
   handleGetProfile,
@@ -56,6 +56,12 @@ import {
   handleAdminPresignedUrl
 } from './handlers/admin.handler.js';
 import { handleScholarSyncAutomation } from './handlers/automation.handler.js';
+import {
+  handleAuthGithubLogin,
+  handleAuthGithubCallback,
+  handleAuthMe,
+  handleAuthLogout
+} from './handlers/auth.handler.js';
 
 export async function routeRequest(request, env) {
   const url = new URL(request.url);
@@ -100,6 +106,20 @@ export async function routeRequest(request, env) {
     // 3. Automation Endpoint
     if (path === '/api/v1/automation/scholar' && method === 'POST') {
       return await handleScholarSyncAutomation(request, env);
+    }
+
+    // 3.5. Authentication Endpoints
+    if (path === '/api/v1/auth/github' && method === 'GET') {
+      return await handleAuthGithubLogin(request, env);
+    }
+    if (path === '/api/v1/auth/callback' && method === 'GET') {
+      return await handleAuthGithubCallback(request, env);
+    }
+    if (path === '/api/v1/auth/me' && method === 'GET') {
+      return await handleAuthMe(request, env);
+    }
+    if (path === '/api/v1/auth/logout' && method === 'POST') {
+      return await handleAuthLogout(request, env);
     }
 
     // 4. Protected Admin Endpoints
@@ -215,6 +235,34 @@ export async function routeRequest(request, env) {
       }
 
       throw new NotFoundError('Admin Route', path);
+    }
+
+    // ----------------------------------------------------------------
+    // 5. Static Assets & Dashboard SPA Serving (via env.ASSETS)
+    // ----------------------------------------------------------------
+    if (env.ASSETS && method === 'GET') {
+      // 5a. Admin Dashboard SPA Routing (/dashboard/*)
+      if (path === '/dashboard' || path === '/dashboard/' || path.startsWith('/dashboard/')) {
+        // If it's a static file request with an extension (e.g. /dashboard/assets/index-*.js)
+        if (path.includes('.') && !path.endsWith('.html')) {
+          return await env.ASSETS.fetch(request);
+        }
+        // SPA Fallback: serve /dashboard/index.html for all client-side routes under /dashboard/*
+        const spaUrl = new URL('/dashboard/index.html', request.url);
+        return await env.ASSETS.fetch(new Request(spaUrl.toString(), request));
+      }
+
+      // 5b. Public Portfolio Static Assets (/, /styles/*, /scripts/*, /assets/*, /data/*)
+      const assetRes = await env.ASSETS.fetch(request);
+      if (assetRes.status !== 404) {
+        return assetRes;
+      }
+      if (path === '/' || path === '') {
+        const rootUrl = new URL('/index.html', request.url);
+        return await env.ASSETS.fetch(new Request(rootUrl.toString(), request));
+      }
+      // Explicit 404 for unknown public paths - DO NOT fallback to Admin SPA!
+      throw new NotFoundError('Page', path);
     }
 
     throw new NotFoundError('API Route', path);

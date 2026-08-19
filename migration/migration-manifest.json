@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "migrationSource": "CURRENT_PORTFOLIO_CANONICAL_SNAPSHOT",
   "snapshotFile": "current-portfolio-snapshot.json",
-  "snapshotSha256": "dce2153405b56c311df75fc4de65c73eeb1e9c8d8256668ce14a838d481a8bc2",
+  "snapshotSha256": "7e74a9f29f6ed0b1aedc09cc0e1e0118a3e20a032c2353d0c4d9aa3cde4a9dbf",
   "generatedAt": "2026-08-18T14:59:49.981Z",
   "entityCounts": {
     "profile": 1,

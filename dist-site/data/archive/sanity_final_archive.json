@@ -1,0 +1,1128 @@
+{
+  "archiveType": "SANITY_CMS_FINAL_RETIREMENT_SNAPSHOT",
+  "projectId": "12ok6v8i",
+  "dataset": "production",
+  "archivedAt": "2026-08-19T00:00:00.000Z",
+  "totalDocuments": 108,
+  "documents": [
+    {
+      "_id": "profile",
+      "_type": "profile",
+      "name": "Dr. Lohith J.J.",
+      "credential": "Ph.D. (NIT Trichy)",
+      "designation": "Professor & Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology)",
+      "yearsExperience": 20,
+      "heroDescriptionLine1": "Professor and Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology) at Nagarjuna College of Engineering & Technology, Bengaluru, with over <strong>20 years</strong> of teaching experience in Computer Science and Engineering.",
+      "heroDescriptionLine2": "Teaching and research expertise in <strong>Blockchain Technology</strong>, <strong>Cybersecurity</strong>, <strong>Smart Contracts</strong>, and <strong>Computer Networks</strong> — with focused research in smart contract security, vulnerability detection, ML-based security analysis, and secure information management.",
+      "currentInstitution": "Nagarjuna College of Engineering & Technology, Bengaluru",
+      "emailPrimary": "lohithjj@gmail.com",
+      "emailSecondary": "lohithjj@wilp.bits-pilani.ac.in",
+      "phone": "+91-9886745882",
+      "address": "NCET, Bengaluru, India",
+      "additionalRoles": [
+        "Guest Faculty at BITS WILP Programme since 2011",
+        "Guest Faculty at Manipal Global Education Services (MAGE)",
+        "Co-guide for Research Dept. at MAHE, Bengaluru",
+        "Doctoral Advisory Committee Member at MAHE, Manipal",
+        "Institute Ethics Committee Chairman at NCET",
+        "BOS & BOE Chairman",
+        "Vice Chairman, B.M.S. Employees Credit Co-operative Society (2023–2024)"
+      ],
+      "professionalMemberships": [
+        "Computer Society of India (CSI) — Life Member",
+        "Indian Society for Technical Education (ISTE) — Life Member",
+        "Cryptology Research Society of India (CRSI) — Life Member"
+      ]
+    },
+    {
+      "_id": "scholarStats",
+      "_type": "scholarStats",
+      "citations": 168,
+      "hIndex": 7,
+      "i10Index": 5,
+      "sciePapersCount": 4,
+      "ieeeConferencesCount": 6,
+      "lastUpdated": "2026-08-13T00:00:00Z",
+      "source": "google_scholar"
+    },
+    {
+      "_id": "edu-phd",
+      "_type": "education",
+      "degree": "Ph.D. in Computer Science & Engineering",
+      "institution": "National Institute of Technology (NIT), Tiruchirappalli",
+      "year": "2024",
+      "thesis": "Thesis: \"Blockchain-Based Smart Contract Security: Frameworks for Vulnerability Detection and Credit Reporting\"",
+      "order": 1
+    },
+    {
+      "_id": "edu-mtech",
+      "_type": "education",
+      "degree": "M.Tech. — Computer Network & Engineering",
+      "institution": "D.S.C.E., V.T.U. — 77%",
+      "year": "2006 — 2009",
+      "order": 2
+    },
+    {
+      "_id": "edu-be",
+      "_type": "education",
+      "degree": "B.E. — Computer Science & Engineering",
+      "institution": "B.N.M.I.T., V.T.U. — 68%",
+      "year": "2001 — 2005",
+      "order": 3
+    },
+    {
+      "_id": "exp-1",
+      "_type": "experience",
+      "role": "Professor & Head, Dept. of CSE(IoT & CyberSecurity including Blockchain Technology)",
+      "organization": "Nagarjuna College of Engineering and Technology, Bengaluru",
+      "startYear": "June 2026",
+      "endYear": "Present",
+      "isCurrent": true,
+      "order": 1
+    },
+    {
+      "_id": "exp-2",
+      "_type": "experience",
+      "role": "Assistant Professor, Dept of CSE",
+      "organization": "B.M.S. College of Engineering, Bengaluru",
+      "startYear": "May 2011",
+      "endYear": "May 2024",
+      "isCurrent": false,
+      "order": 2
+    },
+    {
+      "_id": "exp-3",
+      "_type": "experience",
+      "role": "Senior Lecturer, Dept of CSE",
+      "organization": "Auden Technology and Management Academy",
+      "startYear": "Aug 2009",
+      "endYear": "May 2011",
+      "isCurrent": false,
+      "order": 3
+    },
+    {
+      "_id": "exp-4",
+      "_type": "experience",
+      "role": "Lecturer, Dept of Information Science and Engineering",
+      "organization": "A.P.S. College of Engineering",
+      "startYear": "Aug 2007",
+      "endYear": "Jul 2009",
+      "isCurrent": false,
+      "order": 4
+    },
+    {
+      "_id": "exp-5",
+      "_type": "experience",
+      "role": "Lecturer, Dept of Information Science and Engineering",
+      "organization": "Yellamma Dasappa Institute of Technology",
+      "startYear": "Aug 2005",
+      "endYear": "Jul 2006",
+      "isCurrent": false,
+      "order": 5
+    },
+    {
+      "_id": "pub-j1",
+      "_type": "publication",
+      "title": "Predicting Diabetic Retinopathy and Nephropathy Complications Using Machine Learning Techniques",
+      "authors": "D. Manjunath, J. Lohith, S. S. Kumar, and A. Das",
+      "venue": "IEEE Access",
+      "publicationType": "journal",
+      "year": 2025,
+      "codeNumber": "J1",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "_id": "pub-j2",
+      "_type": "publication",
+      "title": "Enhancing Oyente: Four New Vulnerability Detections for Improved Smart Contract Security Analysis",
+      "authors": "L. J.J. and K. Singh",
+      "venue": "International Journal of Information Technology, vol. 16, no. 6, pp. 3389–3399",
+      "publicationType": "journal",
+      "year": 2024,
+      "doi": "https://doi.org/10.1007/s41870-024-01909-8",
+      "codeNumber": "J2",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "_id": "pub-j3",
+      "_type": "publication",
+      "title": "Digital Forensic Framework for Smart Contract Vulnerabilities Using Ensemble Models",
+      "authors": "L. J.J., K. Singh, and B. Chakravarthi",
+      "venue": "Multimedia Tools and Applications, pp. 1–44",
+      "publicationType": "journal",
+      "year": 2023,
+      "doi": "https://doi.org/10.1007/s11042-023-17308-3",
+      "codeNumber": "J3",
+      "featured": true,
+      "order": 3
+    },
+    {
+      "_id": "pub-j4",
+      "_type": "publication",
+      "title": "TP-Detect: Trigram-Pixel Based Vulnerability Detection for Ethereum Smart Contracts",
+      "authors": "P. S. Lohith J J et al.",
+      "venue": "Multimedia Tools and Applications, pp. 1–15",
+      "publicationType": "journal",
+      "year": 2023,
+      "doi": "https://doi.org/10.1007/s11042-023-15042-4",
+      "codeNumber": "J4",
+      "featured": true,
+      "order": 4
+    },
+    {
+      "_id": "pub-j5",
+      "_type": "publication",
+      "title": "Smart Healthcare System with Light-Weighted Blockchain System and Deep Learning Techniques",
+      "authors": "R. Singh, L. J. J. Mir, et al.",
+      "venue": "Computational Intelligence and Neuroscience, vol. 2022",
+      "publicationType": "journal",
+      "year": 2022,
+      "doi": "https://doi.org/10.1155/2022/1621258",
+      "codeNumber": "J5",
+      "featured": false,
+      "order": 5
+    },
+    {
+      "_id": "pub-j6",
+      "_type": "publication",
+      "title": "Survey on Cognitive Apprehensive Device",
+      "authors": "L. J. J, V. Tyagi, P. Bajaj, R. Desai, and Pranoy",
+      "venue": "JETIR, vol. 2016",
+      "publicationType": "journal",
+      "year": 2016,
+      "codeNumber": "J6",
+      "featured": false,
+      "order": 6
+    },
+    {
+      "_id": "pub-j7",
+      "_type": "publication",
+      "title": "Role of Industry to Improve Outcome Based Education in Engineering",
+      "authors": "L. J. J., Syedakram, Selvakumar S. et al.",
+      "venue": "Journal of Engineering Education Transformations, vol. 2015",
+      "publicationType": "journal",
+      "year": 2015,
+      "codeNumber": "J7",
+      "featured": false,
+      "order": 7
+    },
+    {
+      "_id": "pub-c1",
+      "_type": "publication",
+      "title": "Vulnerabilities in Smart Contracts: A Detailed Survey of Detection and Mitigation Methodologies",
+      "authors": "N. K. Kumar, N. V. Honnungar, M. Sharwari Prakash, and J. J. Lohith",
+      "venue": "ICETCS 2024, pp. 1–7",
+      "publicationType": "conference",
+      "year": 2024,
+      "doi": "10.1109/ICETCS61022.2024.10544155",
+      "codeNumber": "C1",
+      "featured": true,
+      "order": 1
+    },
+    {
+      "_id": "pub-c2",
+      "_type": "publication",
+      "title": "Enhancing Wireless Sensor Network Longevity and Security: A Quad-LEACH Approach",
+      "authors": "J. J. Lohith, S. Shreya, and J. L. Hamsa Priya",
+      "venue": "ICETCS 2024, pp. 1–6",
+      "publicationType": "conference",
+      "year": 2024,
+      "doi": "10.1109/ICETCS61022.2024.10543687",
+      "codeNumber": "C2",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "_id": "pub-c3",
+      "_type": "publication",
+      "title": "Unlocking Efficiency in Agricultural Supply Chains: A Secure and Transparent Approach Through Blockchain Technology",
+      "authors": "J. J. Lohith, S. Shreya, and J. L. Hamsa Priya",
+      "venue": "ICETCS 2024, pp. 1–9",
+      "publicationType": "conference",
+      "year": 2024,
+      "doi": "10.1109/ICETCS61022.2024.10544311",
+      "codeNumber": "C3",
+      "featured": true,
+      "order": 3
+    },
+    {
+      "_id": "pub-c4",
+      "_type": "publication",
+      "title": "Managing the Supply Chain for Crops Directed from Agricultural Fields Using Blockchains",
+      "authors": "G. Kannan, M. Pattnaik, G. Karthikeyan, B. E, P. J. Augustine, and L. J.J.",
+      "venue": "ICEARS 2022, pp. 908–913",
+      "publicationType": "conference",
+      "year": 2022,
+      "doi": "10.1109/ICEARS53579.2022.9752088",
+      "codeNumber": "C4",
+      "featured": false,
+      "order": 4
+    },
+    {
+      "_id": "pub-c5",
+      "_type": "publication",
+      "title": "Secure Distributed Medical Record Storage Using Blockchain and Emergency Sharing Using Multi-Party Computation",
+      "authors": "S. Parthasarathy, A. Harikrishnan, G. Narayanan, L. J.J., and K. Singh",
+      "venue": "NTMS 2021, pp. 1–5",
+      "publicationType": "conference",
+      "year": 2021,
+      "doi": "10.1109/NTMS49979.2021.9432643",
+      "codeNumber": "C5",
+      "featured": false,
+      "order": 5
+    },
+    {
+      "_id": "pub-c6",
+      "_type": "publication",
+      "title": "Intensifying the Lifetime of WSN Using a Centralized Energy Accumulator Node with RF Energy Transmission",
+      "authors": "L. J.J. and B. C. S. B.",
+      "venue": "IEEE IACC 2015, pp. 180–184",
+      "publicationType": "conference",
+      "year": 2015,
+      "doi": "10.1109/IADCC.2015.7154694",
+      "codeNumber": "C6",
+      "featured": false,
+      "order": 6
+    },
+    {
+      "_id": "skill-cat-1",
+      "_type": "skillCategory",
+      "category": "Domain Expertise",
+      "skills": [
+        "Blockchain",
+        "Cryptography",
+        "Computer Networks",
+        "Cyber Security",
+        "Compiler Design",
+        "Network Security",
+        "Machine Learning",
+        "Smart Contracts"
+      ],
+      "order": 1
+    },
+    {
+      "_id": "skill-cat-2",
+      "_type": "skillCategory",
+      "category": "Practical Tools & Skills",
+      "skills": [
+        "Cisco Packet Tracer",
+        "Wireshark",
+        "Social Engineering Tool Kit",
+        "Metamask",
+        "Remix IDE",
+        "Designing & Deploying Smart Contracts",
+        "Web3 & DApps",
+        "CrypTool",
+        "Animal Tool",
+        "Excel Script Analysis"
+      ],
+      "order": 2
+    },
+    {
+      "_id": "skill-cat-3",
+      "_type": "skillCategory",
+      "category": "Administration & Governance",
+      "skills": [
+        "NBA Coordinator (UG)",
+        "NIRF Cell Member",
+        "BOS & BOE Chairman",
+        "Ethics Committee Chairman",
+        "Hostel Secretary",
+        "Hostel Warden",
+        "Syllabus Design",
+        "FDP Convener",
+        "Credit Co-op Vice Chairman",
+        "Exam Coordinator",
+        "OBE & GAPC v4 Framework"
+      ],
+      "order": 3
+    },
+    {
+      "_id": "skill-cat-4",
+      "_type": "skillCategory",
+      "category": "Languages & Misc.",
+      "skills": [
+        "English",
+        "Kannada",
+        "Telugu",
+        "Hindi",
+        "Academic Research",
+        "Teaching & Consultation",
+        "LaTeX Typesetting",
+        "Publishing"
+      ],
+      "order": 4
+    },
+    {
+      "_id": "award-1",
+      "_type": "award",
+      "title": "Excellence in Research Award",
+      "organization": "National Education Brilliance 2024, New Delhi",
+      "year": "2024",
+      "order": 1
+    },
+    {
+      "_id": "award-2",
+      "_type": "award",
+      "title": "BEST RESOURCE PERSON Golden Award 2024",
+      "organization": "Wisdom Educare Academy, Chennai, Tamil Nadu",
+      "year": "2024",
+      "order": 2
+    },
+    {
+      "_id": "award-3",
+      "_type": "award",
+      "title": "Resource Person at Premier NITs (NIT Trichy, Kurukshetra, Durgapur, Jamshedpur)",
+      "organization": "Delivered expert talks on Blockchain & Smart Contracts",
+      "year": "Various",
+      "order": 3
+    },
+    {
+      "_id": "award-4",
+      "_type": "award",
+      "title": "Authored Textbook on Data Communications & Networking",
+      "organization": "B.C.A. IV Sem, Bangalore University",
+      "year": "2024",
+      "order": 4
+    },
+    {
+      "_id": "award-5",
+      "_type": "award",
+      "title": "Developed Video Content for VTU BCA & MCA Students",
+      "organization": "Visvesvaraya Technological University (VTU)",
+      "year": "May 2025",
+      "order": 5
+    },
+    {
+      "_id": "award-6",
+      "_type": "award",
+      "title": "Served as BOS & BOE Chairman",
+      "organization": "Academic Board of Studies & Board of Examiners",
+      "year": "Various",
+      "order": 6
+    },
+    {
+      "_id": "award-7",
+      "_type": "award",
+      "title": "Served as Institute Ethics Committee Chairman",
+      "organization": "Nagarjuna College of Engineering & Technology (NCET)",
+      "year": "Various",
+      "order": 7
+    },
+    {
+      "_id": "award-8",
+      "_type": "award",
+      "title": "Served as Hostel Secretary",
+      "organization": "Nagarjuna College of Engineering & Technology (NCET)",
+      "year": "Various",
+      "order": 8
+    },
+    {
+      "_id": "award-9",
+      "_type": "award",
+      "title": "Serving as Co-guide for Research Department",
+      "organization": "MAHE, Bengaluru",
+      "year": "Present",
+      "order": 9
+    },
+    {
+      "_id": "award-10",
+      "_type": "award",
+      "title": "Jury Member — Blockchain Project Presentation Event",
+      "organization": "Linux Foundation Decentralized Trust (LFDT) India Chapter",
+      "year": "2024",
+      "order": 10
+    },
+    {
+      "_id": "award-11",
+      "_type": "award",
+      "title": "Doctoral Advisory Committee Member",
+      "organization": "MAHE, Manipal",
+      "year": "Present",
+      "order": 11
+    },
+    {
+      "_id": "award-12",
+      "_type": "award",
+      "title": "Evaluator for Toycathon 2021",
+      "organization": "Ministry of Education & AICTE",
+      "year": "2021",
+      "order": 12
+    },
+    {
+      "_id": "award-13",
+      "_type": "award",
+      "title": "Reviewer for Journal of Concurrency and Computation",
+      "organization": "Wiley — Practice and Experience Journal",
+      "year": "Present",
+      "order": 13
+    },
+    {
+      "_id": "award-14",
+      "_type": "award",
+      "title": "Resource Person for 40+ AICTE Sponsored Workshops & FDPs",
+      "organization": "Delivered talks on Blockchain and Smart Contracts across 40+ FDPs",
+      "year": "Various",
+      "order": 14
+    },
+    {
+      "_id": "award-15",
+      "_type": "award",
+      "title": "Serving as Guest Faculty at BITS WILP Programme",
+      "organization": "BITS Pilani Work Integrated Learning Programmes",
+      "year": "2011 — Present",
+      "order": 15
+    },
+    {
+      "_id": "award-16",
+      "_type": "award",
+      "title": "Served as Guest Faculty",
+      "organization": "Manipal Global Education Services (MAGE)",
+      "year": "Various",
+      "order": 16
+    },
+    {
+      "_id": "award-17",
+      "_type": "award",
+      "title": "Completed Summer School on Machine Learning",
+      "organization": "BITS Pilani, Hyderabad Campus",
+      "year": "Various",
+      "order": 17
+    },
+    {
+      "_id": "award-18",
+      "_type": "award",
+      "title": "Mentored UG IUCEE Project (Grade A) & Proceedings Author",
+      "organization": "IUCEE Foundation — Project: Blockchain mapping of products",
+      "year": "Various",
+      "order": 18
+    },
+    {
+      "_id": "award-19",
+      "_type": "award",
+      "title": "Mentored Samsung Prism Worklet & Wipro Project Campus Trainer",
+      "organization": "Samsung Prism (Excellent Grade) & WIPRO (2011)",
+      "year": "2011 — Present",
+      "order": 19
+    },
+    {
+      "_id": "award-20",
+      "_type": "award",
+      "title": "Faculty for Infosys Campus Connect Program",
+      "organization": "Infosys Technologies Limited — DS, Client-Server, Unix, DBMS",
+      "year": "Various",
+      "order": 20
+    },
+    {
+      "_id": "award-21",
+      "_type": "award",
+      "title": "Life Member of Professional Societies (CSI, ISTE, CRSI)",
+      "organization": "Computer Society of India, ISTE, Cryptology Research Society of India",
+      "year": "Lifetime",
+      "order": 21
+    },
+    {
+      "_id": "award-22",
+      "_type": "award",
+      "title": "Valuator for VTU Theory & Practical Examinations",
+      "organization": "Visvesvaraya Technological University (VTU)",
+      "year": "June 2007 — Present",
+      "order": 22
+    },
+    {
+      "_id": "award-23",
+      "_type": "award",
+      "title": "Exam Coordinator for VTU Theory Examinations",
+      "organization": "Visvesvaraya Technological University (VTU)",
+      "year": "2007 — 2008",
+      "order": 23
+    },
+    {
+      "_id": "award-24",
+      "_type": "award",
+      "title": "Worked as Hostel Warden in B.M.S. Hostel",
+      "organization": "B.M.S. Hostel",
+      "year": "Feb 2022 — Apr 2024",
+      "order": 24
+    },
+    {
+      "_id": "award-25",
+      "_type": "award",
+      "title": "Vice Chairman — B.M.S. Employees Credit Co-operative Society",
+      "organization": "B.M.S. Employees Credit Co-operative Society",
+      "year": "Nov 2023 — Apr 2024",
+      "order": 25
+    },
+    {
+      "_id": "talk-1",
+      "_type": "talk",
+      "title": "Cyber Security and Digital Ethics",
+      "venue": "VIT, Pune (FDP)",
+      "dateString": "Feb 27, 2026",
+      "year": 2026,
+      "featured": true,
+      "order": 1
+    },
+    {
+      "_id": "talk-2",
+      "_type": "talk",
+      "title": "Blockchain Technology in Education",
+      "venue": "UGC Malaviya Mission Teacher Centre, Bengaluru University",
+      "dateString": "Jan 28, 2026",
+      "year": 2026,
+      "featured": true,
+      "order": 2
+    },
+    {
+      "_id": "talk-3",
+      "_type": "talk",
+      "title": "Blockchain and Hands-on Smart Contracts",
+      "venue": "RNSIT, Bengaluru",
+      "dateString": "Oct 11, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 3
+    },
+    {
+      "_id": "talk-4",
+      "_type": "talk",
+      "title": "Blockchain and Smart Contracts",
+      "venue": "DSCE, Bengaluru",
+      "dateString": "Sep 11, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 4
+    },
+    {
+      "_id": "talk-5",
+      "_type": "talk",
+      "title": "Protecting Intellectual Property Rights",
+      "venue": "SJCIT, Chikkaballapura",
+      "dateString": "Aug 30, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 5
+    },
+    {
+      "_id": "talk-6",
+      "_type": "talk",
+      "title": "Deploying Smart Contracts",
+      "venue": "NIT Jamshedpur (STC on Blockchain & Applications)",
+      "dateString": "Jun 4, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 6
+    },
+    {
+      "_id": "talk-7",
+      "_type": "talk",
+      "title": "Personality Development — Induction Program",
+      "venue": "VTU PG Center, Muddenahalli",
+      "dateString": "Apr 24, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 7
+    },
+    {
+      "_id": "talk-8",
+      "_type": "talk",
+      "title": "Blockchain & Smart Contracts — 2-Day VAC",
+      "venue": "Cambridge Institute of Technology, Bengaluru",
+      "dateString": "Mar 10–11, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 8
+    },
+    {
+      "_id": "talk-9",
+      "_type": "talk",
+      "title": "Deploying Smart Contracts",
+      "venue": "Vishwakarma Institute of Technology, Pune",
+      "dateString": "Feb 13, 2025",
+      "year": 2025,
+      "featured": true,
+      "order": 9
+    },
+    {
+      "_id": "talk-10",
+      "_type": "talk",
+      "title": "Session Chair — ICIIICEE 2025",
+      "venue": "BNMIT, Bengaluru",
+      "dateString": "Jan 17, 2025",
+      "year": 2025,
+      "featured": false,
+      "order": 10
+    },
+    {
+      "_id": "talk-11",
+      "_type": "talk",
+      "title": "Deploying Smart Contracts — ISEA FUP on Next Gen Security",
+      "venue": "NIT Kurukshetra",
+      "dateString": "Dec 28, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 11
+    },
+    {
+      "_id": "talk-12",
+      "_type": "talk",
+      "title": "Transforming AI With Healthcare — EWASH Conference",
+      "venue": "VTU PG Center, Muddenahalli",
+      "dateString": "Dec 14, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 12
+    },
+    {
+      "_id": "talk-13",
+      "_type": "talk",
+      "title": "Blockchain & Ethereum Smart Contracts",
+      "venue": "Bangalore Institute of Technology, Bengaluru",
+      "dateString": "Nov 14, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 13
+    },
+    {
+      "_id": "talk-14",
+      "_type": "talk",
+      "title": "Blockchain & Smart Contracts — 3-Day VAC",
+      "venue": "P.A. College of Engineering, Mangaluru",
+      "dateString": "Oct 7–9, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 14
+    },
+    {
+      "_id": "talk-15",
+      "_type": "talk",
+      "title": "Essentials of Programming Language",
+      "venue": "VTU PG Center, Muddenahalli",
+      "dateString": "Oct 3, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 15
+    },
+    {
+      "_id": "talk-16",
+      "_type": "talk",
+      "title": "Introduction to Cryptocurrency & Technology Behind It",
+      "venue": "Arohan Lecture 14, DTE Bengaluru",
+      "dateString": "Sep 17, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 16
+    },
+    {
+      "_id": "talk-17",
+      "_type": "talk",
+      "title": "Exploring Cisco Packet Tracer Tool",
+      "venue": "NCET, Dept of CSE(AI&ML), Bengaluru",
+      "dateString": "Jun 11, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 17
+    },
+    {
+      "_id": "talk-18",
+      "_type": "talk",
+      "title": "Blockchain & Smart Contracts — 3-Day VAC",
+      "venue": "NCET, Dept of CSE(DS), Bengaluru",
+      "dateString": "May 27–29, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 18
+    },
+    {
+      "_id": "talk-19",
+      "_type": "talk",
+      "title": "Cybersecurity and its Attacks",
+      "venue": "DSCE, Bengaluru",
+      "dateString": "Jan 2, 2024",
+      "year": 2024,
+      "featured": false,
+      "order": 19
+    },
+    {
+      "_id": "talk-20",
+      "_type": "talk",
+      "title": "Cybersecurity and its Attacks",
+      "venue": "SJCIT, Chikkaballapura",
+      "dateString": "Dec 20, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 20
+    },
+    {
+      "_id": "talk-21",
+      "_type": "talk",
+      "title": "Blockchain and its Applications — 2-Day Workshop",
+      "venue": "Alva's College of Engineering, Moodbidre",
+      "dateString": "Nov 20–21, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 21
+    },
+    {
+      "_id": "talk-22",
+      "_type": "talk",
+      "title": "Blockchain and its Applications — 2-Day Workshop",
+      "venue": "Manipal Institute of Technology, Manipal",
+      "dateString": "Nov 10–11, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 22
+    },
+    {
+      "_id": "talk-23",
+      "_type": "talk",
+      "title": "Blockchain Technology — FDP",
+      "venue": "MLWCE, Hyderabad",
+      "dateString": "Mar 28, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 23
+    },
+    {
+      "_id": "talk-24",
+      "_type": "talk",
+      "title": "Current Trends in Blockchain & CyberSecurity — FDP",
+      "venue": "BMSCE, Bengaluru",
+      "dateString": "Mar 20–26, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 24
+    },
+    {
+      "_id": "talk-25",
+      "_type": "talk",
+      "title": "Introduction to Cryptology — DST-SERB Workshop",
+      "venue": "NIT Tiruchirappalli",
+      "dateString": "Jan 11–12, 2023",
+      "year": 2023,
+      "featured": false,
+      "order": 25
+    },
+    {
+      "_id": "talk-26",
+      "_type": "talk",
+      "title": "Blockchain & IOT Applications — FDP",
+      "venue": "MSRUAS, Bengaluru",
+      "dateString": "Aug 11, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 26
+    },
+    {
+      "_id": "talk-27",
+      "_type": "talk",
+      "title": "Blockchain & AWS — 3-Day FDP",
+      "venue": "Reva University, Bengaluru",
+      "dateString": "Jul 25–27, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 27
+    },
+    {
+      "_id": "talk-28",
+      "_type": "talk",
+      "title": "Introduction to Cryptocurrency & Blockchain",
+      "venue": "RVCE, Bengaluru",
+      "dateString": "May 30, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 28
+    },
+    {
+      "_id": "talk-29",
+      "_type": "talk",
+      "title": "Blockchain & Hands on Ethereum Smart Contracts — Workshop",
+      "venue": "SVIT, Bengaluru",
+      "dateString": "May 19–20, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 29
+    },
+    {
+      "_id": "talk-30",
+      "_type": "talk",
+      "title": "Introduction to Blockchain",
+      "venue": "HNSNC, Virudhunagar, Tamil Nadu",
+      "dateString": "May 10, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 30
+    },
+    {
+      "_id": "talk-31",
+      "_type": "talk",
+      "title": "Blockchain & Hands on Ethereum Smart Contracts — 2-Day Workshop",
+      "venue": "AIT, Chikkamagaluru",
+      "dateString": "Apr 29–30, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 31
+    },
+    {
+      "_id": "talk-32",
+      "_type": "talk",
+      "title": "Recent Trends in Cyber Security & Blockchain — FDP",
+      "venue": "VVCE, Mysuru",
+      "dateString": "Apr 20–21, 2022",
+      "year": 2022,
+      "featured": false,
+      "order": 32
+    },
+    {
+      "_id": "talk-33",
+      "_type": "talk",
+      "title": "Blockchain Technologies and Applications — ATAL FDP",
+      "venue": "Manipal Institute of Technology",
+      "dateString": "Dec 6–10, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 33
+    },
+    {
+      "_id": "talk-34",
+      "_type": "talk",
+      "title": "Lightweight Cryptography for IoT & Blockchain — ATAL FDP",
+      "venue": "UIT RGPV, Bhopal",
+      "dateString": "Jul 28, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 34
+    },
+    {
+      "_id": "talk-35",
+      "_type": "talk",
+      "title": "Blockchain & Smart Contract Technology — FDP",
+      "venue": "NIT Tiruchirappalli",
+      "dateString": "Jun 26, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 35
+    },
+    {
+      "_id": "talk-36",
+      "_type": "talk",
+      "title": "Challenges & Research Directions for Blockchains in IoT — STTP",
+      "venue": "Sona College of Engineering, Salem",
+      "dateString": "Feb 11, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 36
+    },
+    {
+      "_id": "talk-37",
+      "_type": "talk",
+      "title": "Blockchain & Use Cases — ATAL FDP",
+      "venue": "BNMIT, Bengaluru",
+      "dateString": "Jan 18–19, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 37
+    },
+    {
+      "_id": "talk-38",
+      "_type": "talk",
+      "title": "Writing Smart Contracts Using Ethereum — AICTE STTP",
+      "venue": "Sona College of Engineering, Salem",
+      "dateString": "Jan 5–6, 2021",
+      "year": 2021,
+      "featured": false,
+      "order": 38
+    },
+    {
+      "_id": "talk-39",
+      "_type": "talk",
+      "title": "Research Challenges in Blockchain Technology — ATAL FDP",
+      "venue": "Sona College of Engineering, Salem",
+      "dateString": "Dec 14, 2020",
+      "year": 2020,
+      "featured": false,
+      "order": 39
+    },
+    {
+      "_id": "talk-40",
+      "_type": "talk",
+      "title": "Introduction to Ethereum Smart Contracts",
+      "venue": "LBSITW",
+      "dateString": "Nov 25, 2020",
+      "year": 2020,
+      "featured": false,
+      "order": 40
+    },
+    {
+      "_id": "talk-41",
+      "_type": "talk",
+      "title": "Hands-on Ethereum Smart Contracts — ATAL FDP",
+      "venue": "Bangalore Institute of Technology",
+      "dateString": "Nov 24, 2020",
+      "year": 2020,
+      "featured": false,
+      "order": 41
+    },
+    {
+      "_id": "talk-42",
+      "_type": "talk",
+      "title": "Blockchain Technology — Expert Talk",
+      "venue": "BMSIT, Bengaluru",
+      "dateString": "Jun 22, 2020",
+      "year": 2020,
+      "featured": false,
+      "order": 42
+    },
+    {
+      "_id": "talk-43",
+      "_type": "talk",
+      "title": "Blockchain Technology — National Conference on BSCT",
+      "venue": "NIT Tiruchirappalli",
+      "dateString": "2019",
+      "year": 2019,
+      "featured": false,
+      "order": 43
+    },
+    {
+      "_id": "talk-44",
+      "_type": "talk",
+      "title": "Guest Lectures Series in Blockchain & Networks",
+      "venue": "Krupanidhi Degree College & PES Polytechnic, Bengaluru",
+      "dateString": "2018 — 2023",
+      "year": 2018,
+      "featured": false,
+      "order": 44
+    },
+    {
+      "_id": "talk-att-1",
+      "_type": "talk",
+      "title": "Python Programming — Online One-Week FDP (Attended)",
+      "venue": "MHRD & IIT Bombay",
+      "dateString": "2020",
+      "year": 2020,
+      "featured": false,
+      "order": 45
+    },
+    {
+      "_id": "talk-att-2",
+      "_type": "talk",
+      "title": "Blockchain Architecture Design & Use Cases — 3-Week STTP (Attended)",
+      "venue": "AICTE",
+      "dateString": "2020",
+      "year": 2020,
+      "featured": false,
+      "order": 46
+    },
+    {
+      "_id": "talk-att-3",
+      "_type": "talk",
+      "title": "Intellectual Property Rights, Technology Development & Startup (Attended)",
+      "venue": "NIT Tiruchirappalli",
+      "dateString": "2019",
+      "year": 2019,
+      "featured": false,
+      "order": 47
+    },
+    {
+      "_id": "talk-att-4",
+      "_type": "talk",
+      "title": "Pseudospectral Methods in Differential Equations — 2-Week GIAN FDP (Attended)",
+      "venue": "GIAN",
+      "dateString": "2018",
+      "year": 2018,
+      "featured": false,
+      "order": 48
+    },
+    {
+      "_id": "talk-att-5",
+      "_type": "talk",
+      "title": "Software Engineering — Short Term Course (Attended)",
+      "venue": "Dept of CSE, NIT Tiruchirappalli",
+      "dateString": "2017",
+      "year": 2017,
+      "featured": false,
+      "order": 49
+    },
+    {
+      "_id": "talk-att-6",
+      "_type": "talk",
+      "title": "Introduction to Algorithms — Short Term Course (Attended)",
+      "venue": "Dept of CSE, NIT Tiruchirappalli",
+      "dateString": "2017",
+      "year": 2017,
+      "featured": false,
+      "order": 50
+    },
+    {
+      "_id": "talk-att-7",
+      "_type": "talk",
+      "title": "Introduction to Cryptography — Short Term Course (Attended)",
+      "venue": "Dept of CSE, NIT Tiruchirappalli",
+      "dateString": "2017",
+      "year": 2017,
+      "featured": false,
+      "order": 51
+    },
+    {
+      "_id": "talk-att-8",
+      "_type": "talk",
+      "title": "Computer Networking — 2-Week ISTE Workshop (Attended)",
+      "venue": "IIT Bombay & ISTE",
+      "dateString": "2014",
+      "year": 2014,
+      "featured": false,
+      "order": 52
+    },
+    {
+      "_id": "talk-att-9",
+      "_type": "talk",
+      "title": "Faculty Orientation Program (Attended)",
+      "venue": "BMSCE, Bengaluru",
+      "dateString": "2011",
+      "year": 2011,
+      "featured": false,
+      "order": 53
+    },
+    {
+      "_id": "social-linkedin",
+      "_type": "socialLink",
+      "platform": "LinkedIn",
+      "url": "https://www.linkedin.com/in/dr-lohith-j-j-2680aa50/",
+      "icon": "linkedin",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "_id": "social-scholar",
+      "_type": "socialLink",
+      "platform": "Google Scholar",
+      "url": "https://scholar.google.com/citations?hl=en&user=dmSdWtEAAAAJ",
+      "icon": "scholar",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "_id": "social-youtube",
+      "_type": "socialLink",
+      "platform": "YouTube",
+      "url": "https://www.youtube.com/@shreyajj",
+      "icon": "youtube",
+      "visible": true,
+      "order": 3
+    }
+  ],
+  "migrationDecision": "Retired in favor of Cloudflare D1 + React Admin. Sanity write operations 100% disabled.",
+  "schemaTypes": [
+    "profile",
+    "scholarStats",
+    "publication",
+    "invitedTalk",
+    "academicExperience",
+    "education",
+    "achievement",
+    "skillCategory",
+    "socialLink"
+  ]
+}

@@ -9,7 +9,14 @@ studio/.sanity/
 studio/sanity-check.tar.gz
 .env
 .env.local
+.dev.vars
+
+# Temporary & Scratch scripts
+scratch/
+.wrangler/
+*.log
 
 # OS files
 .DS_Store
 Thumbs.db
+

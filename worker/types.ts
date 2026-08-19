@@ -5,6 +5,7 @@
 
 export interface Env {
   DB: D1Database;
+  ASSETS?: Fetcher;
   ASSETS_BUCKET?: R2Bucket;
   ENVIRONMENT: string;
   ADMIN_EMAILS?: string; // Comma-separated allowlist, e.g. "lohithjj@gmail.com"
@@ -12,6 +13,10 @@ export interface Env {
   ACCESS_AUDIENCE?: string; // e.g. Access Application AUD tag
   ACCESS_ISSUER?: string; // e.g. "https://<team>.cloudflareaccess.com"
   SCHOLAR_SYNC_SECRET?: string; // Bearer secret for automation endpoint
+  GITHUB_CLIENT_ID?: string;
+  GITHUB_CLIENT_SECRET?: string;
+  ADMIN_GITHUB_USERS?: string; // Comma-separated authorized GitHub numeric IDs or usernames
+  AUTH_MODE?: 'ACCESS' | 'SESSION' | string; // 'ACCESS' (default) or 'SESSION'
 }
 
 export interface ProfileRecord {
@@ -176,9 +181,26 @@ export interface RevisionRecord {
   created_at: string;
 }
 
+export interface AdminSessionRecord {
+  id: string;
+  session_token_hash: string;
+  github_user_id: number;
+  github_login: string;
+  user_email: string | null;
+  user_name: string | null;
+  user_avatar: string | null;
+  created_at: string;
+  expires_at: string;
+  last_used_at: string;
+  revoked_at: string | null;
+}
+
 export interface AuthenticatedUser {
   email: string;
   sub?: string;
   name?: string;
   rawJwt?: string;
+  githubId?: number;
+  login?: string;
+  avatarUrl?: string | null;
 }

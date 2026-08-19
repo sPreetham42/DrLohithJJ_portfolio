@@ -12,7 +12,8 @@ import {
   AwardAdminRecord,
   SkillCategoryAdminRecord,
   SocialLinkAdminRecord,
-  RevisionHistoryItem
+  RevisionHistoryItem,
+  AuthMeResponse
 } from '../types';
 
 export class ApiClientError extends Error {
@@ -29,20 +30,44 @@ export class ApiClientError extends Error {
   }
 }
 
+type AuthExpiryListener = () => void;
+const authExpiryListeners: Set<AuthExpiryListener> = new Set();
+
+export function onAuthExpired(listener: AuthExpiryListener): () => void {
+  authExpiryListeners.add(listener);
+  return () => authExpiryListeners.delete(listener);
+}
+
+function notifyAuthExpired() {
+  authExpiryListeners.forEach(listener => {
+    try {
+      listener();
+    } catch (err) {
+      console.error('[AUTH_EXPIRY_LISTENER]', err);
+    }
+  });
+}
+
 const API_BASE = (import.meta.env.VITE_API_BASE_URL as string) || '/api/v1';
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE}${path}`;
   const headers = new Headers(options.headers || {});
-  
+  const method = (options.method || 'GET').toUpperCase();
+
   if (!headers.has('Content-Type') && options.body && typeof options.body === 'string') {
     headers.set('Content-Type', 'application/json');
+  }
+
+  // Set CSRF protection header for state-changing admin requests
+  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
+    headers.set('X-Admin-Request', '1');
   }
 
   const res = await fetch(url, {
     ...options,
     headers,
-    credentials: 'include' // Cloudflare Access session cookie / JWT
+    credentials: 'include' // Sends __Host-admin_session HttpOnly cookie
   });
 
   if (res.status === 204) {
@@ -57,6 +82,9 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   }
 
   if (!res.ok) {
+    if (res.status === 401 && path !== '/auth/me') {
+      notifyAuthExpired();
+    }
     const code = data?.error?.code || `HTTP_${res.status}`;
     const message = data?.error?.message || `Request failed with status ${res.status}`;
     const details = data?.error?.details || null;
@@ -225,4 +253,9 @@ export const adminApi = {
         body: JSON.stringify({ filename, mimeType })
       }
     )
+};
+
+export const authApi = {
+  getMe: () => request<AuthMeResponse>('/auth/me'),
+  logout: () => request<{ success: boolean; message: string }>('/auth/logout', { method: 'POST' })
 };

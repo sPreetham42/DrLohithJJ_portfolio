@@ -173,3 +173,20 @@ export type AdminTab =
   | 'skills'
   | 'social'
   | 'assets';
+
+export interface AuthUser {
+  githubId: number;
+  login: string;
+  email: string | null;
+  name: string | null;
+  avatarUrl: string | null;
+}
+
+export interface AuthMeResponse {
+  authenticated: boolean;
+  user?: AuthUser;
+  error?: {
+    code: string;
+    message: string;
+  };
+}

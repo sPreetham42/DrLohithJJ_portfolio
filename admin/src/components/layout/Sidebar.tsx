@@ -64,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
       </nav>
 
       <div className="sidebar-footer">
-        <div>Cloudflare Access Protected</div>
+        <div>GitHub OAuth Protected</div>
         <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>D1 Native Edge Storage</div>
       </div>
     </aside>
