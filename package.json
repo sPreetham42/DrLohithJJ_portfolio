@@ -1,0 +1,37 @@
+{
+  "name": "dr-lohith-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "snapshot:validate": "node migration/validate_snapshot.js",
+    "snapshot:normalize": "node migration/normalize_snapshot.js",
+    "snapshot:manifest": "node migration/generate_manifest.js",
+    "db:migrate:local": "wrangler d1 migrations apply portfolio-db --local",
+    "db:import:dry-run": "node migration/import_d1.js --dry-run",
+    "db:import": "node migration/import_d1.js",
+    "test:phase1": "node migration/test_suite_phase1.js",
+    "test:phase2": "node worker/test_suite_phase2.js",
+    "test:phase3": "node admin/test_suite_phase3.js",
+    "test:phase4": "node scripts/test_suite_phase4.js",
+    "test:phase5": "node scripts/test_suite_phase5.js",
+    "test:phase6": "node scripts/test_suite_phase6.js",
+    "build:admin": "vite build admin",
+    "test": "npm run test:phase1 && npm run test:phase2 && npm run test:phase3 && npm run test:phase4 && npm run test:phase5 && npm run test:phase6"
+  },
+  "dependencies": {
+    "lucide-react": "^1.32.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240815.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "typescript": "^5.5.4",
+    "vite": "^8.2.1",
+    "wrangler": "^3.72.0"
+  }
+}

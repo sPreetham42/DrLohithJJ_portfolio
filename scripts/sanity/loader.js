@@ -6,6 +6,9 @@
 
 import { sanityFetch } from './client.js';
 import * as Q from './queries.js';
+import { setTalksData } from '../talks.js';
+import { setResearchExplorerData } from '../research-explorer.js';
+import { updateScholarHealthUI } from '../scholar-health.js';
 
 export async function initSanityData() {
   // Use Promise.allSettled so a failure in one section does not crash other sections
@@ -111,6 +114,35 @@ async function loadEducation() {
 // ----------------------------------------------------------------
 // 4. PUBLICATIONS (SCIE Journals & IEEE Conferences)
 // ----------------------------------------------------------------
+export function getPaperUrl(p) {
+  if (!p) return null;
+  if (p.externalLink && typeof p.externalLink === 'string' && p.externalLink.trim()) {
+    return p.externalLink.trim();
+  }
+  if (p.url && typeof p.url === 'string' && p.url.trim()) {
+    return p.url.trim();
+  }
+  if (p.paperUrl && typeof p.paperUrl === 'string' && p.paperUrl.trim()) {
+    return p.paperUrl.trim();
+  }
+  if (p.publicationUrl && typeof p.publicationUrl === 'string' && p.publicationUrl.trim()) {
+    return p.publicationUrl.trim();
+  }
+  if (p.link && typeof p.link === 'string' && p.link.trim()) {
+    return p.link.trim();
+  }
+  if (p.doi && typeof p.doi === 'string' && p.doi.trim()) {
+    const doi = p.doi.trim();
+    return doi.startsWith('http://') || doi.startsWith('https://')
+      ? doi
+      : `https://doi.org/${doi}`;
+  }
+  if (p.pdfUrl && typeof p.pdfUrl === 'string' && p.pdfUrl.trim()) {
+    return p.pdfUrl.trim();
+  }
+  return null;
+}
+
 async function loadPublications() {
   const journalsContainer = document.getElementById('journals-list');
   const conferencesContainer = document.getElementById('conferences-list');
@@ -130,19 +162,26 @@ async function loadPublications() {
     if (conferencesContainer && conferences.length > 0) {
       conferencesContainer.innerHTML = conferences.map((p, idx) => renderPubCard(p, p.codeNumber || `C${idx + 1}`)).join('');
     }
+
+    setResearchExplorerData({ publications: items });
   } catch (err) {
     console.warn('[Sanity Publications] Using static fallback:', err.message);
   }
 }
 
 function renderPubCard(p, codeNum) {
-  const pdfLinkHtml = p.pdfUrl ? `<a href="${p.pdfUrl}" target="_blank" rel="noopener" class="pub-doi" style="margin-left:0.75rem;">PDF 📄</a>` : '';
-  const doiLinkHtml = p.doi ? `<a href="${p.doi.startsWith('http') ? p.doi : 'https://doi.org/' + p.doi}" target="_blank" rel="noopener" class="pub-doi">DOI ↗</a>` : '';
+  const paperUrl = getPaperUrl(p);
+  const pdfLinkHtml = p.pdfUrl ? `<a href="${escapeHtml(p.pdfUrl)}" target="_blank" rel="noopener noreferrer" class="pub-doi" style="margin-left:0.75rem;">PDF 📄</a>` : '';
+  const doiLinkHtml = p.doi ? `<a href="${escapeHtml(p.doi.startsWith('http') ? p.doi : 'https://doi.org/' + p.doi)}" target="_blank" rel="noopener noreferrer" class="pub-doi">DOI ↗</a>` : '';
+
+  const titleHtml = paperUrl
+    ? `<a href="${escapeHtml(paperUrl)}" target="_blank" rel="noopener noreferrer" class="pub-title-link"><div class="pub-title">${escapeHtml(p.title || '')} <span class="pub-link-icon">↗</span></div></a>`
+    : `<div class="pub-title">${escapeHtml(p.title || '')}</div>`;
 
   return `
-    <div class="pub-card">
+    <div class="pub-card${paperUrl ? ' pub-card--clickable' : ''}">
       <span class="pub-number">${escapeHtml(codeNum)}</span>
-      <div class="pub-title">${escapeHtml(p.title || '')}</div>
+      ${titleHtml}
       <div class="pub-authors">${escapeHtml(p.authors || '')}</div>
       <div class="pub-venue">
         ${escapeHtml(p.venue || '')} ${p.year ? `(${p.year})` : ''}
@@ -156,176 +195,19 @@ function renderPubCard(p, codeNum) {
 // ----------------------------------------------------------------
 // 5. INVITED TALKS & WORKSHOPS
 // ----------------------------------------------------------------
-// ================================================================
-// LOAD TALKS FROM SANITY
-// ================================================================
 async function loadTalks() {
-  const featuredContainer = document.getElementById('talks-featured');
-  const moreContainer = document.getElementById('talks-more');
-
-  if (!featuredContainer) return;
-
   try {
     const items = await sanityFetch(Q.TALKS_QUERY);
-
-    if (!items || items.length < 50) {
-      console.warn(`[Sanity Talks] Sanity API returned ${items ? items.length : 0} items, which is fewer than static fallback (53+). Preserving full static HTML markup.`);
-      if (window.initTalksYearFilter) {
-        window.initTalksYearFilter();
-      }
-      return;
+    if (items && items.length > 0) {
+      console.log(`[Sanity Talks] Loaded ${items.length} talks from Sanity`);
+      setTalksData(items);
+      setResearchExplorerData({ talks: items });
     }
-
-    console.log(`[Sanity Talks] Loaded ${items.length} talks`);
-
-    // ============================================================
-    // FEATURED TALKS
-    //
-    // First use talks explicitly marked featured.
-    // If there are fewer than 9, fill the remaining slots
-    // with other talks so Featured ALWAYS has 9 cards.
-    // ============================================================
-
-    const explicitlyFeatured = items.filter(
-      t => t.featured === true
-    );
-
-    const featured = explicitlyFeatured.slice(0, 9);
-
-    // Fill remaining featured slots if fewer than 9 are marked
-    // as featured in Sanity.
-    if (featured.length < 9) {
-      const featuredIds = new Set(
-        featured.map(t => t._id)
-      );
-
-      const remaining = items.filter(
-        t => !featuredIds.has(t._id)
-      );
-
-      featured.push(
-        ...remaining.slice(0, 9 - featured.length)
-      );
-    }
-
-    // ============================================================
-    // MORE TALKS
-    //
-    // Everything NOT already used in Featured.
-    // Nothing gets skipped.
-    // ============================================================
-
-    const featuredIds = new Set(
-      featured.map(t => t._id)
-    );
-
-    const more = items.filter(
-      t => !featuredIds.has(t._id)
-    );
-
-    console.log(
-      `[Sanity Talks] Featured: ${featured.length}, More: ${more.length}, Total: ${items.length}`
-    );
-
-    // ============================================================
-    // RENDER FEATURED
-    // ============================================================
-
-    featuredContainer.innerHTML = featured
-      .map(renderTalkCard)
-      .join('');
-
-    // ============================================================
-    // RENDER MORE
-    // ============================================================
-
-    if (moreContainer) {
-      moreContainer.innerHTML = more
-        .map(renderTalkCard)
-        .join('');
-    }
-
-    // ============================================================
-    // YEAR FILTER
-    // Build dropdown from ALL talks
-    // ============================================================
-
-    const years = [
-      ...new Set(
-        items
-          .map(t => t.year)
-          .filter(Boolean)
-      )
-    ].sort(
-      (a, b) => Number(b) - Number(a)
-    );
-
-    const filterSelect =
-      document.getElementById('talk-year-filter');
-
-    if (filterSelect) {
-      filterSelect.innerHTML =
-        `<option value="all">All Years</option>` +
-        years
-          .map(
-            year =>
-              `<option value="${year}">${year}</option>`
-          )
-          .join('');
-    }
-
-    // ============================================================
-    // TOTAL COUNT
-    // ============================================================
-
-    const countSpan =
-      document.getElementById('talk-count');
-
-    if (countSpan) {
-      countSpan.textContent = items.length;
-    }
-
-    // ============================================================
-    // INITIALIZE YEAR FILTER
-    // Must happen AFTER Sanity cards are rendered.
-    // ============================================================
-
-    if (window.initTalksYearFilter) {
-      window.initTalksYearFilter();
-    }
-
   } catch (err) {
-    console.warn(
-      '[Sanity Talks] Using static fallback:',
-      err.message
-    );
+    console.warn('[Sanity Talks] Using built-in fallback talks:', err.message);
   }
 }
 
-
-// ================================================================
-// RENDER TALK CARD
-// ================================================================
-function renderTalkCard(t) {
-  return `
-    <div
-      class="talk-card"
-      data-year="${escapeHtml(String(t.year || ''))}"
-    >
-      <div class="talk-topic">
-        "${escapeHtml(t.title || '')}"
-      </div>
-
-      <div class="talk-venue">
-        ${escapeHtml(t.venue || '')}
-      </div>
-
-      <div class="talk-date">
-        ${escapeHtml(t.dateString || '')}
-      </div>
-    </div>
-  `;
-}
 // ----------------------------------------------------------------
 // 6. ACHIEVEMENTS & AWARDS
 // ----------------------------------------------------------------
@@ -336,7 +218,7 @@ async function loadAwards() {
   try {
     const items = await sanityFetch(Q.AWARDS_QUERY);
     if (!items || items.length < 20) {
-      console.warn(`[Sanity Awards] Sanity API returned ${items ? items.length : 0} items, preserving 25 static achievement cards.`);
+      console.warn(`[Sanity Awards] Sanity API returned ${items ? items.length : 0} items, preserving static achievement cards.`);
       return;
     }
 
@@ -363,7 +245,7 @@ async function loadAwards() {
 // 7. TECHNICAL SKILLS
 // ----------------------------------------------------------------
 async function loadSkills() {
-  const container = document.getElementById('skills-layout');
+  const container = document.getElementById('skills-layout') || document.getElementById('skills-grid');
   if (!container) return;
 
   try {
@@ -400,6 +282,8 @@ async function loadScholarStats() {
     if (stats.sciePapersCount && stats.sciePapersCount > 0) {
       document.querySelectorAll('.stat-papers').forEach(el => el.textContent = stats.sciePapersCount);
     }
+
+    updateScholarHealthUI(stats);
   } catch (err) {
     console.warn('[Sanity Scholar Stats] Using local fallback:', err.message);
   }

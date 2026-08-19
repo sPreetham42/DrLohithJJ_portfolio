@@ -57,6 +57,10 @@ export const PUBLICATIONS_QUERY = `
     codeNumber,
     featured,
     externalLink,
+    url,
+    paperUrl,
+    publicationUrl,
+    link,
     "pdfUrl": pdfFile.asset->url
   }
 `;

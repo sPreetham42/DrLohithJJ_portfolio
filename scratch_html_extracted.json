@@ -1,0 +1,95 @@
+{
+  "profile": {
+    "name": null,
+    "credential": "Ph.D. — NIT Trichy",
+    "designation": null,
+    "heroDesc1": "Professor and Head of Department — CSE (IoT &amp; Cybersecurity including Blockchain Technology)\n            at Nagarjuna College of Engineering &amp; Technology, Bengaluru, with over\n            <strong>20 years</strong> of teaching and research experience in Computer Science and Engineering.",
+    "heroDesc2": "Doctoral research from <strong>NIT Tiruchirappalli</strong> in Blockchain-Based Smart Contract Security.\n            Resource person at <strong>60+ AICTE-sponsored FDPs and workshops</strong> across NITs and premier\n            institutions.\n            Guest Faculty at <strong>BITS WILP</strong> since 2011."
+  },
+  "scholarStatsHtml": {
+    "citations": "170+",
+    "hIndex": "7",
+    "i10Index": "5",
+    "scieCount": "4",
+    "ieeeCount": "6"
+  },
+  "scholarJson": {
+    "citations": 172,
+    "h_index": 8,
+    "i10_index": 8,
+    "papers_count": 0,
+    "source": "google_scholar",
+    "last_updated": "2026-08-18T01:57:13.894274+00:00"
+  },
+  "scholarStatusJson": {
+    "status": "partial_pending_persistence",
+    "source": "google_scholar",
+    "startedAt": "2026-08-18T01:57:10.000Z",
+    "completedAt": "2026-08-18T01:57:13.894Z",
+    "durationMs": 3894,
+    "citations": 172,
+    "hIndex": 8,
+    "i10Index": 8,
+    "sanityUpdated": false,
+    "sanityPersistence": "MISMATCH_DETECTED",
+    "sanityCitations": 168,
+    "sanityHIndex": 7,
+    "sanityI10Index": 5,
+    "citationDifference": 4,
+    "hIndexDifference": 1,
+    "i10IndexDifference": 3,
+    "sanityError": "Sanity document contains 168/7/5; awaiting mutation with write verification via GitHub Actions",
+    "error": null,
+    "isDryRun": false,
+    "lastSyncDate": "2026-08-18T01:57:13.894Z"
+  },
+  "experience": [
+    {
+      "year": "May 2026 — Present",
+      "role": "Professor &amp; Head, Dept. of CSE(IoT &amp; CyberSecurity including Blockchain Technology)",
+      "org": "Nagarjuna College of Engineering &amp; Technology, Bengaluru"
+    },
+    {
+      "year": "May 2024 — May 2026",
+      "role": "Professor &amp; Head, Dept. of AI &amp; ML",
+      "org": "Nagarjuna College of Engineering and Technology, Bengaluru"
+    },
+    {
+      "year": "May 2011 — May 2024",
+      "role": "Assistant Professor, Dept. of CSE",
+      "org": "B.M.S. College of Engineering, Bengaluru"
+    },
+    {
+      "year": "Aug 2009 — May 2011",
+      "role": "Senior Lecturer, Dept. of CSE",
+      "org": "Auden Technology and Management Academy"
+    },
+    {
+      "year": "Aug 2007 — Jul 2009",
+      "role": "Lecturer, Dept. of ISE",
+      "org": "A.P.S. College of Engineering"
+    },
+    {
+      "year": "Aug 2005 — Jul 2006",
+      "role": "Lecturer, Dept. of ISE",
+      "org": "Yellamma Dasappa Institute of Technology"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Ph.D., National Institute of Technology (NIT), Tiruchirappalli",
+      "institution": "National Institute of Technology, Tiruchirappalli",
+      "year": "2024"
+    },
+    {
+      "degree": "M.Tech. — Computer Network and Engineering",
+      "institution": "D.S.C.E., V.T.U. — 77%",
+      "year": "2009"
+    },
+    {
+      "degree": "B.E. — Computer Science and Engineering",
+      "institution": "B.N.M.I.T., V.T.U. — 68%",
+      "year": "2005"
+    }
+  ]
+}

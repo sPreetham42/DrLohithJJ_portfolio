@@ -1,4 +1,8 @@
+import { initPublicDataAdapter } from './data/adapter.js';
 import { initSanityData } from './sanity/loader.js';
+import { initTalksController } from './talks.js';
+import { initResearchExplorer } from './research-explorer.js';
+import { initScholarHealth } from './scholar-health.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -7,13 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initContactForm();
   initGoogleScholarSync();
+  initScholarHealth();
+  initHeroCounters();
+  initTalksController();
+  initResearchExplorer();
+  initPublicationCardLinks();
 
-  // Load CMS data from Sanity
-  initSanityData().catch(err => {
-    console.warn(
-      '[Sanity Loader] Fallback to static HTML content:',
-      err.message
-    );
+  // Primary Data Source: D1 Worker Public API (with automatic canonical fallback)
+  initPublicDataAdapter().catch(err => {
+    console.warn('[Public Adapter] Falling back to legacy loader / static HTML:', err.message);
+    if (window.PORTFOLIO_CONFIG?.useLegacySanity) {
+      initSanityData().catch(() => {});
+    }
   });
 });
 
@@ -32,6 +41,8 @@ function initNavbar() {
   const navbar = document.getElementById('navbar');
   const navLinks = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('section[id]');
+
+  if (!navbar) return;
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
@@ -79,98 +90,13 @@ function initScrollReveal() {
 }
 
 // ================================================================
-// TALKS YEAR FILTER
-// ================================================================
-// ================================================================
-// TALKS YEAR FILTER
-// ================================================================
-function initTalksYearFilter() {
-  const yearFilter = document.getElementById('talk-year-filter');
-  const countSpan = document.getElementById('talk-count');
-  const featuredContainer = document.getElementById('talks-featured');
-  const moreContainer = document.getElementById('talks-more');
-
-  if (!yearFilter) return;
-
-  // Prevent duplicate event listeners
-  if (yearFilter.dataset.initialized === 'true') return;
-  yearFilter.dataset.initialized = 'true';
-
-  yearFilter.addEventListener('change', (e) => {
-    const selectedYear = e.target.value;
-
-    // Get ALL talks from both containers
-    const talkCards = document.querySelectorAll(
-      '#talks-featured .talk-card, #talks-more .talk-card'
-    );
-
-    let visibleCount = 0;
-
-    // ============================================================
-    // ALL YEARS
-    // ============================================================
-    if (selectedYear === 'all') {
-
-      // Show only featured cards initially
-      if (featuredContainer) {
-        featuredContainer.querySelectorAll('.talk-card').forEach(card => {
-          card.style.display = '';
-        });
-      }
-
-      // Hide the additional talks again
-      if (moreContainer) {
-        moreContainer.classList.remove('show');
-
-        moreContainer.querySelectorAll('.talk-card').forEach(card => {
-          card.style.display = '';
-        });
-      }
-
-      // Count ALL talks, not just visible talks
-      visibleCount = talkCards.length;
-    }
-
-    // ============================================================
-    // SPECIFIC YEAR
-    // ============================================================
-    else {
-
-      // Show the "more" container because matching talks
-      // may be inside it.
-      if (moreContainer) {
-        moreContainer.classList.add('show');
-      }
-
-      talkCards.forEach(card => {
-        const cardYear = card.getAttribute('data-year');
-
-        if (cardYear === selectedYear) {
-          card.style.display = '';
-          visibleCount++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // Update count
-    if (countSpan) {
-      countSpan.textContent = visibleCount;
-    }
-  });
-}
-
-// Expose globally for loader.js
-window.initTalksYearFilter = initTalksYearFilter;
-// ================================================================
 // MOBILE MENU
 // ================================================================
 function initMobileMenu() {
   const toggle = document.getElementById('nav-mobile-toggle');
   const navLinks = document.getElementById('nav-links');
 
-  if (!toggle) return;
+  if (!toggle || !navLinks) return;
 
   toggle.addEventListener('click', () => {
     toggle.classList.toggle('open');
@@ -192,7 +118,8 @@ function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {
       e.preventDefault();
-      const target = document.querySelector(anchor.getAttribute('href'));
+      const href = anchor.getAttribute('href');
+      const target = document.querySelector(href);
       if (target) {
         const offset = 80;
         const top = target.getBoundingClientRect().top + window.scrollY - offset;
@@ -235,7 +162,7 @@ function initContactForm() {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           Message Sent!
         `;
-          btn.style.background = '#0F2137';
+          btn.style.background = '#0B6B5A';
           setTimeout(() => {
             btn.innerHTML = originalText;
             btn.style.background = '';
@@ -290,10 +217,9 @@ function initGoogleScholarSync() {
     });
 }
 
-/* ============================================================
-   HERO STATS — SMOOTH COUNT-UP
-   ============================================================ */
-
+// ================================================================
+// HERO STATS — SMOOTH COUNT-UP
+// ================================================================
 function initHeroCounters() {
   const counters = document.querySelectorAll(
     '.hero-stat-number[data-count]'
@@ -310,10 +236,10 @@ function initHeroCounters() {
     counter.textContent = hasPlus ? '0+' : '0';
 
     // Stagger each counter slightly
-    const delay = 950 + (index * 180);
+    const delay = 600 + (index * 120);
 
     // Count-up duration
-    const duration = 3500;
+    const duration = 2000;
 
     setTimeout(() => {
       const startTime = performance.now();
@@ -323,33 +249,38 @@ function initHeroCounters() {
         const progress = Math.min(elapsed / duration, 1);
 
         // Smooth ease-out
-        const easedProgress =
-          1 - Math.pow(1 - progress, 3);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.floor(easedProgress * target);
 
-        const currentValue = Math.floor(
-          easedProgress * target
-        );
-
-        counter.textContent = hasPlus
-          ? `${currentValue}+`
-          : `${currentValue}`;
+        counter.textContent = hasPlus ? `${currentValue}+` : `${currentValue}`;
 
         if (progress < 1) {
           requestAnimationFrame(animate);
         } else {
-          counter.textContent = hasPlus
-            ? `${target}+`
-            : `${target}`;
+          counter.textContent = hasPlus ? `${target}+` : `${target}`;
         }
       }
 
       requestAnimationFrame(animate);
-
     }, delay);
   });
 }
 
-document.addEventListener(
-  'DOMContentLoaded',
-  initHeroCounters
-);
+// ================================================================
+// CLICKABLE PUBLICATION CARDS
+// Allows clicking anywhere on a clickable publication card to open the paper
+// ================================================================
+function initPublicationCardLinks() {
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.pub-card--clickable');
+    if (!card) return;
+
+    // If clicked directly on an <a> element or its children, let native link behavior handle it
+    if (e.target.closest('a')) return;
+
+    const mainLink = card.querySelector('.pub-title-link');
+    if (mainLink && mainLink.href) {
+      window.open(mainLink.href, '_blank', 'noopener,noreferrer');
+    }
+  });
+}

@@ -26,12 +26,15 @@ jobs:
       - name: Install dependencies
         run: pip install scholarly
 
-      - name: Run sync script
+      - name: Run sync script (Cloudflare D1 Target)
         timeout-minutes: 3
         env:
+          SCHOLAR_PERSISTENCE_TARGET: 'd1'
+          WORKER_AUTOMATION_URL: 'https://api.drlohithjj.com/api/v1/automation/scholar'
+          SCHOLAR_SYNC_SECRET: ${{ secrets.SCHOLAR_SYNC_SECRET }}
+          PUBLIC_READ_URL: 'https://api.drlohithjj.com/api/v1/public/scholar-stats'
           SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID || '12ok6v8i' }}
           SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
-          SANITY_DATASET: 'production'
           PYTHONUNBUFFERED: '1'
         run: python scripts/sync_scholar.py
 
