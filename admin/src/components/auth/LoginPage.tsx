@@ -14,8 +14,8 @@ export const LoginPage: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--bg-primary, #0f172a)',
-        color: 'var(--text-primary, #f8fafc)',
+        background: 'radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.06) 0%, var(--bg-app, #080c14) 60%)',
+        color: 'var(--text-primary, #f1f5f9)',
         padding: '24px',
         fontFamily: 'var(--font-sans, system-ui, -apple-system, sans-serif)'
       }}
@@ -23,52 +23,55 @@ export const LoginPage: React.FC = () => {
       <div
         style={{
           width: '100%',
-          maxWidth: '440px',
-          background: 'var(--bg-secondary, #1e293b)',
-          border: '1px solid var(--border-color, #334155)',
-          borderRadius: '16px',
-          padding: '40px 32px',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5)',
+          maxWidth: '420px',
+          background: 'var(--bg-card, #111827)',
+          border: '1px solid var(--border-primary, rgba(148, 163, 184, 0.12))',
+          borderRadius: '20px',
+          padding: '44px 36px 40px',
+          boxShadow: '0 20px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(56, 189, 248, 0.04)',
           textAlign: 'center'
         }}
       >
         {/* Header Icon */}
         <div
           style={{
-            width: '56px',
-            height: '56px',
+            width: '52px',
+            height: '52px',
             borderRadius: '14px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+            background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            margin: '0 auto 20px',
-            boxShadow: '0 10px 15px -3px rgba(59, 130, 246, 0.3)'
+            margin: '0 auto 24px',
+            boxShadow: '0 8px 24px -4px rgba(56, 189, 248, 0.3)'
           }}
         >
-          <Lock size={28} color="#ffffff" />
+          <Lock size={24} color="#0c1221" />
         </div>
 
         {/* Titles */}
         <h1
           style={{
-            fontSize: '1.5rem',
+            fontSize: '1.35rem',
             fontWeight: 700,
-            margin: '0 0 8px',
-            letterSpacing: '-0.025em'
+            margin: '0 0 6px',
+            letterSpacing: '-0.03em',
+            color: 'var(--text-primary, #f1f5f9)'
           }}
         >
           Dr. Lohith J.J.
         </h1>
         <p
           style={{
-            fontSize: '0.9rem',
-            color: 'var(--text-muted, #94a3b8)',
-            margin: '0 0 32px',
-            lineHeight: 1.5
+            fontSize: '0.825rem',
+            color: 'var(--text-dim, #64748b)',
+            margin: '0 0 36px',
+            lineHeight: 1.6
           }}
         >
-          Academic Portfolio Administration Dashboard. Please authenticate with your authorized GitHub account.
+          Portfolio Administration Console
+          <br />
+          Authenticate with your authorized GitHub account.
         </p>
 
         {/* Login Button */}
@@ -81,31 +84,34 @@ export const LoginPage: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '12px',
-            background: '#24292f',
-            color: '#ffffff',
-            border: '1px solid #444c56',
+            gap: '10px',
+            background: '#f1f5f9',
+            color: '#111827',
+            border: 'none',
             borderRadius: '10px',
-            padding: '14px 20px',
-            fontSize: '1rem',
+            padding: '13px 20px',
+            fontSize: '0.9rem',
             fontWeight: 600,
             cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)'
+            transition: 'all 0.2s cubic-bezier(0.33, 1, 0.68, 1)',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
+            letterSpacing: '0.01em'
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.background = '#2f363d';
-            e.currentTarget.style.borderColor = '#57606a';
+            e.currentTarget.style.background = '#ffffff';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)';
+            e.currentTarget.style.transform = 'translateY(-1px)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.background = '#24292f';
-            e.currentTarget.style.borderColor = '#444c56';
+            e.currentTarget.style.background = '#f1f5f9';
+            e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15)';
+            e.currentTarget.style.transform = 'translateY(0)';
           }}
         >
           {/* GitHub SVG Icon */}
           <svg
-            height="20"
-            width="20"
+            height="18"
+            width="18"
             viewBox="0 0 16 16"
             fill="currentColor"
             style={{ flexShrink: 0 }}
@@ -113,7 +119,7 @@ export const LoginPage: React.FC = () => {
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
           </svg>
           <span>Continue with GitHub</span>
-          <ArrowRight size={16} />
+          <ArrowRight size={15} />
         </button>
 
         {/* Security Footer Badge */}
@@ -121,17 +127,17 @@ export const LoginPage: React.FC = () => {
           style={{
             marginTop: '32px',
             paddingTop: '20px',
-            borderTop: '1px solid var(--border-color, #334155)',
+            borderTop: '1px solid var(--border-primary, rgba(148, 163, 184, 0.12))',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '8px',
-            fontSize: '0.8rem',
-            color: 'var(--text-muted, #94a3b8)'
+            gap: '7px',
+            fontSize: '0.725rem',
+            color: 'var(--text-dim, #64748b)'
           }}
         >
-          <ShieldCheck size={16} color="#10b981" />
-          <span>Protected by D1 Session & HttpOnly Cookies</span>
+          <ShieldCheck size={14} color="#34d399" />
+          <span>HttpOnly sessions • Edge-secured</span>
         </div>
       </div>
     </div>
