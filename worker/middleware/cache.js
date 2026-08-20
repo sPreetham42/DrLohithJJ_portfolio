@@ -1,6 +1,6 @@
 export function getPublicCacheHeaders(tag) {
   return {
-    'Cache-Control': 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+    'Cache-Control': 'public, max-age=0, s-maxage=120, stale-while-revalidate=300',
     'Cache-Tag': tag,
     'Content-Type': 'application/json; charset=utf-8'
   };

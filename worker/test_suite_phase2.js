@@ -205,7 +205,10 @@ function createStatementExecutor(sql, params = []) {
         return { results: list };
       }
       if (sql.includes('FROM talks')) {
-        const list = Array.from(dbStore.talks.values()).filter(t => t.published === 1);
+        let list = Array.from(dbStore.talks.values()).filter(t => t.published === 1);
+        if (sql.includes('year = ?')) {
+          list = list.filter(t => t.year === params[0]);
+        }
         list.sort((a, b) => b.year - a.year || a.display_order - b.display_order);
         return { results: list };
       }
@@ -394,7 +397,7 @@ const profBody = await profRes.json();
 assert(profBody.name === 'Dr. Lohith J.J.', '1.5 Public profile name matches canonical value');
 assert(profBody.credential === 'Ph.D. — NIT Trichy', '1.6 Public profile credential matches editorial value');
 assert(profBody.version === undefined, '1.7 Internal version is stripped from public response DTO');
-assert(profRes.headers.get('Cache-Control')?.includes('s-maxage=3600'), '1.8 Public cache headers present');
+assert(profRes.headers.get('Cache-Control')?.includes('s-maxage=120'), '1.8 Public cache headers present');
 
 // 1.3 Scholar Stats
 const statsReq = new Request('http://localhost/api/v1/public/scholar-stats');
@@ -470,13 +473,13 @@ console.log('\n--- SUITE 3: CORS & PREFLIGHT HANDLING ---');
 const preflightReq = new Request('http://localhost/api/v1/public/publications', {
   method: 'OPTIONS',
   headers: {
-    'Origin': 'https://drlohithjj.com',
+    'Origin': 'https://drlohithjj.in',
     'Access-Control-Request-Method': 'GET'
   }
 });
 const preflightRes = await worker.fetch(preflightReq, mockEnv, {});
 assert(preflightRes.status === 204, '3.1 OPTIONS preflight returns 204 No Content');
-assert(preflightRes.headers.get('Access-Control-Allow-Origin') === 'https://drlohithjj.com', '3.2 Whitelisted origin returned');
+assert(preflightRes.headers.get('Access-Control-Allow-Origin') === 'https://drlohithjj.in', '3.2 Whitelisted origin returned');
 assert(preflightRes.headers.get('Access-Control-Allow-Methods')?.includes('GET'), '3.3 Allow-Methods header present');
 
 // ----------------------------------------------------------------

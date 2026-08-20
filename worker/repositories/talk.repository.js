@@ -5,7 +5,14 @@ export class TalkRepository {
     this.db = db;
   }
 
-  async getAllPublic() {
+  async getAllPublic(year) {
+    if (year && !isNaN(year)) {
+      const { results } = await this.db
+        .prepare('SELECT * FROM talks WHERE published = 1 AND year = ? ORDER BY display_order ASC')
+        .bind(year)
+        .all();
+      return results || [];
+    }
     const { results } = await this.db
       .prepare('SELECT * FROM talks WHERE published = 1 ORDER BY year DESC, display_order ASC')
       .all();

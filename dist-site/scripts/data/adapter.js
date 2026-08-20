@@ -360,5 +360,23 @@ async function hydrateSkills() {
 async function hydrateSocialLinks() {
   const links = await publicDataAdapter.getSocialLinks();
   if (!links || links.length === 0) return;
-  // Social links are rendered statically into the sidebar and hero navigation
+
+  const container = document.querySelector('.hero-social-links');
+  if (!container) return;
+
+  const visibleLinks = links.filter(l => l.published !== false && l.visible !== false);
+  if (visibleLinks.length === 0) return;
+
+  container.innerHTML = visibleLinks.map(l => {
+    const iconSrc = l.icon ? (l.icon.startsWith('assets/') ? l.icon : `assets/${l.icon}`) : 'assets/gmail.svg';
+    const tooltip = escapeHtml(l.platform || '');
+    const isEmail = l.url && l.url.startsWith('mailto:');
+    const targetAttr = isEmail ? '' : ' target="_blank" rel="noopener noreferrer"';
+    return `
+      <a href="${escapeHtml(l.url || '#')}" class="hero-social-link"${targetAttr}
+        aria-label="${tooltip}" title="${tooltip}" data-tooltip="${tooltip}">
+        <img src="${escapeHtml(iconSrc)}" alt="${tooltip}" />
+      </a>
+    `;
+  }).join('');
 }

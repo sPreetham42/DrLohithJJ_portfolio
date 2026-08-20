@@ -1,5 +1,10 @@
 # SANITY CMS RETIREMENT & CLOUDFLARE D1 BACKUP ARCHIVE
 
+> [!IMPORTANT]
+> **HISTORICAL ARCHIVE ONLY — SANITY CMS IS PERMANENTLY RETIRED IN PRODUCTION**
+> Cloudflare D1 is the sole production source of truth for all application data.
+> The files in this directory exist purely as immutable historical backups and cryptographic records.
+
 ## Executive Summary
 This directory contains the permanent cryptographic archive of the legacy Sanity CMS dataset and the standalone production backup of Cloudflare D1 for the Dr. Lohith J.J. Academic Portfolio.
 

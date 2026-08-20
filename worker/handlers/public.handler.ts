@@ -81,10 +81,7 @@ export async function handleGetTalks(request: Request, env: Env): Promise<Respon
   const yearFilter = yearParam ? parseInt(yearParam, 10) : null;
 
   const repo = new TalkRepository(env.DB);
-  let list = await repo.getAllPublic();
-  if (yearFilter && !isNaN(yearFilter)) {
-    list = list.filter(t => t.year === yearFilter);
-  }
+  const list = await repo.getAllPublic(yearFilter);
 
   const dtos = list.map(toPublicTalkDto);
   return jsonResponse(dtos, 200, getPublicCacheHeaders('talks'));

@@ -1,6 +1,6 @@
 const ALLOWED_ORIGINS = [
-  'https://drlohithjj.com',
-  'https://www.drlohithjj.com',
+  'https://drlohithjj.in',
+  'https://www.drlohithjj.in',
   'https://spreetham42.github.io',
   'http://localhost:3000',
   'http://localhost:5173',
@@ -15,7 +15,8 @@ export function handleCors(request) {
   const headers = {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cf-Access-Jwt-Assertion, X-Requested-With',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Cf-Access-Jwt-Assertion, X-Requested-With, X-Admin-Request',
+    'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Max-Age': '86400',
     'Vary': 'Origin'
   };

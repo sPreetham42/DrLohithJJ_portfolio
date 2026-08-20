@@ -4,7 +4,14 @@ import { ConcurrencyConflictError } from '../errors';
 export class TalkRepository {
   constructor(private db: D1Database) {}
 
-  async getAllPublic(): Promise<TalkRecord[]> {
+  async getAllPublic(year?: number | null): Promise<TalkRecord[]> {
+    if (year && !isNaN(year)) {
+      const { results } = await this.db
+        .prepare('SELECT * FROM talks WHERE published = 1 AND year = ? ORDER BY display_order ASC')
+        .bind(year)
+        .all<TalkRecord>();
+      return results || [];
+    }
     const { results } = await this.db
       .prepare('SELECT * FROM talks WHERE published = 1 ORDER BY year DESC, display_order ASC')
       .all<TalkRecord>();

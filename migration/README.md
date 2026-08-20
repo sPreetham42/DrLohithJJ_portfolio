@@ -1,5 +1,10 @@
 # Phase 1 Migration Foundation: Current Portfolio → D1
 
+> [!NOTE]
+> **HISTORICAL MIGRATION RECORD & TEST HARNESS**
+> This directory documents the completed migration from legacy CMS to Cloudflare D1.
+> The scripts and tests herein provide deterministic verification and provenance.
+
 This directory contains the deterministic, validated data migration pipeline for transitioning the Dr. Lohith J.J. academic portfolio from legacy Sanity CMS to Cloudflare D1.
 
 ---
