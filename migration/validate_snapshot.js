@@ -75,6 +75,11 @@ export function validateSnapshot(filePath = SNAPSHOT_PATH) {
   if (counts.socialLinks !== 7) errors.push(`Expected 7 social links, got ${counts.socialLinks}`);
 
   // 4. Asset Reference Integrity
+  const assetIdSet = new Set(data.assets.map(a => a.id));
+  if (data.profile.photoAsset && !assetIdSet.has(data.profile.photoAsset)) {
+    errors.push(`Profile photoAsset '${data.profile.photoAsset}' does not reference a valid asset ID.`);
+  }
+
   for (const asset of data.assets) {
     const localFile = path.join(__dirname, '..', asset.localPath);
     if (!fs.existsSync(localFile)) {

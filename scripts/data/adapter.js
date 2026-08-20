@@ -168,6 +168,34 @@ async function hydrateProfile() {
     const img = document.querySelector('.hero-photo-frame img');
     if (img) img.src = data.photoUrl;
   }
+
+  // Contact & Office Location Hydration
+  if (data.emailPrimary) {
+    document.querySelectorAll('.contact-email-primary').forEach(el => {
+      el.textContent = data.emailPrimary;
+      if (el.tagName === 'A') el.href = `mailto:${data.emailPrimary}`;
+    });
+  }
+
+  if (data.emailSecondary) {
+    document.querySelectorAll('.contact-email-secondary').forEach(el => {
+      el.textContent = data.emailSecondary;
+      if (el.tagName === 'A') el.href = `mailto:${data.emailSecondary}`;
+    });
+    document.querySelectorAll('.contact-item-secondary').forEach(el => {
+      el.style.display = '';
+    });
+  } else if (data.emailSecondary === null || data.emailSecondary === '') {
+    document.querySelectorAll('.contact-item-secondary').forEach(el => {
+      el.style.display = 'none';
+    });
+  }
+
+  if (data.address) {
+    document.querySelectorAll('.contact-location-address').forEach(el => {
+      el.textContent = data.address;
+    });
+  }
 }
 
 // 2. Scholar Stats Hydration

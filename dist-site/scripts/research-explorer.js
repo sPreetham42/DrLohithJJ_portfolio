@@ -5,7 +5,6 @@
 // ================================================================
 
 import { DEFAULT_TALKS } from './talks.js';
-import { getPaperUrl } from './sanity/loader.js';
 
 export const RESEARCH_AREAS = [
   {
@@ -312,7 +311,7 @@ export function calculateAreaStats(areaId, publications = explorerPublications, 
 }
 
 // ----------------------------------------------------------------
-// 3. DATA SYNCHRONIZATION (from Sanity or local)
+// 3. DATA SYNCHRONIZATION (from D1 API or local fallback)
 // ----------------------------------------------------------------
 export function setResearchExplorerData({ publications, talks }) {
   if (Array.isArray(publications) && publications.length > 0) {

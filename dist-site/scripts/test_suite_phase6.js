@@ -98,10 +98,10 @@ testAssert(d1Backup.tables.awards.length === 25, '10.3 Backup contains exactly 2
 // ----------------------------------------------------------------
 // GATE 11, 12, 13: SANITY ZERO-TRAFFIC, ROLLBACK & SECRETS
 // ----------------------------------------------------------------
-console.log('\n--- GATES 11, 12, 13: SANITY ZERO-TRAFFIC, ROLLBACK & SECRETS ---');
+console.log('\n--- GATES 11, 12, 13: SANITY ZERO-TRAFFIC, D1 TARGET & SECRETS ---');
 const syncScript = fs.readFileSync(path.resolve('scripts/sync_scholar.py'), 'utf-8');
-testAssert(syncScript.includes('get_persistence_target()'), '11.1 sync_scholar.py checks persistence target dynamically');
-testAssert(syncScript.includes('SCHOLAR_PERSISTENCE_TARGET'), '12.1 Rollback switch SCHOLAR_PERSISTENCE_TARGET supported');
+testAssert(!syncScript.includes('push_to_sanity'), '11.1 sync_scholar.py has zero Sanity mutation paths');
+testAssert(syncScript.includes('push_to_d1_with_verification'), '12.1 D1 primary automation persistence active');
 testAssert(!syncScript.includes('dev-scholar-secret-key-1234567890'), '13.1 Production secrets not hardcoded in source');
 
 // ----------------------------------------------------------------

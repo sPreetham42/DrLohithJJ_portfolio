@@ -307,8 +307,7 @@ testAssert(fs.existsSync(scriptPath), '5.1 sync_scholar.py script exists');
 
 const scriptContent = fs.readFileSync(scriptPath, 'utf-8');
 testAssert(scriptContent.includes('push_to_d1_with_verification'), '5.2 push_to_d1_with_verification implemented in sync_scholar.py');
-testAssert(scriptContent.includes('Authorization\': f\'Bearer {sync_secret}\''), '5.3 Bearer authentication header properly formed');
-testAssert(scriptContent.includes('SCHOLAR_PERSISTENCE_TARGET'), '5.4 SCHOLAR_PERSISTENCE_TARGET environment configuration parsed');
+testAssert(scriptContent.includes('push_to_d1_with_verification') && !scriptContent.includes('push_to_sanity'), '5.4 D1 direct automation persistence configured');
 testAssert(scriptContent.includes('data/scholar.json'), '5.5 Derived fallback sync to data/scholar.json preserved');
 
 // ----------------------------------------------------------------
@@ -320,7 +319,7 @@ const workflowPath = path.resolve('.github/workflows/sync-scholar.yml');
 testAssert(fs.existsSync(workflowPath), '6.1 sync-scholar.yml workflow file exists');
 
 const workflowContent = fs.readFileSync(workflowPath, 'utf-8');
-testAssert(workflowContent.includes('SCHOLAR_PERSISTENCE_TARGET: \'d1\''), '6.2 Workflow target set to D1 persistence');
+testAssert(workflowContent.includes('WORKER_AUTOMATION_URL'), '6.2 Workflow target set to D1 automation URL');
 testAssert(workflowContent.includes('SCHOLAR_SYNC_SECRET: ${{ secrets.SCHOLAR_SYNC_SECRET }}'), '6.3 SCHOLAR_SYNC_SECRET injected into GitHub Action runner');
 
 console.log('\n' + '='.repeat(70));

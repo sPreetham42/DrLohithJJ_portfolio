@@ -8,6 +8,7 @@ import { AwardRepository } from '../repositories/award.repository.js';
 import { SkillCategoryRepository } from '../repositories/skill.repository.js';
 import { SocialLinkRepository } from '../repositories/social.repository.js';
 import { RevisionRepository } from '../repositories/revision.repository.js';
+import { AssetRepository } from '../repositories/asset.repository.js';
 import {
   ProfileSchema,
   ScholarStatsSchema,
@@ -62,6 +63,24 @@ export async function handleAdminUpdateProfile(request, env, user) {
   const expectedVersion = Number(body.version);
   if (isNaN(expectedVersion)) throw new ValidationError('Missing or invalid expected version number');
 
+  let photoAssetId = parse.data.photoAsset || null;
+  if (photoAssetId) {
+    const assetRepo = new AssetRepository(env.DB);
+    const assetById = await assetRepo.getById(photoAssetId);
+    if (!assetById) {
+      // Check if caller supplied storage_key instead of asset ID
+      const assetByStorageKey = await env.DB
+        .prepare('SELECT id FROM assets WHERE storage_key = ?')
+        .bind(photoAssetId)
+        .first();
+      if (assetByStorageKey) {
+        photoAssetId = assetByStorageKey.id;
+      } else {
+        throw new ValidationError(`Referenced photo asset '${photoAssetId}' does not exist.`);
+      }
+    }
+  }
+
   const repo = new ProfileRepository(env.DB);
   const updated = await repo.update(
     {
@@ -76,7 +95,7 @@ export async function handleAdminUpdateProfile(request, env, user) {
       email_secondary: parse.data.emailSecondary || null,
       phone: parse.data.phone,
       address: parse.data.address,
-      photo_asset_id: parse.data.photoAsset || null,
+      photo_asset_id: photoAssetId,
       additional_roles_json: JSON.stringify(parse.data.additionalRoles),
       professional_memberships_json: JSON.stringify(parse.data.professionalMemberships),
       metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null

@@ -1,5 +1,4 @@
 import { initPublicDataAdapter } from './data/adapter.js';
-import { initSanityData } from './sanity/loader.js';
 import { initTalksController } from './talks.js';
 import { initResearchExplorer } from './research-explorer.js';
 import { initScholarHealth } from './scholar-health.js';
@@ -19,10 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Primary Data Source: D1 Worker Public API (with automatic canonical fallback)
   initPublicDataAdapter().catch(err => {
-    console.warn('[Public Adapter] Falling back to legacy loader / static HTML:', err.message);
-    if (window.PORTFOLIO_CONFIG?.useLegacySanity) {
-      initSanityData().catch(() => {});
-    }
+    console.warn('[Public Adapter] Falling back to static HTML fallback:', err.message);
   });
 });
 

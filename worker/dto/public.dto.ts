@@ -11,6 +11,7 @@ import {
 } from '../types';
 
 export function toPublicProfileDto(record: ProfileRecord, photoUrl: string | null = null) {
+  const resolvedPhotoPath = photoUrl || record.photo_asset_id;
   return {
     name: record.name,
     credential: record.credential,
@@ -23,7 +24,9 @@ export function toPublicProfileDto(record: ProfileRecord, photoUrl: string | nul
     emailSecondary: record.email_secondary,
     phone: record.phone,
     address: record.address,
-    photoAsset: photoUrl || record.photo_asset_id,
+    photoAssetId: record.photo_asset_id,
+    photoAsset: resolvedPhotoPath,
+    photoUrl: resolvedPhotoPath,
     additionalRoles: JSON.parse(record.additional_roles_json || '[]'),
     professionalMemberships: JSON.parse(record.professional_memberships_json || '[]')
   };

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "migrationSource": "CURRENT_PORTFOLIO_CANONICAL_SNAPSHOT",
   "snapshotFile": "current-portfolio-snapshot.json",
-  "snapshotSha256": "7e74a9f29f6ed0b1aedc09cc0e1e0118a3e20a032c2353d0c4d9aa3cde4a9dbf",
+  "snapshotSha256": "4c8cc5c37feb982030b1cbe1794f5c7b716e31d85051a1d74f11060aee22e961",
   "generatedAt": "2026-08-18T14:59:49.981Z",
   "entityCounts": {
     "profile": 1,
@@ -21,7 +21,7 @@
     {
       "entityType": "profile",
       "id": "profile",
-      "sha256": "58e312921fbc0715773f20cc8a81625de5d95cf68cdd1f7e140e57f9ffd52b6b"
+      "sha256": "31ad58f36b7a9b9f6f26100130153c1fbe4f9f5dc105ae615304ee730faaabfa"
     },
     {
       "entityType": "scholarStats",

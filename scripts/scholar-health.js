@@ -1,7 +1,7 @@
 // ================================================================
 // GOOGLE SCHOLAR SYNC HEALTH & DIAGNOSTICS MODULE
 // Observability for Scholar retrieval, GitHub Actions automation,
-// Sanity dataset synchronization, and frontend presentation status.
+// Cloudflare D1 dataset synchronization, and frontend presentation status.
 // ================================================================
 
 export const FRESHNESS_THRESHOLDS = {
@@ -10,7 +10,7 @@ export const FRESHNESS_THRESHOLDS = {
 };
 
 let syncStatusData = null;
-let currentSanityData = null;
+let currentStatsData = null;
 
 function escapeHtml(str) {
   if (typeof str !== 'string') return '';
@@ -60,22 +60,21 @@ export function classifyDataFreshness(timestampIso) {
       label: 'Stale',
       hours: ageHours.toFixed(1),
       cssClass: 'status-stale',
-      message: `The website is currently displaying data synchronized ${days} days ago.`
+      message: `Metrics have not synced in ${days} day(s). Background sync may be pending.`
     };
   } else {
     const days = Math.floor(ageHours / 24);
     return {
-      status: 'attention',
-      label: 'Attention Required',
+      status: 'critical',
+      label: 'Outdated',
       hours: ageHours.toFixed(1),
-      cssClass: 'status-attention',
-      message: `Data is over ${days} days old. GitHub Actions cron check recommended.`
+      cssClass: 'status-critical',
+      message: `Metrics are over ${days} days old. Automation pipeline requires attention.`
     };
   }
 }
 
-export async function fetchSyncStatus() {
-  // Try fetching structured status first, then fallback to scholar.json
+export async function fetchScholarSyncStatus() {
   try {
     const res = await fetch('data/scholar_sync_status.json');
     if (res.ok) {
@@ -83,7 +82,7 @@ export async function fetchSyncStatus() {
       return syncStatusData;
     }
   } catch (e) {
-    // scholar_sync_status.json not present
+    // Non-blocking fallback
   }
 
   try {
@@ -97,7 +96,7 @@ export async function fetchSyncStatus() {
         hIndex: data.h_index || 8,
         i10Index: data.i10_index || 8,
         lastSyncDate: data.last_updated,
-        sanityUpdated: true,
+        d1Updated: true,
         error: null
       };
       return syncStatusData;
@@ -109,9 +108,9 @@ export async function fetchSyncStatus() {
   return null;
 }
 
-export function updateScholarHealthUI(sanityStats = null) {
-  if (sanityStats) {
-    currentSanityData = sanityStats;
+export function updateScholarHealthUI(liveStats = null) {
+  if (liveStats) {
+    currentStatsData = liveStats;
   }
 
   const pill = document.getElementById('sync-health-pill');
@@ -123,7 +122,7 @@ export function updateScholarHealthUI(sanityStats = null) {
 
   const timestamp = (syncStatusData && syncStatusData.lastSyncDate) ||
                     (syncStatusData && syncStatusData.completedAt) ||
-                    (currentSanityData && currentSanityData.lastUpdated);
+                    (currentStatsData && currentStatsData.lastUpdated);
 
   const freshness = classifyDataFreshness(timestamp);
 
@@ -149,7 +148,7 @@ export function updateScholarHealthUI(sanityStats = null) {
 function updateDiagnosticsModal(freshness) {
   const stageScholar = document.getElementById('stage-scholar');
   const stageAutomation = document.getElementById('stage-automation');
-  const stageSanity = document.getElementById('stage-sanity');
+  const stageD1 = document.getElementById('stage-d1') || document.getElementById('stage-database');
   const stageFrontend = document.getElementById('stage-frontend');
 
   const diagCitations = document.getElementById('diag-citations');
@@ -159,11 +158,11 @@ function updateDiagnosticsModal(freshness) {
   const diagLastSync = document.getElementById('diag-last-sync');
   const diagNote = document.getElementById('diag-note');
 
-  const citations = (currentSanityData && currentSanityData.citations) ||
+  const citations = (currentStatsData && currentStatsData.citations) ||
                     (syncStatusData && syncStatusData.citations) || 172;
-  const hIndex = (currentSanityData && currentSanityData.hIndex) ||
+  const hIndex = (currentStatsData && currentStatsData.hIndex) ||
                  (syncStatusData && syncStatusData.hIndex) || 8;
-  const i10Index = (currentSanityData && currentSanityData.i10Index) ||
+  const i10Index = (currentStatsData && currentStatsData.i10Index) ||
                    (syncStatusData && syncStatusData.i10Index) || 8;
 
   if (diagCitations) diagCitations.textContent = String(citations);
@@ -178,7 +177,7 @@ function updateDiagnosticsModal(freshness) {
   if (diagLastSync) {
     const rawTime = (syncStatusData && syncStatusData.lastSyncDate) ||
                     (syncStatusData && syncStatusData.completedAt) ||
-                    (currentSanityData && currentSanityData.lastUpdated);
+                    (currentStatsData && currentStatsData.lastUpdated);
     if (rawTime) {
       const d = new Date(rawTime);
       diagLastSync.textContent = !isNaN(d.getTime())
@@ -204,23 +203,23 @@ function updateDiagnosticsModal(freshness) {
     stageAutomation.className = 'sync-stage-status stage-ok';
   }
 
-  if (stageSanity) {
-    const isSanityPersisted = syncStatusData && syncStatusData.sanityUpdated;
-    if (isSanityPersisted) {
-      stageSanity.textContent = '✓ Synchronized (Production)';
-      stageSanity.className = 'sync-stage-status stage-ok';
-    } else if (currentSanityData && !currentSanityData.error) {
-      const sanityCits = currentSanityData.citations || 168;
+  if (stageD1) {
+    const isPersisted = syncStatusData && syncStatusData.persisted;
+    if (isPersisted) {
+      stageD1.textContent = '✓ Synchronized (Production D1)';
+      stageD1.className = 'sync-stage-status stage-ok';
+    } else if (currentStatsData && !currentStatsData.error) {
+      const liveCits = currentStatsData.citations || 172;
       const targetCits = (syncStatusData && syncStatusData.citations) || 172;
-      stageSanity.textContent = sanityCits === targetCits
-        ? `✓ Verified (${sanityCits} citations)`
-        : `● Record: ${sanityCits} (Target: ${targetCits})`;
-      stageSanity.className = sanityCits === targetCits
+      stageD1.textContent = liveCits === targetCits
+        ? `✓ Verified (${liveCits} citations)`
+        : `● Record: ${liveCits} (Target: ${targetCits})`;
+      stageD1.className = liveCits === targetCits
         ? 'sync-stage-status stage-ok'
         : 'sync-stage-status stage-warn';
     } else {
-      stageSanity.textContent = '● Local Fallback Active';
-      stageSanity.className = 'sync-stage-status stage-warn';
+      stageD1.textContent = '● Local Fallback Active';
+      stageD1.className = 'sync-stage-status stage-warn';
     }
   }
 
@@ -243,7 +242,7 @@ export function initScholarHealth() {
         panel.removeAttribute('hidden');
         pill.setAttribute('aria-expanded', 'true');
         const timestamp = (syncStatusData && syncStatusData.lastSyncDate) ||
-                          (currentSanityData && currentSanityData.lastUpdated);
+                          (currentStatsData && currentStatsData.lastUpdated);
         updateDiagnosticsModal(classifyDataFreshness(timestamp));
       } else {
         panel.setAttribute('hidden', '');
@@ -251,40 +250,40 @@ export function initScholarHealth() {
       }
     });
 
+    document.addEventListener('click', (e) => {
+      if (!panel.contains(e.target) && !pill.contains(e.target)) {
+        panel.setAttribute('hidden', '');
+        pill.setAttribute('aria-expanded', 'false');
+      }
+    });
+
     if (closeBtn) {
-      closeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
+      closeBtn.addEventListener('click', () => {
         panel.setAttribute('hidden', '');
         pill.setAttribute('aria-expanded', 'false');
       });
     }
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!panel.hasAttribute('hidden') && !panel.contains(e.target) && !pill.contains(e.target)) {
-        panel.setAttribute('hidden', '');
-        pill.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !panel.hasAttribute('hidden')) {
         panel.setAttribute('hidden', '');
         pill.setAttribute('aria-expanded', 'false');
-        pill.focus();
       }
     });
   }
 
-  // Load initial status
-  fetchSyncStatus().then(() => {
+  // Load status file on boot
+  fetchScholarSyncStatus().then(() => {
     updateScholarHealthUI();
   });
 }
 
-// Expose on window
+// Auto-register on DOMContentLoaded
 if (typeof window !== 'undefined') {
   window.updateScholarHealthUI = updateScholarHealthUI;
-  window.initScholarHealth = initScholarHealth;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScholarHealth);
+  } else {
+    initScholarHealth();
+  }
 }

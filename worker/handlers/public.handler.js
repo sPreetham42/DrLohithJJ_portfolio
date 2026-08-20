@@ -7,6 +7,7 @@ import { EducationRepository } from '../repositories/education.repository.js';
 import { AwardRepository } from '../repositories/award.repository.js';
 import { SkillCategoryRepository } from '../repositories/skill.repository.js';
 import { SocialLinkRepository } from '../repositories/social.repository.js';
+import { AssetRepository } from '../repositories/asset.repository.js';
 import {
   toPublicProfileDto,
   toPublicScholarStatsDto,
@@ -44,7 +45,16 @@ export async function handleGetProfile(request, env) {
   const profile = await repo.get();
   if (!profile) throw new NotFoundError('Profile', 'profile');
 
-  const dto = toPublicProfileDto(profile);
+  let photoUrl = null;
+  if (profile.photo_asset_id) {
+    const assetRepo = new AssetRepository(env.DB);
+    const asset = await assetRepo.getById(profile.photo_asset_id);
+    if (asset) {
+      photoUrl = asset.storage_key;
+    }
+  }
+
+  const dto = toPublicProfileDto(profile, photoUrl);
   return jsonResponse(dto, 200, getPublicCacheHeaders('profile'));
 }
 

@@ -74,7 +74,7 @@ const rawProfileData = {
   email_secondary: 'hod-cse@ncetmail.com',
   phone: '+91-9886745882',
   address: 'NCET, Bengaluru',
-  photo_asset_id: 'assets/Dr Lohith J J.jpeg',
+  photo_asset_id: 'asset-headshot',
   additional_roles_json: JSON.stringify(['Guest Faculty — BITS Pilani (Off-Campus)', 'BoS Member — Autonomous Institutions']),
   professional_memberships_json: JSON.stringify(['Senior Member — IEEE', 'Life Member — Cryptology Research Society of India (CRSI)']),
   version: 2

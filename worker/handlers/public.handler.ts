@@ -8,6 +8,7 @@ import { EducationRepository } from '../repositories/education.repository';
 import { AwardRepository } from '../repositories/award.repository';
 import { SkillCategoryRepository } from '../repositories/skill.repository';
 import { SocialLinkRepository } from '../repositories/social.repository';
+import { AssetRepository } from '../repositories/asset.repository';
 import {
   toPublicProfileDto,
   toPublicScholarStatsDto,
@@ -45,7 +46,16 @@ export async function handleGetProfile(request: Request, env: Env): Promise<Resp
   const profile = await repo.get();
   if (!profile) throw new NotFoundError('Profile', 'profile');
 
-  const dto = toPublicProfileDto(profile);
+  let photoUrl: string | null = null;
+  if (profile.photo_asset_id) {
+    const assetRepo = new AssetRepository(env.DB);
+    const asset = await assetRepo.getById(profile.photo_asset_id);
+    if (asset) {
+      photoUrl = asset.storage_key;
+    }
+  }
+
+  const dto = toPublicProfileDto(profile, photoUrl);
   return jsonResponse(dto, 200, getPublicCacheHeaders('profile'));
 }
 

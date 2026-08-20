@@ -159,6 +159,16 @@ const dbStore = {
     updated_at: new Date().toISOString(),
     metadata: null
   }])),
+  assets: new Map(snapshot.assets.map(a => [a.id, {
+    id: a.id,
+    storage_key: a.localPath,
+    filename: a.filename,
+    mime_type: a.mimeType,
+    byte_size: a.byteSize,
+    is_primary_photo: a.isPrimaryPhoto ? 1 : 0,
+    created_at: new Date().toISOString(),
+    metadata: null
+  }])),
   scholar_sync_runs: new Map(),
   revisions: []
 };
@@ -170,6 +180,11 @@ function createStatementExecutor(sql, params = []) {
     first: async () => {
       if (sql.includes('FROM profile')) return dbStore.profile;
       if (sql.includes('FROM scholar_stats')) return dbStore.scholar_stats;
+      if (sql.includes('FROM assets WHERE id =')) return dbStore.assets.get(params[0]) || null;
+      if (sql.includes('FROM assets WHERE storage_key =')) {
+        const found = Array.from(dbStore.assets.values()).find(a => a.storage_key === params[0]);
+        return found ? { id: found.id } : null;
+      }
       if (sql.includes('FROM publications WHERE id =')) return dbStore.publications.get(params[0]) || null;
       if (sql.includes('FROM talks WHERE id =')) return dbStore.talks.get(params[0]) || null;
       if (sql.includes('FROM experience WHERE id =')) return dbStore.experience.get(params[0]) || null;
@@ -181,6 +196,9 @@ function createStatementExecutor(sql, params = []) {
       return null;
     },
     all: async () => {
+      if (sql.includes('FROM assets')) {
+        return { results: Array.from(dbStore.assets.values()) };
+      }
       if (sql.includes('FROM publications')) {
         const list = Array.from(dbStore.publications.values()).filter(p => p.published === 1);
         list.sort((a, b) => a.display_order - b.display_order || b.year - a.year);
@@ -228,6 +246,7 @@ function createStatementExecutor(sql, params = []) {
         dbStore.profile.credential = params[1];
         dbStore.profile.designation = params[2];
         dbStore.profile.years_experience = params[3];
+        dbStore.profile.photo_asset_id = params[11];
         dbStore.profile.version += 1;
         dbStore.profile.updated_at = new Date().toISOString();
         return { success: true, meta: { changes: 1 } };

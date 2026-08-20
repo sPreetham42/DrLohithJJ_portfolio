@@ -9,9 +9,8 @@ Strategy:
   2. Fallback Scraper: OpenAlex API (parallelized REST API queries across author IDs)
   3. Monotonic Safety: Never overwrite with lower numbers unless verified
   4. Primary Persistence Target: Cloudflare D1 via POST /api/v1/automation/scholar
-  5. Rollback Persistence Target: Sanity CMS (configurable via SCHOLAR_PERSISTENCE_TARGET=sanity)
-  6. Verification: Direct cache-bypassed read-back verification against GET /api/v1/public/scholar-stats
-  7. Fail-Loud Diagnostics: Structured status reporting, non-zero exits on failure, dry-run mode.
+  5. Verification: Direct cache-bypassed read-back verification against GET /api/v1/public/scholar-stats
+  6. Fail-Loud Diagnostics: Structured status reporting, non-zero exits on failure, dry-run mode.
 """
 
 import argparse
@@ -63,16 +62,11 @@ def log(msg):
     print(f"[{datetime.now(timezone.utc).strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def get_persistence_target():
-    """Returns 'd1' (primary production target) or 'sanity' (legacy rollback target)."""
-    return os.environ.get('SCHOLAR_PERSISTENCE_TARGET', 'd1').strip().lower()
-
-
 def get_d1_config():
     """Resolves Cloudflare D1 Worker automation API configuration."""
     automation_url = os.environ.get(
         'WORKER_AUTOMATION_URL',
-        'https://api.drlohithjj.com/api/v1/automation/scholar'
+        'https://drlohithjj.in/api/v1/automation/scholar'
     ).strip()
     
     sync_secret = os.environ.get('SCHOLAR_SYNC_SECRET', '').strip()
@@ -82,22 +76,10 @@ def get_d1_config():
         
     read_url = os.environ.get(
         'PUBLIC_READ_URL',
-        'https://api.drlohithjj.com/api/v1/public/scholar-stats'
+        'https://drlohithjj.in/api/v1/public/scholar-stats'
     ).strip()
     
     return automation_url, sync_secret, read_url
-
-
-def get_sanity_config():
-    """Safely resolves legacy Sanity configuration for rollback scenarios."""
-    raw_project_id = os.environ.get('SANITY_PROJECT_ID', '')
-    raw_dataset = os.environ.get('SANITY_DATASET', '')
-    
-    project_id = raw_project_id.strip() if raw_project_id else '12ok6v8i'
-    dataset = raw_dataset.strip() if raw_dataset else 'production'
-    write_token = os.environ.get('SANITY_WRITE_TOKEN', '').strip() or None
-    
-    return project_id, dataset, write_token
 
 
 def load_existing_fallback():
@@ -120,22 +102,6 @@ def fetch_d1_current(read_url):
             return data
     except Exception as e:
         log(f"[D1 READ ERROR] Could not fetch current D1 document from {read_url}: {e}")
-        return None
-
-
-def fetch_sanity_current():
-    """Fetch current scholarStats document directly from Sanity query API."""
-    project_id, dataset, _ = get_sanity_config()
-    query = '*[_type == "scholarStats" && _id == "scholarStats"][0]'
-    url = f"https://{project_id}.api.sanity.io/v2023-01-01/data/query/{dataset}?query={urllib.parse.quote(query)}"
-
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'ScholarSyncDiagnostics/1.0'})
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            data = json.loads(resp.read().decode('utf-8'))
-            return data.get('result')
-    except Exception as e:
-        log(f"[SANITY READ ERROR] Could not fetch current Sanity document: {e}")
         return None
 
 
@@ -434,84 +400,16 @@ def push_to_d1_with_verification(data, sync_run_id=None):
 
 
 # ----------------------------------------------------------------
-# LEGACY ROLLBACK PERSISTENCE: SANITY CMS
-# ----------------------------------------------------------------
-def push_to_sanity_with_verification(data):
-    """Rollback fallback to Sanity CMS."""
-    project_id, dataset, write_token = get_sanity_config()
-
-    if not write_token:
-        msg = "SANITY_WRITE_TOKEN not set in environment"
-        log(f"[SANITY] {msg}. Skipping Sanity mutation.")
-        return {
-            "success": False,
-            "persistence_verified": False,
-            "error": msg,
-            "stage": "token_check"
-        }
-
-    mutate_url = f"https://{project_id}.api.sanity.io/v2023-01-01/data/mutate/{dataset}?returnDocuments=true"
-    payload = {
-        "mutations": [
-            {
-                "createOrReplace": {
-                    "_id": "scholarStats",
-                    "_type": "scholarStats",
-                    "citations": data["citations"],
-                    "hIndex": data["h_index"],
-                    "i10Index": data["i10_index"],
-                    "sciePapersCount": 4,
-                    "ieeeConferencesCount": 6,
-                    "lastUpdated": data["last_updated"],
-                    "source": data.get("source", "google_scholar")
-                }
-            }
-        ]
-    }
-
-    log(f"[SANITY] Sending rollback mutation to {project_id}/{dataset}...")
-    try:
-        req = urllib.request.Request(
-            mutate_url,
-            data=json.dumps(payload).encode('utf-8'),
-            headers={
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {write_token}'
-            },
-            method='POST'
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            res_data = json.loads(resp.read().decode('utf-8'))
-            log(f"[SANITY MUTATION OK] Transaction ID: {res_data.get('transactionId', 'OK')}")
-            return {
-                "success": True,
-                "persistence_verified": True,
-                "error": None,
-                "stage": "verified"
-            }
-    except Exception as e:
-        err = str(e)
-        log(f"[SANITY ERROR] Mutation request failed: {err}")
-        return {
-            "success": False,
-            "persistence_verified": False,
-            "error": err,
-            "stage": "mutation"
-        }
-
-
-# ----------------------------------------------------------------
 # MAIN PIPELINE
 # ----------------------------------------------------------------
 def run_pipeline(dry_run=False, verbose=False, sync_run_id=None):
     """Executes the Google Scholar sync & health diagnostic pipeline."""
     started_at_iso = datetime.now(timezone.utc).isoformat()
     start_time = time.time()
-    persistence_target = get_persistence_target()
 
     print("\n" + "═" * 60)
     print("  Google Scholar Synchronization & Health Diagnostics")
-    print(f"  Target Destination: {persistence_target.upper()} {'(Primary)' if persistence_target == 'd1' else '(Legacy Rollback)'}")
+    print("  Target Destination: CLOUDFLARE D1 (Production)")
     print("═" * 60)
     if dry_run:
         print("  [MODE: DRY RUN / DIAGNOSTIC — NO MUTATIONS]\n")
@@ -544,7 +442,7 @@ def run_pipeline(dry_run=False, verbose=False, sync_run_id=None):
         log("[FATAL] Both Google Scholar and OpenAlex retrievals failed.")
         status_doc = {
             "status": "failed",
-            "target": persistence_target,
+            "target": "d1",
             "source": "none",
             "startedAt": started_at_iso,
             "completedAt": completed_at_iso,
@@ -587,12 +485,8 @@ def run_pipeline(dry_run=False, verbose=False, sync_run_id=None):
     update_res = None
 
     if not dry_run:
-        if persistence_target == 'd1':
-            log("[STAGE 3/4] Mutating Cloudflare D1 scholar_stats via Worker Automation Endpoint...")
-            update_res = push_to_d1_with_verification(selected_res, sync_run_id=sync_run_id)
-        else:
-            log("[STAGE 3/4 ROLLBACK] Mutating legacy Sanity scholarStats singleton...")
-            update_res = push_to_sanity_with_verification(selected_res)
+        log("[STAGE 3/4] Mutating Cloudflare D1 scholar_stats via Worker Automation Endpoint...")
+        update_res = push_to_d1_with_verification(selected_res, sync_run_id=sync_run_id)
 
         log("[STAGE 4/4] Updating derived local fallback cache (data/scholar.json)...")
         os.makedirs(DATA_DIR, exist_ok=True)
@@ -621,7 +515,7 @@ def run_pipeline(dry_run=False, verbose=False, sync_run_id=None):
     # Write structured status artifact
     status_doc = {
         "status": overall_status,
-        "target": persistence_target,
+        "target": "d1",
         "source": selected_res.get('source', 'google_scholar'),
         "startedAt": started_at_iso,
         "completedAt": completed_at_iso,
@@ -645,7 +539,7 @@ def run_pipeline(dry_run=False, verbose=False, sync_run_id=None):
     # Print Summary Report
     print("\nGoogle Scholar Sync Diagnostic Report")
     print("──────────────────────────────────────────────────────")
-    print(f"Target Destination:       {persistence_target.upper()} {'(Cloudflare D1)' if persistence_target == 'd1' else '(Sanity)'}")
+    print("Target Destination:       D1 (Cloudflare D1)")
     print(f"Scholar Retrieval:        SUCCESS ({selected_res.get('source', 'google_scholar')})")
     print(f"  • Citations:            {selected_res['citations']}")
     print(f"  • h-index:              {selected_res['h_index']}")

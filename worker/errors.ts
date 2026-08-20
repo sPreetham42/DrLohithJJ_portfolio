@@ -13,8 +13,9 @@ export class ApiError extends Error {
 }
 
 export class ValidationError extends ApiError {
-  constructor(details: unknown) {
-    super(400, 'VALIDATION_ERROR', 'Request validation failed', details);
+  constructor(details: unknown, message = 'Request validation failed') {
+    const finalMessage = typeof details === 'string' ? details : message;
+    super(400, 'VALIDATION_ERROR', finalMessage, details);
     this.name = 'ValidationError';
   }
 }
