@@ -6,6 +6,14 @@
 
 import { DEFAULT_TALKS } from './talks.js';
 
+// Helper to resolve publication links
+function getPaperUrl(p) {
+  if (p.externalUrl) return p.externalUrl;
+  if (p.doi) {
+    return p.doi.startsWith('http') ? p.doi : `https://doi.org/${p.doi}`;
+  }
+  return null;
+}
 export const RESEARCH_AREAS = [
   {
     id: 'all',
@@ -446,7 +454,7 @@ function renderFeaturedHighlights(stats) {
   container.innerHTML = highlights.map(item => {
     if (item.type === 'publication') {
       const p = item.data;
-      const paperUrl = getPaperUrl ? getPaperUrl(p) : (p.doi || p.externalLink);
+      const paperUrl = getPaperUrl(p);
       return `
         <div class="featured-research-card${paperUrl ? ' pub-card--clickable' : ''}">
           <div class="featured-card-header">
@@ -454,9 +462,9 @@ function renderFeaturedHighlights(stats) {
             <span class="featured-year-tag">${escapeHtml(String(p.year || ''))}</span>
           </div>
           ${paperUrl
-            ? `<a href="${escapeHtml(paperUrl)}" target="_blank" rel="noopener noreferrer" class="pub-title-link"><h4 class="featured-title">${escapeHtml(p.title || '')} <span class="pub-link-icon">↗</span></h4></a>`
-            : `<h4 class="featured-title">${escapeHtml(p.title || '')}</h4>`
-          }
+          ? `<a href="${escapeHtml(paperUrl)}" target="_blank" rel="noopener noreferrer" class="pub-title-link"><h4 class="featured-title">${escapeHtml(p.title || '')} <span class="pub-link-icon">↗</span></h4></a>`
+          : `<h4 class="featured-title">${escapeHtml(p.title || '')}</h4>`
+        }
           <p class="featured-venue">${escapeHtml(p.venue || '')}</p>
           <div class="featured-authors">${escapeHtml(p.authors || '')}</div>
         </div>
@@ -496,7 +504,7 @@ function renderPublicationsList(pubs) {
 
   container.innerHTML = pubs.map((p, idx) => {
     const codeNum = p.codeNumber || `P${idx + 1}`;
-    const paperUrl = getPaperUrl ? getPaperUrl(p) : (p.doi || p.externalLink);
+    const paperUrl = getPaperUrl(p);
     const pdfLinkHtml = p.pdfUrl ? `<a href="${escapeHtml(p.pdfUrl)}" target="_blank" rel="noopener noreferrer" class="pub-doi" style="margin-left:0.75rem;">PDF 📄</a>` : '';
     const doiLinkHtml = p.doi ? `<a href="${escapeHtml(p.doi.startsWith('http') ? p.doi : 'https://doi.org/' + p.doi)}" target="_blank" rel="noopener noreferrer" class="pub-doi">DOI ↗</a>` : '';
 
