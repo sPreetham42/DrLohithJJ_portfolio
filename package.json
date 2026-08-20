@@ -4,14 +4,14 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "db:migrate:local": "wrangler d1 migrations apply portfolio-db --local",
-        "db:migrate:remote": "wrangler d1 migrations apply portfolio-db --remote",
-        "build:admin": "vite build admin",
-        "build:site": "node scripts/build_unified_site.js",
-        "build": "npm run build:admin && npm run build:site",
-        "dev": "wrangler dev worker/index.ts",
-        "deploy": "npm run build && wrangler deploy"
-    },
+    "dev": "wrangler dev worker/index.ts",
+    "db:migrate:local": "wrangler d1 migrations apply portfolio-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply portfolio-db --remote",
+    "build:admin": "vite build admin",
+    "build:site": "node scripts/build_unified_site.js",
+    "build": "npm run build:admin && npm run build:site",
+    "deploy": "npm run build && wrangler deploy"
+  },
     "dependencies": {
         "lucide-react": "^1.32.0",
         "react": "^19.2.8",
