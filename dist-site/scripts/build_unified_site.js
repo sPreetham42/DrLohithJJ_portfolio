@@ -18,7 +18,14 @@ console.log('='.repeat(70) + '\n');
 
 // 1. Clean output directory
 if (fs.existsSync(OUTPUT_DIR)) {
-  fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
+  try {
+    fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
+  } catch {
+    // If folder handle is locked by dev server, empty contents
+    fs.readdirSync(OUTPUT_DIR).forEach(f => {
+      fs.rmSync(path.join(OUTPUT_DIR, f), { recursive: true, force: true });
+    });
+  }
 }
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 

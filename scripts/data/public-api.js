@@ -3,8 +3,13 @@
 // Lightweight, zero-dependency, resilient fetch client for GET /api/v1/public/*
 // ================================================================
 
-// Default API base URL (configurable via window.PORTFOLIO_CONFIG)
-const DEFAULT_API_BASE = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+const isLocalDev = typeof window !== 'undefined' && (
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1' ||
+  window.location.hostname === '[::1]'
+);
+
+const DEFAULT_API_BASE = isLocalDev && window.location.port !== '8787'
   ? 'http://127.0.0.1:8787/api/v1/public'
   : '/api/v1/public';
 
@@ -66,7 +71,7 @@ function isValidScholarStats(data) {
 }
 
 function isValidArray(data) {
-  return Array.isArray(data) && data.length > 0;
+  return Array.isArray(data);
 }
 
 // ----------------------------------------------------------------

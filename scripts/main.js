@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTalksController();
   initResearchExplorer();
   initPublicationCardLinks();
+  initAcademicPhotoRibbon();
 
   // Primary Data Source: D1 Worker Public API (with automatic canonical fallback)
   initPublicDataAdapter().catch(err => {
@@ -194,7 +195,8 @@ function initGoogleScholarSync() {
     .then(data => {
       if (data.citations && data.citations > 0) {
         document.querySelectorAll('.stat-citations').forEach(el => {
-          el.textContent = `${data.citations}+`;
+          el.textContent = `${data.citations}`;
+          el.setAttribute('data-count', data.citations);
         });
       }
       if (data.h_index && data.h_index > 0) {
@@ -205,6 +207,7 @@ function initGoogleScholarSync() {
       if (data.papers_count && data.papers_count > 0) {
         document.querySelectorAll('.stat-papers').forEach(el => {
           el.textContent = data.papers_count;
+          el.setAttribute('data-count', data.papers_count);
         });
       }
     })
@@ -226,10 +229,8 @@ function initHeroCounters() {
 
     if (!Number.isFinite(target)) return;
 
-    const hasPlus = counter.textContent.includes('+');
-
-    // Start from zero
-    counter.textContent = hasPlus ? '0+' : '0';
+    // Start from exact zero without plus sign
+    counter.textContent = '0';
 
     // Stagger each counter slightly
     const delay = 600 + (index * 120);
@@ -248,12 +249,12 @@ function initHeroCounters() {
         const easedProgress = 1 - Math.pow(1 - progress, 3);
         const currentValue = Math.floor(easedProgress * target);
 
-        counter.textContent = hasPlus ? `${currentValue}+` : `${currentValue}`;
+        counter.textContent = `${currentValue}`;
 
         if (progress < 1) {
           requestAnimationFrame(animate);
         } else {
-          counter.textContent = hasPlus ? `${target}+` : `${target}`;
+          counter.textContent = `${target}`;
         }
       }
 
@@ -280,3 +281,94 @@ function initPublicationCardLinks() {
     }
   });
 }
+
+// ================================================================
+// ACADEMIC PHOTO RIBBON CONTROLLER (requestAnimationFrame Loop)
+// ================================================================
+
+let ribbonAnimationFrame = null;
+
+function initAcademicPhotoRibbon() {
+  const track = document.getElementById('academic-photo-ribbon-track');
+  if (!track) return;
+
+  // Prevent duplicate animation loops
+  if (ribbonAnimationFrame) {
+    cancelAnimationFrame(ribbonAnimationFrame);
+    ribbonAnimationFrame = null;
+  }
+
+  // Respect reduced-motion preference
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    track.style.transform = 'translate3d(0, 0, 0)';
+    return;
+  }
+
+  const items = Array.from(track.querySelectorAll('.academic-photo-ribbon-item'));
+  const itemCount = items.length / 2;
+
+  if (itemCount <= 0 || items.length % 2 !== 0) return;
+
+  let offset = 0;
+  let previousTime = performance.now();
+
+  function measureTravelDistance() {
+    const secondSetFirstItem = items[itemCount];
+    if (!secondSetFirstItem) return 0;
+    return secondSetFirstItem.offsetLeft;
+  }
+
+  let travelDistance = measureTravelDistance();
+
+  function getPixelsPerSecond() {
+    const width = window.innerWidth;
+    if (width <= 768) return 90;
+    if (width <= 1024) return 100;
+    return 110;
+  }
+
+  let pixelsPerSecond = getPixelsPerSecond();
+
+  function animate(now) {
+    const deltaSeconds = Math.min((now - previousTime) / 1000, 0.05);
+    previousTime = now;
+
+    if (travelDistance > 0) {
+      offset -= pixelsPerSecond * deltaSeconds;
+
+      if (Math.abs(offset) >= travelDistance) {
+        offset += travelDistance;
+      }
+
+      track.style.transform = `translate3d(${offset}px, 0, 0)`;
+    } else {
+      travelDistance = measureTravelDistance();
+    }
+
+    ribbonAnimationFrame = requestAnimationFrame(animate);
+  }
+
+  ribbonAnimationFrame = requestAnimationFrame(animate);
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      pixelsPerSecond = getPixelsPerSecond();
+      const newDistance = measureTravelDistance();
+      if (newDistance > 0) {
+        travelDistance = newDistance;
+        if (Math.abs(offset) >= travelDistance) {
+          offset %= travelDistance;
+        }
+      }
+    }, 100);
+  });
+}
+
+// Ensure ribbon starts immediately if script executes after DOM is already parsed
+if (document.readyState !== 'loading') {
+  initAcademicPhotoRibbon();
+}
+

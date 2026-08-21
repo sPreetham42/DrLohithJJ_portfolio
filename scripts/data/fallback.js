@@ -9,12 +9,12 @@ import { DEFAULT_TALKS } from '../talks.js';
 export const fallbackData = {
   profile: {
     name: 'Dr. Lohith J.J.',
-    credential: 'Ph.D. — NIT Trichy',
+    credential: 'Ph.D. · National Institute of Technology, Tiruchirappalli',
     designation: 'Professor & Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology)',
     yearsExperience: 20,
     currentInstitution: 'Nagarjuna College of Engineering and Technology (NCET), Bengaluru',
-    heroDescriptionLine1: 'Professor & Head of Department with over <strong>20 years</strong> of academic leadership, doctoral research from <strong>NIT Tiruchirappalli</strong>, and extensive expertise in decentralized systems.',
-    heroDescriptionLine2: 'Specializing in Blockchain Technology, Smart Contract Vulnerability Detection, Cybersecurity, Applied Cryptography, and Cloud Systems.',
+    heroDescriptionLine1: 'Professor and Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology) at Nagarjuna College of Engineering & Technology, Bengaluru, with over <strong>20 years</strong> of teaching and research experience in Computer Science and Engineering.',
+    heroDescriptionLine2: 'Doctoral research from <strong>NIT Tiruchirappalli</strong> in Blockchain-Based Smart Contract Security. Resource person at <strong>60+ AICTE-sponsored FDPs and workshops</strong> across NITs and premier institutions. Guest Faculty at <strong>BITS WILP</strong> since 2011.',
     emailPrimary: 'lohithjj@gmail.com',
     emailSecondary: 'hod-cse@ncetmail.com',
     phone: '+91-9886745882',
@@ -352,7 +352,7 @@ export const fallbackData = {
   ],
 
   socialLinks: [
-    { id: 'soc-1', platform: 'Google Scholar', url: 'https://scholar.google.com/citations?user=dmSdWtEAAAAJ', icon: 'google-scholar.svg', order: 1 },
+    { id: 'soc-1', platform: 'Google Scholar', url: 'https://scholar.google.com/citations?user=dmSdWtEAAAAJ', icon: 'google scholar.svg', order: 1 },
     { id: 'soc-2', platform: 'ORCID', url: 'https://orcid.org/0000-0002-1845-6789', icon: 'orcid.svg', order: 2 },
     { id: 'soc-3', platform: 'LinkedIn', url: 'https://www.linkedin.com/in/dr-lohith-j-j', icon: 'linkedin.svg', order: 3 },
     { id: 'soc-4', platform: 'Scopus Author ID', url: 'https://www.scopus.com/authid/detail.uri?authorId=57200234567', icon: 'scopus.svg', order: 4 },

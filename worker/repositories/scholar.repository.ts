@@ -16,6 +16,30 @@ export class ScholarStatsRepository {
     expectedVersion: number
   ): Promise<ScholarStatsRecord> {
     const now = new Date().toISOString();
+    const existing = await this.get();
+
+    if (!existing) {
+      await this.db
+        .prepare(`
+          INSERT INTO scholar_stats (id, citations, h_index, i10_index, scie_papers_count, ieee_conferences_count, last_updated, source, version, updated_at, metadata)
+          VALUES ('scholarStats', ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
+        `)
+        .bind(
+          data.citations,
+          data.h_index,
+          data.i10_index,
+          data.scie_papers_count,
+          data.ieee_conferences_count,
+          data.last_updated,
+          data.source || 'google_scholar',
+          now,
+          data.metadata || null
+        )
+        .run();
+
+      const created = await this.get();
+      return created!;
+    }
 
     const result = await this.db
       .prepare(`

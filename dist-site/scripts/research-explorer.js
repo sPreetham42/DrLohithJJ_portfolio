@@ -25,80 +25,60 @@ export const RESEARCH_AREAS = [
     keywords: []
   },
   {
-    id: 'blockchain',
-    title: 'Blockchain Technology',
-    shortTitle: 'Blockchain',
-    badge: 'Primary Domain',
-    icon: '🔗',
-    description: 'Architectural frameworks for decentralized ledgers, Ethereum ecosystem, consensus protocols, and enterprise distributed applications.',
-    keywords: [
-      'blockchain', 'distributed ledger', 'dlt', 'ethereum', 'cryptocurrency',
-      'smart contract', 'consensus', 'defi', 'web3', 'bsct', 'crops',
-      'agricultural supply chain', 'supply chain'
-    ]
-  },
-  {
-    id: 'smart-contracts',
-    title: 'Smart Contract Security',
-    shortTitle: 'Smart Contracts',
-    badge: 'Doctoral Focus',
+    id: 'blockchain-security',
+    title: 'Blockchain & Smart Contract Security',
+    shortTitle: 'Blockchain & Smart Contracts',
+    badge: 'Doctoral & Primary Focus',
     icon: '🛡️',
-    description: 'Doctoral research from NIT Tiruchirappalli: automated vulnerability detection, Oyente static analysis extensions, TP-Detect bytecode imaging, and digital forensic frameworks.',
+    description: 'Decentralized architectures, automated smart contract vulnerability detection (Oyente extensions, TP-Detect), Ethereum ecosystem, and secure distributed ledger frameworks.',
     keywords: [
-      'smart contract', 'smart contracts', 'vulnerability', 'vulnerabilities',
-      'oyente', 'tp-detect', 'trigram-pixel', 'forensic', 'security analysis',
-      'solidity', 'deploying smart contracts', 'writing smart contracts'
+      'blockchain', 'smart contract', 'smart contracts', 'ethereum', 'solidity',
+      'vulnerability', 'vulnerabilities', 'oyente', 'tp-detect', 'trigram-pixel',
+      'distributed ledger', 'dlt', 'cryptocurrency', 'consensus', 'defi', 'web3',
+      'bsct', 'crops', 'agricultural supply chain', 'supply chain', 'security analysis',
+      'writing smart contracts', 'deploying smart contracts'
     ]
   },
   {
-    id: 'cybersecurity',
+    id: 'cybersecurity-forensics',
     title: 'Cybersecurity & Digital Forensics',
-    shortTitle: 'Cybersecurity',
+    shortTitle: 'Cybersecurity & Forensics',
     badge: 'Applied Security',
     icon: '🔒',
-    description: 'Multi-party computation for healthcare data sharing, digital ethics, lightweight cryptography, and threat mitigation frameworks.',
+    description: 'Digital forensic investigations, privacy-preserving multi-party computation, digital ethics, threat modeling, and institutional cybersecurity frameworks.',
     keywords: [
       'cybersecurity', 'cyber security', 'security', 'secure', 'forensic', 'forensics',
       'cryptology', 'cryptography', 'digital ethics', 'multi-party computation',
-      'attacks', 'isea', 'medical record', 'vulnerability', 'vulnerabilities'
-    ]
-  },
-  {
-    id: 'iot',
-    title: 'IoT & Wireless Sensor Networks',
-    shortTitle: 'IoT & WSN',
-    badge: 'Connected Systems',
-    icon: '📡',
-    description: 'Quad-LEACH routing protocols, RF energy transmission via centralized accumulator nodes, and lightweight IoT security.',
-    keywords: [
-      'iot', 'internet of things', 'wsn', 'wireless sensor', 'sensor network',
-      'sensor networks', 'quad-leach', 'energy accumulator', 'rf energy', 'connected'
+      'attacks', 'isea', 'medical record', 'vulnerability', 'vulnerabilities', 'threat', 'privacy',
+      'lightweight cryptography'
     ]
   },
   {
     id: 'ai-ml',
-    title: 'AI & Machine Learning in Security',
-    shortTitle: 'AI & ML',
+    title: 'Artificial Intelligence & Machine Learning',
+    shortTitle: 'AI & Machine Learning',
     badge: 'Intelligent Systems',
     icon: '🧠',
-    description: 'Ensemble machine learning classifiers, trigram-pixel representation models, and predictive intelligence for automated security analysis and biomedical complications.',
+    description: 'Ensemble machine learning architectures, deep learning models, automated classifier systems for healthcare diagnostics, and predictive analytics.',
     keywords: [
       'machine learning', 'deep learning', 'ai', 'artificial intelligence',
       'ensemble', 'predicting', 'prediction', 'predictive', 'tp-detect',
-      'classifiers', 'diabetic retinopathy', 'data science', 'ewash'
+      'classifiers', 'diabetic retinopathy', 'data science', 'ewash', 'nephropathy',
+      'classification', 'neural'
     ]
   },
   {
-    id: 'networks',
-    title: 'Computer Networks & Communications',
-    shortTitle: 'Networks',
-    badge: 'Core Foundations',
-    icon: '🌐',
-    description: 'Authored university textbook on Data Communications & Networking (Bangalore University), network protocol simulation, and outcome-based pedagogical frameworks.',
+    id: 'iot-networks',
+    title: 'IoT, WSN & Computer Networks',
+    shortTitle: 'IoT & Networks',
+    badge: 'Connected Systems',
+    icon: '📡',
+    description: 'Wireless sensor networks (Quad-LEACH protocols), centralized RF energy accumulation, network protocol optimization, and authored textbook on Data Communications & Networking.',
     keywords: [
+      'iot', 'internet of things', 'wsn', 'wireless sensor', 'sensor network',
+      'sensor networks', 'quad-leach', 'energy accumulator', 'rf energy', 'connected',
       'computer network', 'computer networks', 'networking', 'network', 'data communications',
-      'cisco packet tracer', 'routing', 'protocol', 'protocols', 'distributed',
-      'outcome based education', 'pedagogy', 'wsn', 'wireless sensor'
+      'cisco packet tracer', 'routing', 'protocol', 'protocols', 'outcome based education', 'pedagogy'
     ]
   }
 ];
@@ -111,6 +91,8 @@ export const DEFAULT_PUBLICATIONS = [
     venue: 'IEEE Access',
     publicationType: 'journal',
     year: 2025,
+    externalUrl: 'https://ieeexplore.ieee.org/document/10969779',
+    doi: 'https://ieeexplore.ieee.org/document/10969779',
     codeNumber: 'J1',
     featured: true
   },
@@ -175,6 +157,7 @@ export const DEFAULT_PUBLICATIONS = [
     venue: 'Journal of Engineering Education Transformations, vol. 2015',
     publicationType: 'journal',
     year: 2015,
+    externalUrl: 'https://scholar.google.com/citations?view_op=view_citation&hl=en&user=dmSdWtEAAAAJ&citation_for_view=dmSdWtEAAAAJ:W7OEmFMy1HYC',
     codeNumber: 'J7',
     featured: false
   },
@@ -392,14 +375,12 @@ export function renderResearchExplorerUI() {
   const badgeEl = document.getElementById('research-area-badge');
   const statPubsEl = document.getElementById('r-stat-pubs');
   const statTalksEl = document.getElementById('r-stat-talks');
-  const statSpanEl = document.getElementById('r-stat-span');
 
   if (titleEl) titleEl.textContent = currentArea.title;
   if (descEl) descEl.textContent = currentArea.description;
   if (badgeEl) badgeEl.textContent = currentArea.badge;
   if (statPubsEl) statPubsEl.textContent = String(stats.publicationCount);
   if (statTalksEl) statTalksEl.textContent = String(stats.talkCount);
-  if (statSpanEl) statSpanEl.textContent = stats.yearSpan;
 
   // 2. Update Tabs State
   const tabs = document.querySelectorAll('.research-tab-btn');

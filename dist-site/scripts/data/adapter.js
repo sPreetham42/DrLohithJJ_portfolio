@@ -151,16 +151,33 @@ async function hydrateProfile() {
     document.querySelectorAll('.hero-name-text').forEach(el => el.textContent = data.name);
   }
   if (data.credential) {
-    document.querySelectorAll('.hero-credential').forEach(el => el.textContent = data.credential);
+    document.querySelectorAll('.hero-credential').forEach(el => {
+      // If structured spans exist, keep structured format
+      const phdSpan = el.querySelector('.credential-phd');
+      const instSpan = el.querySelector('.credential-inst');
+      if (phdSpan && instSpan) {
+        if (data.credential.includes('·')) {
+          const parts = data.credential.split('·');
+          phdSpan.textContent = parts[0].trim();
+          instSpan.textContent = parts[1].trim();
+        } else if (data.credential.includes('—')) {
+          const parts = data.credential.split('—');
+          phdSpan.textContent = parts[0].trim();
+          instSpan.textContent = parts[1].trim();
+        }
+      } else {
+        el.textContent = data.credential;
+      }
+    });
   }
   if (data.designation) {
     document.querySelectorAll('.hero-eyebrow').forEach(el => el.textContent = data.designation);
   }
-  if (data.heroDescriptionLine1) {
+  if (data.heroDescriptionLine1 && !data.heroDescriptionLine1.includes('Welcome to my portfolio')) {
     const line1 = document.querySelector('.hero-desc-1');
     if (line1) line1.innerHTML = sanitizeControlledHtml(data.heroDescriptionLine1);
   }
-  if (data.heroDescriptionLine2) {
+  if (data.heroDescriptionLine2 && !data.heroDescriptionLine2.includes('Researching Blockchain and Security')) {
     const line2 = document.querySelector('.hero-desc-2');
     if (line2) line2.innerHTML = sanitizeControlledHtml(data.heroDescriptionLine2);
   }
@@ -191,9 +208,26 @@ async function hydrateProfile() {
     });
   }
 
+  if (data.phone) {
+    document.querySelectorAll('.contact-phone').forEach(el => {
+      el.textContent = data.phone;
+      if (el.tagName === 'A') el.href = `tel:${data.phone.replace(/[^+\d]/g, '')}`;
+    });
+    document.querySelectorAll('.contact-item-phone').forEach(el => {
+      el.style.display = '';
+    });
+  }
+
   if (data.address) {
     document.querySelectorAll('.contact-location-address').forEach(el => {
       el.textContent = data.address;
+    });
+  }
+
+  if (data.yearsExperience) {
+    document.querySelectorAll('.stat-experience').forEach(el => {
+      el.textContent = `${data.yearsExperience}`;
+      el.setAttribute('data-count', data.yearsExperience);
     });
   }
 }
@@ -204,13 +238,19 @@ async function hydrateScholarStats() {
   if (!stats) return;
 
   if (stats.citations && stats.citations > 0) {
-    document.querySelectorAll('.stat-citations').forEach(el => el.textContent = `${stats.citations}+`);
+    document.querySelectorAll('.stat-citations').forEach(el => {
+      el.textContent = `${stats.citations}`;
+      el.setAttribute('data-count', stats.citations);
+    });
   }
   if (stats.hIndex && stats.hIndex > 0) {
     document.querySelectorAll('.stat-hindex').forEach(el => el.textContent = stats.hIndex);
   }
   if (stats.sciePapersCount && stats.sciePapersCount > 0) {
-    document.querySelectorAll('.stat-papers').forEach(el => el.textContent = stats.sciePapersCount);
+    document.querySelectorAll('.stat-papers').forEach(el => {
+      el.textContent = stats.sciePapersCount;
+      el.setAttribute('data-count', stats.sciePapersCount);
+    });
   }
 
   if (typeof updateScholarHealthUI === 'function') {
@@ -269,6 +309,11 @@ function renderPubCard(p, codeNum) {
 async function hydrateTalks() {
   const talks = await publicDataAdapter.getTalks();
   if (talks && talks.length > 0) {
+    const talkCount = talks.length >= 60 ? talks.length : 60;
+    document.querySelectorAll('.stat-talks').forEach(el => {
+      el.textContent = `${talkCount}`;
+      el.setAttribute('data-count', talkCount);
+    });
     if (typeof setTalksData === 'function') {
       setTalksData(talks);
     }
@@ -380,3 +425,4 @@ async function hydrateSocialLinks() {
     `;
   }).join('');
 }
+
