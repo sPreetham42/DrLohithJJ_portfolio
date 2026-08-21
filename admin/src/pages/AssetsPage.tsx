@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HardDrive, CheckCircle2, Shield } from 'lucide-react';
+import { HardDrive, CheckCircle2, Shield, Info } from 'lucide-react';
 import { FormSection } from '../components/common/FormSection';
 import { AssetUploader } from '../components/common/AssetUploader';
 
@@ -19,8 +19,8 @@ export const AssetsPage: React.FC = () => {
   return (
     <div>
       <FormSection
-        title="Cloudflare R2 Direct Upload Architecture"
-        description="Presigned URL boundary for zero-overhead direct object storage uploads"
+        title="Media & Document Asset Architecture"
+        description="Static asset delivery with optional Cloudflare R2 Object Storage presigned uploads"
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div
@@ -34,19 +34,17 @@ export const AssetsPage: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-primary)', fontWeight: 600, marginBottom: '4px' }}>
-              <Shield size={16} /> Edge-Enforced Security Flow
+              <Shield size={16} /> Asset Storage Architecture
             </div>
             <ol style={{ paddingLeft: '20px', color: 'var(--text-muted)' }}>
-              <li>Administrator selects document or image in Admin Dashboard.</li>
-              <li>Browser requests short-lived (900s) presigned upload authorization from <code>POST /api/v1/admin/assets/presigned-url</code>.</li>
-              <li>Browser transmits binary directly to Cloudflare R2 bucket via HTTP PUT (zero Worker CPU/RAM memory overhead).</li>
-              <li>D1 stores lightweight relative path and metadata reference.</li>
+              <li><strong>Default / Active Mode:</strong> High-resolution portraits, certificates, and presentation slides are canonically committed to repository <code>/assets/</code> and deployed alongside the site.</li>
+              <li><strong>R2 Direct Upload:</strong> When an <code>ASSETS_BUCKET</code> R2 binding is configured in <code>wrangler.toml</code>, the Worker dynamically issues presigned upload contracts for direct binary transfer.</li>
             </ol>
           </div>
 
           <div style={{ marginTop: '8px' }}>
             <AssetUploader
-              label="Upload Asset to R2 Bucket"
+              label="Upload Asset (R2 Direct or Reference)"
               currentAssetPath={null}
               onAssetUploaded={handleNewAsset}
               allowedExtensions={['.jpg', '.jpeg', '.png', '.pdf']}

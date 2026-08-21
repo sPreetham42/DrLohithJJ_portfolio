@@ -70,9 +70,6 @@ def get_d1_config():
     ).strip()
     
     sync_secret = os.environ.get('SCHOLAR_SYNC_SECRET', '').strip()
-    if not sync_secret and os.environ.get('NODE_ENV') != 'production':
-        # Default dev key matching worker local environment
-        sync_secret = 'dev-scholar-secret-key-12345'
         
     read_url = os.environ.get(
         'PUBLIC_READ_URL',

@@ -36,9 +36,9 @@ export async function authenticateAdmin(request: Request, env: Env): Promise<Aut
         throw new ForbiddenError('Cross-site state-changing requests are strictly forbidden');
       }
 
-      // If X-Admin-Request is configured/expected by the Admin SPA client
-      if (adminHeader && adminHeader !== '1' && adminHeader.toLowerCase() !== 'true') {
-        throw new ForbiddenError('Invalid X-Admin-Request CSRF header value');
+      // Enforce mandatory custom header for all state-changing mutations in SESSION mode
+      if (!adminHeader || (adminHeader !== '1' && adminHeader.toLowerCase() !== 'true')) {
+        throw new ForbiddenError('Missing or invalid X-Admin-Request CSRF protection header');
       }
     }
 

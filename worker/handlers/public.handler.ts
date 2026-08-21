@@ -92,7 +92,11 @@ export async function handleGetPublications(request: Request, env: Env): Promise
 export async function handleGetTalks(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const yearParam = url.searchParams.get('year');
-  const yearFilter = yearParam ? parseInt(yearParam, 10) : null;
+  let yearFilter: number | undefined = undefined;
+  if (yearParam) {
+    const parsed = parseInt(yearParam, 10);
+    if (!isNaN(parsed)) yearFilter = parsed;
+  }
 
   const repo = new TalkRepository(env.DB);
   const list = await repo.getAllPublic(yearFilter);

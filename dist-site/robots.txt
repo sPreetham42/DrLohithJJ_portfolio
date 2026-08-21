@@ -1,0 +1,7 @@
+# robots.txt for Dr. Lohith J.J. Academic Portfolio
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: https://drlohithjj.in/sitemap.xml

@@ -1,24 +1,63 @@
+// ================================================================
+// GOOGLE SCHOLAR SYNC AUTOMATION HANDLER
+// Ingests automated daily metrics from GitHub Actions pipeline into D1.
+// Enforces constant-time secret validation, fail-closed security, and idempotency.
+// ================================================================
+
 import { Env } from '../types';
 import { ScholarStatsRepository } from '../repositories/scholar.repository';
 import { ScholarSyncRunRepository } from '../repositories/scholar_sync.repository';
-import { UnauthorizedError, ValidationError } from '../errors';
+import { UnauthorizedError, ValidationError, ApiError } from '../errors';
 import { getNoCacheHeaders, invalidateCache } from '../middleware/cache';
 import { jsonResponse } from './public.handler';
 
-export async function handleScholarSyncAutomation(request: Request, env: Env): Promise<Response> {
-  const authHeader = request.headers.get('Authorization') || '';
-  const token = authHeader.replace(/^Bearer\s+/i, '').trim();
+export function constantTimeCompare(a: string, b: string): boolean {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const aLen = a.length;
+  const bLen = b.length;
+  let mismatch = aLen ^ bLen;
+  for (let i = 0; i < Math.max(aLen, bLen); i++) {
+    const charA = i < aLen ? a.charCodeAt(i) : 0;
+    const charB = i < bLen ? b.charCodeAt(i) : 0;
+    mismatch |= charA ^ charB;
+  }
+  return mismatch === 0;
+}
 
-  const configuredSecret = env.SCHOLAR_SYNC_SECRET || 'dev-scholar-secret-key-12345';
-  if (!token || token !== configuredSecret) {
-    throw new UnauthorizedError('Invalid or missing automation secret token in Authorization header');
+export async function handleScholarSyncAutomation(request: Request, env: Env): Promise<Response> {
+  const configuredSecret = (env.SCHOLAR_SYNC_SECRET || '').trim();
+
+  // Fail-Closed: Never substitute a hardcoded fallback secret in production
+  if (!configuredSecret) {
+    throw new ApiError(
+      500,
+      'AUTH_CONFIG_ERROR',
+      'SCHOLAR_SYNC_SECRET is not configured on the server. Automation is disabled.'
+    );
   }
 
-  const body = await request.json() as any;
+  const authHeader = request.headers.get('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new UnauthorizedError('Missing or malformed Authorization header. Expected Bearer token format.');
+  }
+
+  const token = authHeader.substring(7).trim();
+  if (!token || !constantTimeCompare(token, configuredSecret)) {
+    throw new UnauthorizedError('Invalid automation secret token provided');
+  }
+
+  let body: any;
+  try {
+    body = await request.json();
+  } catch {
+    throw new ValidationError('Malformed JSON payload in automation request');
+  }
+
   const syncRunId = body.syncRunId;
   const citations = Number(body.citations);
   const hIndex = Number(body.hIndex);
   const i10Index = Number(body.i10Index);
+  const source = typeof body.source === 'string' && body.source.trim() ? body.source.trim() : 'google_scholar';
   const lastUpdated = body.lastUpdated || new Date().toISOString();
 
   if (!syncRunId || typeof syncRunId !== 'string') {
@@ -45,7 +84,7 @@ export async function handleScholarSyncAutomation(request: Request, env: Env): P
           scie_papers_count: existing ? existing.scie_papers_count : 4,
           ieee_conferences_count: existing ? existing.ieee_conferences_count : 6,
           last_updated: stats.last_updated,
-          source: 'google_scholar',
+          source,
           metadata: existing ? existing.metadata : null
         },
         version
@@ -55,12 +94,16 @@ export async function handleScholarSyncAutomation(request: Request, env: Env): P
 
   await invalidateCache('scholar-stats', env);
 
-  return jsonResponse({
-    status: 'success',
-    idempotencyResult: result.status,
-    syncRunId,
-    citations,
-    hIndex,
-    i10Index
-  }, 200, getNoCacheHeaders());
+  return jsonResponse(
+    {
+      status: 'success',
+      idempotencyResult: result.status,
+      syncRunId,
+      citations,
+      hIndex,
+      i10Index
+    },
+    200,
+    getNoCacheHeaders()
+  );
 }

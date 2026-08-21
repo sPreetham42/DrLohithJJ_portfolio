@@ -40,6 +40,12 @@ fs.copyFileSync(path.join(ROOT_DIR, 'index.html'), path.join(OUTPUT_DIR, 'index.
 if (fs.existsSync(path.join(ROOT_DIR, 'CNAME'))) {
   fs.copyFileSync(path.join(ROOT_DIR, 'CNAME'), path.join(OUTPUT_DIR, 'CNAME'));
 }
+if (fs.existsSync(path.join(ROOT_DIR, 'robots.txt'))) {
+  fs.copyFileSync(path.join(ROOT_DIR, 'robots.txt'), path.join(OUTPUT_DIR, 'robots.txt'));
+}
+if (fs.existsSync(path.join(ROOT_DIR, 'sitemap.xml'))) {
+  fs.copyFileSync(path.join(ROOT_DIR, 'sitemap.xml'), path.join(OUTPUT_DIR, 'sitemap.xml'));
+}
 
 const copyDirRecursive = (src, dest) => {
   if (!fs.existsSync(src)) return;

@@ -1,4 +1,7 @@
-import crypto from 'node:crypto';
+// ================================================================
+// SCHOLAR SYNC RUN REPOSITORY
+// Idempotency tracking and replay protection using standard Web Crypto SHA-256
+// ================================================================
 
 export interface ScholarSyncRunRecord {
   sync_run_id: string;
@@ -8,6 +11,14 @@ export interface ScholarSyncRunRecord {
   payload_sha256: string;
   status: 'success' | 'failed';
   created_at: string;
+}
+
+export async function computeSha256Hex(content: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(content);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 export class ScholarSyncRunRepository {
@@ -30,7 +41,7 @@ export class ScholarSyncRunRepository {
       h_index: payload.h_index,
       i10_index: payload.i10_index
     });
-    const payloadSha256 = crypto.createHash('sha256').update(payloadJson).digest('hex');
+    const payloadSha256 = await computeSha256Hex(payloadJson);
 
     const existing = await this.getById(syncRunId);
     if (existing) {
@@ -50,8 +61,11 @@ export class ScholarSyncRunRepository {
     await this.db
       .prepare(`
         INSERT INTO scholar_sync_runs (
-          sync_run_id, citations, h_index, i10_index, payload_sha256, status, created_at
-        ) VALUES (?, ?, ?, ?, ?, 'success', ?)
+          sync_run_id, citations, h_index, i10_index,
+          payload_sha256, status, created_at
+        ) VALUES (
+          ?, ?, ?, ?, ?, 'success', ?
+        )
       `)
       .bind(
         syncRunId,
@@ -64,7 +78,6 @@ export class ScholarSyncRunRepository {
       .run();
 
     const created = await this.getById(syncRunId);
-    if (!created) throw new Error('Failed to record scholar sync run');
-    return { status: 'applied', record: created };
+    return { status: 'applied', record: created! };
   }
 }

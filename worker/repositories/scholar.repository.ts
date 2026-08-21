@@ -1,5 +1,11 @@
+// ================================================================
+// SCHOLAR STATS REPOSITORY
+// Singleton scholar metrics data access with atomic D1 batch mutation & revision auditing
+// ================================================================
+
 import { ScholarStatsRecord } from '../types';
 import { ConcurrencyConflictError } from '../errors';
+import { RevisionRepository } from './revision.repository';
 
 export class ScholarStatsRepository {
   constructor(private db: D1Database) {}
@@ -11,37 +17,12 @@ export class ScholarStatsRepository {
       .first<ScholarStatsRecord>();
   }
 
-  async update(
+  prepareUpdateStatement(
     data: Omit<ScholarStatsRecord, 'id' | 'version' | 'updated_at'>,
-    expectedVersion: number
-  ): Promise<ScholarStatsRecord> {
-    const now = new Date().toISOString();
-    const existing = await this.get();
-
-    if (!existing) {
-      await this.db
-        .prepare(`
-          INSERT INTO scholar_stats (id, citations, h_index, i10_index, scie_papers_count, ieee_conferences_count, last_updated, source, version, updated_at, metadata)
-          VALUES ('scholarStats', ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
-        `)
-        .bind(
-          data.citations,
-          data.h_index,
-          data.i10_index,
-          data.scie_papers_count,
-          data.ieee_conferences_count,
-          data.last_updated,
-          data.source || 'google_scholar',
-          now,
-          data.metadata || null
-        )
-        .run();
-
-      const created = await this.get();
-      return created!;
-    }
-
-    const result = await this.db
+    expectedVersion: number,
+    now: string
+  ): D1PreparedStatement {
+    return this.db
       .prepare(`
         UPDATE scholar_stats SET
           citations = ?,
@@ -67,15 +48,84 @@ export class ScholarStatsRepository {
         now,
         data.metadata || null,
         expectedVersion
-      )
-      .run();
+      );
+  }
 
-    if (!result.success || result.meta.changes === 0) {
+  async updateWithRevision(
+    data: Omit<ScholarStatsRecord, 'id' | 'version' | 'updated_at'>,
+    expectedVersion: number,
+    author: string
+  ): Promise<ScholarStatsRecord> {
+    const now = new Date().toISOString();
+    const existing = await this.get();
+
+    if (!existing) {
+      const insertStmt = this.db
+        .prepare(`
+          INSERT INTO scholar_stats (
+            id, citations, h_index, i10_index, scie_papers_count,
+            ieee_conferences_count, last_updated, source, version, updated_at, metadata
+          ) VALUES ('scholarStats', ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
+        `)
+        .bind(
+          data.citations,
+          data.h_index,
+          data.i10_index,
+          data.scie_papers_count,
+          data.ieee_conferences_count,
+          data.last_updated,
+          data.source || 'google_scholar',
+          now,
+          data.metadata || null
+        );
+
+      const revRepo = new RevisionRepository(this.db);
+      const revStmt = revRepo.createRevisionStatement({
+        id: `rev-scholarStats-scholarStats-1-${Date.now()}`,
+        entity_type: 'scholarStats',
+        entity_id: 'scholarStats',
+        version: 1,
+        action: 'create',
+        payload_json: JSON.stringify({ ...data, version: 1 }),
+        author,
+        created_at: now
+      });
+
+      await this.db.batch([insertStmt, revStmt]);
+      const created = await this.get();
+      return created!;
+    }
+
+    const nextVersion = expectedVersion + 1;
+    const updateStmt = this.prepareUpdateStatement(data, expectedVersion, now);
+
+    const revRepo = new RevisionRepository(this.db);
+    const revStmt = revRepo.createConditionalRevisionStatement({
+      id: `rev-scholarStats-scholarStats-${nextVersion}-${Date.now()}`,
+      entity_type: 'scholarStats',
+      entity_id: 'scholarStats',
+      version: nextVersion,
+      action: 'update',
+      payload_json: JSON.stringify({ ...data, version: nextVersion }),
+      author,
+      created_at: now
+    });
+
+    const [updateRes] = await this.db.batch([updateStmt, revStmt]);
+
+    if (!updateRes.success || updateRes.meta.changes === 0) {
       throw new ConcurrencyConflictError('scholarStats', 'scholarStats', expectedVersion);
     }
 
     const updated = await this.get();
-    if (!updated) throw new Error('Failed to retrieve updated scholarStats');
+    if (!updated) throw new Error('Failed to retrieve updated scholar stats');
     return updated;
+  }
+
+  async update(
+    data: Omit<ScholarStatsRecord, 'id' | 'version' | 'updated_at'>,
+    expectedVersion: number
+  ): Promise<ScholarStatsRecord> {
+    return await this.updateWithRevision(data, expectedVersion, 'system');
   }
 }

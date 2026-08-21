@@ -351,6 +351,10 @@ export const fallbackData = {
     }
   ],
 
+  get skillCategories() {
+    return this.skills;
+  },
+
   socialLinks: [
     { id: 'soc-1', platform: 'Google Scholar', url: 'https://scholar.google.com/citations?user=dmSdWtEAAAAJ', icon: 'google scholar.svg', order: 1 },
     { id: 'soc-2', platform: 'ORCID', url: 'https://orcid.org/0000-0002-1845-6789', icon: 'orcid.svg', order: 2 },

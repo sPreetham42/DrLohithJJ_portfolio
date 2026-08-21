@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
 interface ConfirmDialogProps {
@@ -22,11 +22,27 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   onConfirm,
   onCancel
 }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCancel();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onCancel]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content" style={{ maxWidth: '440px' }}>
+    <div className="modal-overlay" role="presentation" onClick={onCancel}>
+      <div
+        className="modal-content"
+        style={{ maxWidth: '440px' }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirm-dialog-title"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           {isDestructive && (
             <div
@@ -44,7 +60,9 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
               <AlertTriangle size={22} />
             </div>
           )}
-          <h3 className="modal-title">{title}</h3>
+          <h3 id="confirm-dialog-title" className="modal-title">
+            {title}
+          </h3>
         </div>
 
         <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
