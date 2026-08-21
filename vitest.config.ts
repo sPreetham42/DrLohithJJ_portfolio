@@ -4,7 +4,11 @@ export default defineConfig({
   test: {
     include: ['tests/**/*.test.ts'],
     exclude: ['tests/workers/**', 'node_modules/**'],
-    pool: 'threads',
-    fileParallelism: false
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: true
+      }
+    }
   }
 });
