@@ -114,6 +114,55 @@ export function initTalksMarquee(initialTalks = null) {
 
     // Manual Mouse / Trackpad Wheel Control
     marquee.addEventListener('wheel', handleMarqueeWheel, { passive: false });
+
+    // Touch Swipe Interaction for Mobile / Tablets
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouchActive = false;
+    let isHorizontalSwipe = false;
+
+    marquee.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isTouchActive = true;
+      isHorizontalSwipe = false;
+      isManualScrolling = true;
+      if (manualScrollTimer) clearTimeout(manualScrollTimer);
+    }, { passive: true });
+
+    marquee.addEventListener('touchmove', (e) => {
+      if (!isTouchActive || e.touches.length !== 1) return;
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = touchStartX - currentX;
+      const deltaY = touchStartY - currentY;
+
+      if (!isHorizontalSwipe) {
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 6) {
+          isHorizontalSwipe = true;
+        }
+      }
+
+      if (isHorizontalSwipe) {
+        if (e.cancelable) e.preventDefault();
+        touchStartX = currentX;
+        touchStartY = currentY;
+        applyWheelOffset(deltaX);
+      }
+    }, { passive: false });
+
+    const endTouch = () => {
+      if (!isTouchActive) return;
+      isTouchActive = false;
+      if (manualScrollTimer) clearTimeout(manualScrollTimer);
+      manualScrollTimer = setTimeout(() => {
+        isManualScrolling = false;
+      }, 1000);
+    };
+
+    marquee.addEventListener('touchend', endTouch, { passive: true });
+    marquee.addEventListener('touchcancel', endTouch, { passive: true });
   }
 
   // Animation Loop

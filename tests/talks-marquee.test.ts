@@ -58,4 +58,16 @@ describe('Featured Talks Marquee Selection & Ordering', () => {
     expect(fromEmpty.length).toBeGreaterThanOrEqual(6);
     expect(fromEmpty[0].year).toBe(2026);
   });
+
+  it('renders Set A (primary talks) and Set B (exact replica) for infinite loop wrapping', () => {
+    const mockTalks = [
+      { id: 't1', title: 'Keynote 1', year: 2026, order: 1, published: 1 },
+      { id: 't2', title: 'Keynote 2', year: 2025, order: 2, published: 1 }
+    ];
+
+    const featured = getFeaturedTalks(mockTalks);
+    expect(featured.length).toBe(2);
+    expect(featured[0].title).toBe('Keynote 1');
+    expect(featured[1].title).toBe('Keynote 2');
+  });
 });
