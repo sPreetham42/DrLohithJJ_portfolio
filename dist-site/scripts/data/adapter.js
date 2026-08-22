@@ -157,7 +157,7 @@ async function hydrateProfile() {
       const instSpan = el.querySelector('.credential-inst');
       if (markSpan && instSpan) {
         let markText = 'Ph.D.';
-        let instText = 'NIT Tiruchirappalli';
+        let instText = 'National Institute of Technology, Tiruchirappalli';
 
         if (data.credential.includes('·')) {
           const parts = data.credential.split('·');
@@ -169,8 +169,8 @@ async function hydrateProfile() {
           instText = parts[1].trim();
         }
 
-        if (instText.includes('National Institute of Technology') || instText.includes('NIT')) {
-          instText = 'NIT Tiruchirappalli';
+        if (instText.includes('NIT') && !instText.includes('National Institute')) {
+          instText = 'National Institute of Technology, Tiruchirappalli';
         }
 
         markSpan.textContent = markText;

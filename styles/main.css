@@ -404,52 +404,55 @@ section {
 
 .hero-credential {
   display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  row-gap: 6px;
-  margin-top: 10px;
-  margin-bottom: var(--space-xs);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  margin-top: 14px;
+  margin-bottom: var(--space-md);
+  padding: 10px 16px 11px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--navy-muted);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  max-width: fit-content;
   opacity: 0;
   transform: translateY(15px);
   animation: fadeUp 0.7s var(--ease-out) 0.3s forwards;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-credential:hover {
+  border-left-color: var(--navy);
+  box-shadow: var(--shadow-md);
 }
 
 .credential-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.78125rem;
-  font-weight: var(--fw-bold);
-  color: var(--navy);
-  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--navy-muted);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  line-height: 1;
-  padding: 3px 8px 3px 8px;
-  border: 1px solid rgba(23, 42, 58, 0.24);
-  border-radius: var(--radius-sm);
-  background-color: rgba(23, 42, 58, 0.035);
-  box-shadow: 0 1px 2px rgba(23, 42, 58, 0.03);
+  line-height: 1.2;
+  border: none;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .credential-divider {
-  display: inline-block;
-  width: 1px;
-  height: 14px;
-  background-color: rgba(23, 42, 58, 0.22);
-  margin: 0 11px;
-  flex-shrink: 0;
-  align-self: center;
+  display: none;
 }
 
 .credential-inst {
   font-family: var(--font-display);
-  font-size: 1.1875rem;
-  font-weight: var(--fw-medium);
-  color: var(--navy-muted);
-  letter-spacing: 0.015em;
-  line-height: 1;
-  align-self: center;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
 }
 
 .hero-eyebrow {
@@ -2546,9 +2549,15 @@ body.nav-open {
   }
 
   .hero-credential {
-    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: var(--space-xs);
-    width: 100%;
+    width: fit-content;
+    max-width: min(440px, 92vw);
+    border-left: 1px solid var(--border);
+    border-top: 3px solid var(--navy-muted);
   }
 
   .hero-domains {
