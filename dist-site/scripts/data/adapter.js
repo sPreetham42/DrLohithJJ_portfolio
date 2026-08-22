@@ -152,12 +152,12 @@ async function hydrateProfile() {
   }
   if (data.credential) {
     document.querySelectorAll('.hero-credential').forEach(el => {
-      // Support structured credential spans (.credential-mark, .credential-phd, .credential-inst)
-      const markSpan = el.querySelector('.credential-mark, .credential-phd');
-      const instSpan = el.querySelector('.credential-inst');
+      // Support structured credential spans (.gold-badge-mark, .credential-mark, .gold-badge-inst, .credential-inst)
+      const markSpan = el.querySelector('.gold-badge-mark, .credential-mark, .credential-phd');
+      const instSpan = el.querySelector('.gold-badge-inst, .credential-inst');
       if (markSpan && instSpan) {
         let markText = 'Ph.D.';
-        let instText = 'National Institute of Technology, Tiruchirappalli';
+        let instText = 'NIT Trichy';
 
         if (data.credential.includes('·')) {
           const parts = data.credential.split('·');
@@ -169,8 +169,8 @@ async function hydrateProfile() {
           instText = parts[1].trim();
         }
 
-        if (instText.includes('NIT') && !instText.includes('National Institute')) {
-          instText = 'National Institute of Technology, Tiruchirappalli';
+        if (instText.includes('National Institute') || instText.includes('Tiruchirappalli') || instText.includes('NIT')) {
+          instText = 'NIT Trichy';
         }
 
         markSpan.textContent = markText;
@@ -334,19 +334,20 @@ function renderPubCard(p, codeNum) {
 async function hydrateTalks() {
   const talks = await publicDataAdapter.getTalks();
   if (talks && talks.length > 0) {
-    const talkCount = talks.length >= 60 ? talks.length : 60;
+    const validTalks = talks.filter(t => !t.title?.includes('(Attended)') && t.talkType !== 'attended');
+    const talkCount = validTalks.length >= 60 ? validTalks.length : 60;
     document.querySelectorAll('.stat-talks').forEach(el => {
       el.textContent = `${talkCount}`;
       el.setAttribute('data-count', talkCount);
     });
     if (typeof setTalksData === 'function') {
-      setTalksData(talks);
+      setTalksData(validTalks);
     }
     if (typeof setResearchExplorerData === 'function') {
-      setResearchExplorerData({ talks });
+      setResearchExplorerData({ talks: validTalks });
     }
     if (typeof updateTalksMarquee === 'function') {
-      updateTalksMarquee(talks);
+      updateTalksMarquee(validTalks);
     }
   }
 }

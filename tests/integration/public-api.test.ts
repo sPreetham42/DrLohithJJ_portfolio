@@ -83,7 +83,7 @@ describe('Real Worker + D1 Integration: Public Read Endpoints', () => {
     const response = await routeRequest(request, testEnv);
     expect(response.status).toBe(200);
     const body = (await response.json()) as any;
-    expect(body.length).toBe(53);
+    expect(body.length).toBe(43);
     expect(body[0].title).toBeDefined();
     expect(body[0].venue).toBeDefined();
     expect(body[0].year).toBeDefined();

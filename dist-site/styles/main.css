@@ -162,18 +162,24 @@ section {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: space-between;
+  gap: clamp(6px, 1.1vw, 16px);
+  width: 100%;
+  margin-left: 0;
 }
 
 .nav-link {
-  font-family: var(--font-mono);
-  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
   font-weight: var(--fw-semibold);
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: var(--space-xs) 0;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  padding: 6px 0;
   position: relative;
+  line-height: 1;
   transition: color var(--duration-fast) var(--ease-in-out);
 }
 
@@ -184,7 +190,7 @@ section {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--emerald);
+  background: var(--gold);
   transition: width var(--duration-normal) var(--ease-out);
 }
 
@@ -402,68 +408,59 @@ section {
   gap: 12px;
 }
 
-/* Editorial Academic Credential Typography Lockup (Pure Editorial - No Box/Plaque) */
+/* Restored & Refined Gold Academic Distinction Badge */
 .hero-credential {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 12px;
   margin-bottom: var(--space-md);
-  padding: 0;
-  background: none;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
   opacity: 0;
   transform: translateY(15px);
   animation: fadeUp 0.7s var(--ease-out) 0.3s forwards;
 }
 
-.credential-eyebrow {
+.academic-gold-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 12px;
+  background: rgba(196, 154, 74, 0.07);
+  border: 1px solid rgba(196, 154, 74, 0.35);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 3px rgba(23, 42, 58, 0.04);
+  transition: border-color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+}
+
+.academic-gold-badge:hover {
+  border-color: rgba(196, 154, 74, 0.6);
+  background: rgba(196, 154, 74, 0.1);
+}
+
+.gold-badge-mark {
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  color: var(--navy-muted);
-  letter-spacing: 0.12em;
+  color: var(--navy);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   line-height: 1;
 }
 
-.credential-body {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px;
+.gold-badge-divider {
+  color: var(--gold);
+  font-size: 0.65rem;
+  line-height: 1;
+  opacity: 0.85;
 }
 
-.credential-mark {
-  font-family: var(--font-heading);
-  font-size: 1.02rem;
-  font-weight: 700;
+.gold-badge-inst {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--navy);
-  line-height: 1.35;
-  border: none;
-  background: none;
-  padding: 0;
-  box-shadow: none;
-  border-radius: 0;
-}
-
-.credential-dot {
-  font-size: 1rem;
-  color: var(--navy-muted);
-  opacity: 0.6;
-  user-select: none;
-}
-
-.credential-inst {
-  font-family: var(--font-heading);
-  font-size: 1.02rem;
-  font-weight: 500;
-  color: var(--navy-muted);
-  letter-spacing: -0.01em;
-  line-height: 1.35;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
 .hero-eyebrow {
@@ -2652,21 +2649,10 @@ body.nav-open {
   }
 
   .hero-credential {
-    align-items: flex-start;
-    text-align: left;
-    margin-left: 0;
-    margin-right: 0;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: var(--space-xs);
-    width: 100%;
-    max-width: 100%;
-    border: none;
-    background: none;
-    box-shadow: none;
-  }
-
-  .credential-body {
-    justify-content: flex-start;
-    text-align: left;
   }
 
   .hero-domains {
@@ -2737,6 +2723,12 @@ body.nav-open {
 
   .research-overview-header {
     flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .research-overview-info {
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   .research-stats-pill {
@@ -2746,12 +2738,196 @@ body.nav-open {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --space-section: 2.25rem;
+    --container-padding: 1rem;
+    --space-2xl: 1.5rem;
+    --space-3xl: 1.75rem;
+    --nav-height: 52px;
+  }
+
+  .section-title {
+    font-size: clamp(1.35rem, 4.5vw, 1.6rem);
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .section-subtitle {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    margin-bottom: 1rem !important;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .divider-line {
+    width: 32px;
+    height: 2px;
+    margin-bottom: 8px;
+  }
+
+  .hero {
+    padding-top: 1.25rem;
+    padding-bottom: 0;
+    min-height: auto;
+  }
+
+  .hero-name {
+    font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .academic-gold-badge {
+    padding: 3px 9px;
+    gap: 6px;
+    border-radius: 4px;
+  }
+
+  .gold-badge-mark {
+    font-size: 0.72rem;
+  }
+
+  .gold-badge-inst {
+    font-size: 0.78rem;
+  }
+
+  .hero-social-link {
+    width: 34px;
+    height: 34px;
+  }
+
   .research-domains-cards {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .research-domain-card {
+    padding: 12px 14px;
+    min-height: auto;
+    gap: 8px;
+  }
+
+  .research-overview-card {
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+    border-left-width: 3px;
+  }
+
+  .research-area-title {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+  }
+
+  .research-area-desc {
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .research-stats-pill {
+    padding: 8px 12px;
+    gap: 10px;
+    border-radius: 6px;
+  }
+
+  .r-stat-val {
+    font-size: 1.1rem;
+  }
+
+  .r-stat-lbl {
+    font-size: 8.5px;
   }
 
   .research-featured-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .featured-research-card {
+    padding: 12px 14px;
+    min-height: auto;
+  }
+
+  .pub-card {
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    min-height: auto;
+    border-radius: 6px;
+  }
+
+  .pub-title {
+    font-size: 0.875rem;
+    line-height: 1.38;
+    margin-bottom: 4px;
+  }
+
+  .pub-authors,
+  .pub-venue {
+    font-size: 0.78125rem;
+    line-height: 1.38;
+  }
+
+  .pub-number {
+    font-size: 9.5px;
+    padding: 1px 5px;
+  }
+
+  .explorer-talk-card,
+  .talk-card {
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    min-height: auto;
+    border-radius: 6px;
+  }
+
+  .talk-topic,
+  .explorer-talk-title {
+    font-size: 0.875rem;
+    line-height: 1.38;
+  }
+
+  .talk-venue,
+  .explorer-talk-venue {
+    font-size: 0.78125rem;
+  }
+
+  .scholars-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .scholar-card {
+    padding: 14px;
+    min-height: auto;
+    border-radius: 6px;
+  }
+
+  .scholar-name {
+    font-size: 0.95rem;
+  }
+
+  .scholar-affiliation,
+  .scholar-guidance {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .scholar-badge {
+    font-size: 9.5px;
+    padding: 2px 6px;
+  }
+
+  .btn {
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
   }
 
   .nav-links {
@@ -2762,7 +2938,7 @@ body.nav-open {
     right: 0;
     background: var(--bg-primary);
     flex-direction: column;
-    padding: var(--space-lg) var(--space-xl);
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-md);
     max-height: calc(100vh - var(--nav-height) - 16px);
@@ -2781,16 +2957,18 @@ body.nav-open {
 
   .about-subgrid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .talk-filters {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-md);
+    gap: 10px;
   }
 
   .footer .container {
@@ -2801,40 +2979,25 @@ body.nav-open {
 
 @media (max-width: 600px) {
   .hero-portrait-card {
-    max-width: 295px;
+    max-width: 275px;
   }
 
   .hero-photo-frame {
-    width: min(275px, 86vw);
-    height: min(340px, 108vw);
+    width: min(250px, 82vw);
+    height: min(310px, 102vw);
     margin: 0 auto;
   }
 
   .talks-marquee-card {
-    flex: 0 0 270px;
-    width: 270px;
-    height: 150px;
-  }
-
-  .hero-social-link {
-    width: 36px;
-    height: 36px;
-  }
-
-  .hero-social-link svg,
-  .hero-social-link img {
-    width: 17px;
-    height: 17px;
-  }
-
-  .hero-social-link::after {
-    display: none;
+    flex: 0 0 250px;
+    width: 250px;
+    height: 140px;
   }
 
   .stats-bar {
     grid-template-columns: repeat(2, 1fr);
     display: grid;
-    gap: var(--space-sm);
+    gap: 8px;
   }
 
   .stat-divider {
@@ -2843,29 +3006,36 @@ body.nav-open {
 }
 
 @media (max-width: 480px) {
-  .credential-divider {
-    margin: 0 6px;
+  .hero-name {
+    font-size: clamp(1.6rem, 7.5vw, 2.1rem);
   }
 
-  .credential-inst {
+  .research-overview-card {
+    padding: 12px;
+  }
+
+  .r-stat-val {
     font-size: 1.05rem;
   }
 
-  .hero-eyebrow {
-    font-size: 0.95rem;
+  .r-stat-lbl {
+    font-size: 8px;
   }
 
   .achievements-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .talks-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .btn {
-    min-height: 44px;
-    padding: 10px 18px;
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 0.8125rem;
   }
 }
 

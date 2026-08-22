@@ -16,9 +16,9 @@ export const fallbackData = {
     heroDescriptionLine1: 'Professor and Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology) at Nagarjuna College of Engineering & Technology, Bengaluru, with over <strong>20 years</strong> of teaching and research experience in Computer Science and Engineering.',
     heroDescriptionLine2: 'Doctoral research from <strong>NIT Tiruchirappalli</strong> in Blockchain-Based Smart Contract Security. Resource person at <strong>60+ AICTE-sponsored FDPs and workshops</strong> across NITs and premier institutions. Guest Faculty at <strong>BITS WILP</strong> since 2011.',
     emailPrimary: 'lohithjj@gmail.com',
-    emailSecondary: 'hod-cse@ncetmail.com',
+    emailSecondary: 'lohithjj@wilp.bits-pilani.ac.in',
     phone: '+91-9886745882',
-    address: 'Department of CSE, Nagarjuna College of Engineering and Technology, Mudugurki, Venkatagirikote Post, Devanahalli, Bengaluru — 562164',
+    address: 'NCET, Bengaluru, Karnataka, India',
     photoUrl: 'assets/Dr Lohith J J.jpeg',
     additionalRoles: [
       'Guest Faculty — BITS Pilani (Off-Campus Work Integrated Learning Programmes)',

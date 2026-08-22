@@ -511,10 +511,11 @@ function renderPublicationsList(pubs) {
 function renderTalksList(talks) {
   const container = document.getElementById('explorer-talks-list');
   const countBadge = document.getElementById('research-talks-count');
-  if (countBadge) countBadge.textContent = String(talks.length);
+  const validTalks = (talks || []).filter(t => !t.title?.includes('(Attended)') && t.talkType !== 'attended');
+  if (countBadge) countBadge.textContent = String(validTalks.length);
   if (!container) return;
 
-  if (talks.length === 0) {
+  if (validTalks.length === 0) {
     container.innerHTML = `
       <div class="explorer-empty">
         <p>No invited talks recorded under this specific keyword.</p>
@@ -525,7 +526,7 @@ function renderTalksList(talks) {
   }
 
   // Show up to 10 most relevant talks in this column for neat balance
-  const displayTalks = talks.slice(0, 10);
+  const displayTalks = validTalks.slice(0, 10);
 
   container.innerHTML = `
     <div class="explorer-talk-items">
@@ -540,9 +541,9 @@ function renderTalksList(talks) {
         </div>
       `).join('')}
     </div>
-    ${talks.length > 10 ? `
+    ${validTalks.length > 10 ? `
       <div class="explorer-talks-more">
-        <span>+ ${talks.length - 10} additional sessions in this area</span>
+        <span>+ ${validTalks.length - 10} additional sessions in this area</span>
         <a href="#talks" class="explorer-link-all">Explore in Full Talks Section ↓</a>
       </div>
     ` : ''}

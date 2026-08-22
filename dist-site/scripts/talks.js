@@ -47,19 +47,10 @@ export const DEFAULT_TALKS = [
   {"_id": "talk-41", "title": "Hands-on Ethereum Smart Contracts — ATAL FDP", "venue": "Bangalore Institute of Technology", "dateString": "Nov 24, 2020", "year": 2020, "featured": false, "order": 41},
   {"_id": "talk-42", "title": "Blockchain Technology — Expert Talk", "venue": "BMSIT, Bengaluru", "dateString": "Jun 22, 2020", "year": 2020, "featured": false, "order": 42},
   {"_id": "talk-43", "title": "Blockchain Technology — National Conference on BSCT", "venue": "NIT Tiruchirappalli", "dateString": "2019", "year": 2019, "featured": false, "order": 43},
-  {"_id": "talk-44", "title": "Guest Lectures Series in Blockchain & Networks", "venue": "Krupanidhi Degree College & PES Polytechnic, Bengaluru", "dateString": "2018 — 2023", "year": 2018, "featured": false, "order": 44},
-  {"_id": "talk-att-1", "title": "Python Programming — Online One-Week FDP (Attended)", "venue": "MHRD & IIT Bombay", "dateString": "2020", "year": 2020, "featured": false, "order": 45},
-  {"_id": "talk-att-2", "title": "Blockchain Architecture Design & Use Cases — 3-Week STTP (Attended)", "venue": "AICTE", "dateString": "2020", "year": 2020, "featured": false, "order": 46},
-  {"_id": "talk-att-3", "title": "Intellectual Property Rights, Technology Development & Startup (Attended)", "venue": "NIT Tiruchirappalli", "dateString": "2019", "year": 2019, "featured": false, "order": 47},
-  {"_id": "talk-att-4", "title": "Pseudospectral Methods in Differential Equations — 2-Week GIAN FDP (Attended)", "venue": "GIAN", "dateString": "2018", "year": 2018, "featured": false, "order": 48},
-  {"_id": "talk-att-5", "title": "Software Engineering — Short Term Course (Attended)", "venue": "Dept of CSE, NIT Tiruchirappalli", "dateString": "2017", "year": 2017, "featured": false, "order": 49},
-  {"_id": "talk-att-6", "title": "Introduction to Algorithms — Short Term Course (Attended)", "venue": "Dept of CSE, NIT Tiruchirappalli", "dateString": "2017", "year": 2017, "featured": false, "order": 50},
-  {"_id": "talk-att-7", "title": "Introduction to Cryptography — Short Term Course (Attended)", "venue": "Dept of CSE, NIT Tiruchirappalli", "dateString": "2017", "year": 2017, "featured": false, "order": 51},
-  {"_id": "talk-att-8", "title": "Computer Networking — 2-Week ISTE Workshop (Attended)", "venue": "IIT Bombay & ISTE", "dateString": "2014", "year": 2014, "featured": false, "order": 52},
-  {"_id": "talk-att-9", "title": "Faculty Orientation Program (Attended)", "venue": "BMSCE, Bengaluru", "dateString": "2011", "year": 2011, "featured": false, "order": 53}
+  {"_id": "talk-44", "title": "Guest Lectures Series in Blockchain & Networks", "venue": "Krupanidhi Degree College & PES Polytechnic, Bengaluru", "dateString": "2018 — 2023", "year": 2018, "featured": false, "order": 44}
 ];
 
-let talksData = [...DEFAULT_TALKS];
+let talksData = DEFAULT_TALKS.filter(t => !t.title?.includes('(Attended)') && t.talkType !== 'attended');
 let selectedYear = 'all';
 let isExpanded = false;
 const INITIAL_LIMIT = 9;
@@ -76,7 +67,7 @@ function escapeHtml(str) {
 
 export function setTalksData(items) {
   if (Array.isArray(items) && items.length > 0) {
-    talksData = items;
+    talksData = items.filter(t => !t.title?.includes('(Attended)') && t.talkType !== 'attended');
   }
   populateYearDropdown();
   renderTalksUI();

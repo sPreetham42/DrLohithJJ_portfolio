@@ -31,8 +31,8 @@ function escapeHtml(str) {
 export function getFeaturedTalks(allTalks) {
   const source = Array.isArray(allTalks) && allTalks.length > 0 ? allTalks : DEFAULT_TALKS;
 
-  // Only published talks
-  const published = source.filter(t => t.published !== 0 && t.published !== false);
+  // Only published talks, excluding Attended sessions
+  const published = source.filter(t => t.published !== 0 && t.published !== false && !t.title?.includes('(Attended)') && t.talkType !== 'attended');
 
   // Dynamic sort: year DESC, then order / displayOrder
   const sorted = [...published].sort((a, b) => {

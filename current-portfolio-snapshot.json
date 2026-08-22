@@ -373,7 +373,7 @@
       "Advisory Committee Member for International Conferences",
       "Doctoral Committee Member and Research Supervisor"
     ],
-    "address": "NCET, Bengaluru, India",
+    "address": "NCET, Bengaluru, Karnataka, India",
     "credential": "Ph.D. — NIT Trichy",
     "currentInstitution": "Nagarjuna College of Engineering & Technology, Bengaluru",
     "designation": "Professor & Head of Department — CSE (IoT & Cybersecurity including Blockchain Technology)",
@@ -1079,42 +1079,6 @@
       "year": 2020
     },
     {
-      "dateString": "2020",
-      "featured": false,
-      "id": "talk-att-1",
-      "order": 45,
-      "title": "Python Programming — Online One-Week FDP (Attended)",
-      "venue": "MHRD & IIT Bombay",
-      "year": 2020
-    },
-    {
-      "dateString": "2020",
-      "featured": false,
-      "id": "talk-att-2",
-      "order": 46,
-      "title": "Blockchain Architecture Design & Use Cases — 3-Week STTP (Attended)",
-      "venue": "AICTE",
-      "year": 2020
-    },
-    {
-      "dateString": "2019",
-      "featured": false,
-      "id": "talk-43",
-      "order": 43,
-      "title": "Blockchain Technology — National Conference on BSCT",
-      "venue": "NIT Tiruchirappalli",
-      "year": 2019
-    },
-    {
-      "dateString": "2019",
-      "featured": false,
-      "id": "talk-att-3",
-      "order": 47,
-      "title": "Intellectual Property Rights, Technology Development & Startup (Attended)",
-      "venue": "NIT Tiruchirappalli",
-      "year": 2019
-    },
-    {
       "dateString": "2018 — 2023",
       "featured": false,
       "id": "talk-44",
@@ -1122,60 +1086,6 @@
       "title": "Guest Lectures Series in Blockchain & Networks",
       "venue": "Krupanidhi Degree College & PES Polytechnic, Bengaluru",
       "year": 2018
-    },
-    {
-      "dateString": "2018",
-      "featured": false,
-      "id": "talk-att-4",
-      "order": 48,
-      "title": "Pseudospectral Methods in Differential Equations — 2-Week GIAN FDP (Attended)",
-      "venue": "GIAN",
-      "year": 2018
-    },
-    {
-      "dateString": "2017",
-      "featured": false,
-      "id": "talk-att-5",
-      "order": 49,
-      "title": "Software Engineering — Short Term Course (Attended)",
-      "venue": "Dept of CSE, NIT Tiruchirappalli",
-      "year": 2017
-    },
-    {
-      "dateString": "2017",
-      "featured": false,
-      "id": "talk-att-6",
-      "order": 50,
-      "title": "Introduction to Algorithms — Short Term Course (Attended)",
-      "venue": "Dept of CSE, NIT Tiruchirappalli",
-      "year": 2017
-    },
-    {
-      "dateString": "2017",
-      "featured": false,
-      "id": "talk-att-7",
-      "order": 51,
-      "title": "Introduction to Cryptography — Short Term Course (Attended)",
-      "venue": "Dept of CSE, NIT Tiruchirappalli",
-      "year": 2017
-    },
-    {
-      "dateString": "2014",
-      "featured": false,
-      "id": "talk-att-8",
-      "order": 52,
-      "title": "Computer Networking — 2-Week ISTE Workshop (Attended)",
-      "venue": "IIT Bombay & ISTE",
-      "year": 2014
-    },
-    {
-      "dateString": "2011",
-      "featured": false,
-      "id": "talk-att-9",
-      "order": 53,
-      "title": "Faculty Orientation Program (Attended)",
-      "venue": "BMSCE, Bengaluru",
-      "year": 2011
     }
   ],
   "version": "1.0.0-canonical-frozen"

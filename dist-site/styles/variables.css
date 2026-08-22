@@ -61,9 +61,9 @@
   --font-body: 'Manrope', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  --fs-hero: clamp(3.2rem, 5.5vw, 4.8rem);
-  --fs-h1: clamp(2.25rem, 3.8vw, 3rem);
-  --fs-h2: clamp(1.75rem, 2.8vw, 2.25rem);
+  --fs-hero: clamp(1.75rem, 4vw + 0.8rem, 4.5rem);
+  --fs-h1: clamp(1.35rem, 2.5vw + 0.6rem, 2.75rem);
+  --fs-h2: clamp(1.15rem, 2vw + 0.5rem, 2.1rem);
   --fs-h3: 1.25rem;
 
   --fs-body: 1rem;
@@ -89,7 +89,7 @@
   /* ── Layout ── */
   --container-max: 1120px;
   --container-padding: 1.5rem;
-  --nav-height: 64px;
+  --nav-height: 56px;
   --radius-sm: 3px;
   --radius-md: 6px;
   --radius-lg: 10px;
