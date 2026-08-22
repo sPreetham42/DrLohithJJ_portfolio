@@ -20,7 +20,7 @@ export const RESEARCH_AREAS = [
     title: 'All Research Areas',
     shortTitle: 'All Areas',
     badge: 'Comprehensive',
-    icon: '🌐',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
     description: 'Explore Dr. Lohith’s complete scholarly portfolio spanning blockchain security, artificial intelligence, IoT communications, and cryptographic systems.',
     keywords: []
   },
@@ -29,7 +29,7 @@ export const RESEARCH_AREAS = [
     title: 'Blockchain & Smart Contract Security',
     shortTitle: 'Blockchain & Smart Contracts',
     badge: 'Doctoral & Primary Focus',
-    icon: '🛡️',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
     description: 'Decentralized architectures, automated smart contract vulnerability detection (Oyente extensions, TP-Detect), Ethereum ecosystem, and secure distributed ledger frameworks.',
     keywords: [
       'blockchain', 'smart contract', 'smart contracts', 'ethereum', 'solidity',
@@ -44,7 +44,7 @@ export const RESEARCH_AREAS = [
     title: 'Cybersecurity & Digital Forensics',
     shortTitle: 'Cybersecurity & Forensics',
     badge: 'Applied Security',
-    icon: '🔒',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
     description: 'Digital forensic investigations, privacy-preserving multi-party computation, digital ethics, threat modeling, and institutional cybersecurity frameworks.',
     keywords: [
       'cybersecurity', 'cyber security', 'security', 'secure', 'forensic', 'forensics',
@@ -58,7 +58,7 @@ export const RESEARCH_AREAS = [
     title: 'Artificial Intelligence & Machine Learning',
     shortTitle: 'AI & Machine Learning',
     badge: 'Intelligent Systems',
-    icon: '🧠',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>`,
     description: 'Ensemble machine learning architectures, deep learning models, automated classifier systems for healthcare diagnostics, and predictive analytics.',
     keywords: [
       'machine learning', 'deep learning', 'ai', 'artificial intelligence',
@@ -72,7 +72,7 @@ export const RESEARCH_AREAS = [
     title: 'IoT, WSN & Computer Networks',
     shortTitle: 'IoT & Networks',
     badge: 'Connected Systems',
-    icon: '📡',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/></svg>`,
     description: 'Wireless sensor networks (Quad-LEACH protocols), centralized RF energy accumulation, network protocol optimization, and authored textbook on Data Communications & Networking.',
     keywords: [
       'iot', 'internet of things', 'wsn', 'wireless sensor', 'sensor network',
