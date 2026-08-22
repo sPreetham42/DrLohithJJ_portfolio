@@ -158,11 +158,12 @@ function initContactForm() {
     e.preventDefault();
 
     const btn = form.querySelector('.btn-primary');
+    if (!btn) return;
     const originalText = btn.innerHTML;
 
     // Show sending state
     btn.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
       Sending...
     `;
     btn.disabled = true;
@@ -174,12 +175,12 @@ function initContactForm() {
       body: formData,
       headers: { 'Accept': 'application/json' }
     })
-      .then(response => {
+      .then(async (response) => {
         if (response.ok) {
           btn.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          Message Sent!
-        `;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Message Sent!
+          `;
           btn.style.background = '#0B6B5A';
           setTimeout(() => {
             btn.innerHTML = originalText;
@@ -188,17 +189,25 @@ function initContactForm() {
             form.reset();
           }, 3000);
         } else {
-          throw new Error('Form submission failed');
+          let errText = 'Form submission failed';
+          try {
+            const data = await response.json();
+            if (data && data.errors && data.errors.length) {
+              errText = data.errors.map(err => err.message).join(', ');
+            }
+          } catch (_) {}
+          throw new Error(errText);
         }
       })
-      .catch(() => {
+      .catch(err => {
+        console.error('[Contact Form Error]:', err.message);
         btn.innerHTML = `⚠ Failed — Try Again`;
         btn.style.background = '#b91c1c';
         setTimeout(() => {
           btn.innerHTML = originalText;
           btn.style.background = '';
           btn.disabled = false;
-        }, 3000);
+        }, 3500);
       });
   });
 }
