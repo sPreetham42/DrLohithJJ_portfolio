@@ -232,15 +232,83 @@ section {
 }
 
 /* ================================================================
+   3.1. FEATURED TALKS MARQUEE (Ticker Strip above Hero)
+   ================================================================ */
+
+/* ================================================================
+   3.1 FEATURED TALKS MARQUEE — Equal-Sized Card Ribbon above Hero
+   ================================================================ */
+
+.talks-marquee-section {
+  width: 100%;
+  margin-top: var(--nav-height);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 0 1.5rem 0;
+  position: relative;
+  z-index: 90;
+  overflow: hidden;
+}
+
+.talks-marquee-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.talks-marquee-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent 100%);
+}
+
+.talks-marquee-track {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
+}
+
+.talks-marquee-card {
+  flex: 0 0 310px;
+  width: 310px;
+  height: 155px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.talks-marquee-card .featured-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: var(--navy);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.talks-marquee-card .featured-venue {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ================================================================
    4. ASYMMETRIC EDITORIAL HERO
    ================================================================ */
 
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--nav-height) - 40px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: calc(var(--nav-height) + 2rem);
+  padding-top: var(--space-xl);
   padding-bottom: 0;
   background:
     radial-gradient(ellipse 65% 55% at 85% 35%, rgba(220, 237, 231, 0.6) 0%, rgba(250, 249, 245, 0) 70%),
@@ -335,37 +403,53 @@ section {
 }
 
 .hero-credential {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   flex-wrap: wrap;
-  align-items: baseline;
-  font-family: var(--font-body);
-  font-size: 1.25rem;
-  letter-spacing: -0.015em;
-  line-height: 1.45;
-  margin-top: 6px;
+  row-gap: 6px;
+  margin-top: 10px;
   margin-bottom: var(--space-xs);
   opacity: 0;
   transform: translateY(15px);
   animation: fadeUp 0.7s var(--ease-out) 0.3s forwards;
 }
 
-.credential-phd {
-  font-weight: 700;
+.credential-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 0.78125rem;
+  font-weight: var(--fw-bold);
   color: var(--navy);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 3px 8px 3px 8px;
+  border: 1px solid rgba(23, 42, 58, 0.24);
+  border-radius: var(--radius-sm);
+  background-color: rgba(23, 42, 58, 0.035);
+  box-shadow: 0 1px 2px rgba(23, 42, 58, 0.03);
 }
 
-.credential-sep {
-  color: var(--emerald);
-  margin: 0 10px;
-  font-weight: 600;
-  opacity: 0.85;
+.credential-divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: rgba(23, 42, 58, 0.22);
+  margin: 0 11px;
+  flex-shrink: 0;
+  align-self: center;
 }
 
 .credential-inst {
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: 1.15rem;
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: var(--fw-medium);
+  color: var(--navy-muted);
+  letter-spacing: 0.015em;
+  line-height: 1;
+  align-self: center;
 }
 
 .hero-eyebrow {
@@ -569,57 +653,7 @@ section {
   animation: fadeUp 0.6s var(--ease-out) 0.75s forwards;
 }
 
-/* Integrated Metrics Strip - Full Width Academic Data Rail */
-.hero-stats-strip {
-  width: 100%;
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: var(--space-lg) 0;
-  z-index: 10;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.6s var(--ease-out) 0.85s forwards;
-}
 
-.stats-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.hero-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  text-align: center;
-  padding: 0 var(--space-md);
-}
-
-.hero-stat:not(:last-child) {
-  border-right: 1px solid var(--border);
-}
-
-.hero-stat-number {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
-  font-weight: var(--fw-bold);
-  color: var(--emerald);
-  line-height: 1.1;
-  margin-bottom: 4px;
-}
-
-.hero-stat-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: var(--fw-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-}
 
 /* Right Column: Editorial Portrait */
 .hero-visual {
@@ -1657,218 +1691,7 @@ section {
   display: block;
 }
 
-/* Scholar Sync Health Diagnostics */
-.sync-health-wrapper {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -1.25rem;
-  margin-bottom: var(--space-xl);
-}
 
-.sync-health-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  padding: 5px 14px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: var(--fw-semibold);
-  color: var(--text-secondary);
-  box-shadow: var(--shadow-sm);
-  cursor: pointer;
-  outline: none;
-  transition: all var(--duration-fast) var(--ease-out);
-}
-
-.sync-health-pill:hover,
-.sync-health-pill:focus-visible {
-  border-color: var(--emerald);
-  color: var(--navy);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.sync-health-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-healthy {
-  background: #10B981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-}
-
-.status-stale {
-  background: #F59E0B;
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
-}
-
-.status-attention {
-  background: #EF4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
-}
-
-.sync-health-age {
-  color: var(--text-muted);
-  font-weight: var(--fw-normal);
-  padding-left: 6px;
-  border-left: 1px solid var(--border);
-}
-
-.sync-health-info-icon {
-  font-size: 11px;
-  color: var(--emerald);
-  margin-left: 2px;
-}
-
-/* Diagnostic Popover Panel */
-.sync-health-panel {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: min(390px, 92vw);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-top: 3px solid var(--emerald);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: var(--space-lg);
-  z-index: 50;
-  text-align: left;
-  animation: fadeIn 0.15s ease-out;
-}
-
-.sync-panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: var(--space-md);
-}
-
-.sync-panel-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: var(--fw-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--navy);
-}
-
-.sync-panel-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--emerald);
-}
-
-.sync-panel-close {
-  background: transparent;
-  border: none;
-  font-size: 13px;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.sync-panel-close:hover {
-  background: var(--ivory);
-  color: var(--navy);
-}
-
-.sync-pipeline-stages {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: var(--space-md);
-}
-
-.sync-stage-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: var(--fs-badge);
-  padding: 4px 0;
-}
-
-.sync-stage-name {
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-}
-
-.sync-stage-status {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: var(--fw-bold);
-}
-
-.stage-ok {
-  color: #059669;
-}
-
-.stage-warn {
-  color: #D97706;
-}
-
-.stage-fail {
-  color: #DC2626;
-}
-
-.sync-detail-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  background: var(--ivory);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 8px;
-  margin-bottom: var(--space-sm);
-}
-
-.sync-detail-box {
-  text-align: center;
-}
-
-.sync-detail-lbl {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin-bottom: 2px;
-}
-
-.sync-detail-val {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: var(--fw-bold);
-  color: var(--navy);
-}
-
-.sync-timestamp-info {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.sync-note {
-  margin-top: 4px;
-  font-size: 9px;
-  color: var(--text-secondary);
-}
 
 .pub-section {
   margin-top: var(--space-2xl);
@@ -2734,25 +2557,8 @@ section {
     justify-content: center;
   }
 
-  .hero-stats-strip .stats-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
-  }
-
-  .hero-stat {
-    border-right: none !important;
-    border-bottom: 1px solid var(--border-light);
-    padding: var(--space-sm) 0;
-  }
-
-  .hero-stat:nth-child(even) {
-    border-left: 1px solid var(--border-light) !important;
-  }
-
-  .hero-stat:nth-child(3),
-  .hero-stat:nth-child(4) {
-    border-bottom: none;
+  .hero-scholar-health-container {
+    justify-content: center;
   }
 
   .career-layout {
@@ -2841,10 +2647,6 @@ section {
   .hero-photo-frame {
     width: min(280px, 82vw);
     height: min(350px, 105vw);
-  }
-
-  .hero-stats-strip {
-    padding: var(--space-md) 0;
   }
 
   .hero-social-link svg,

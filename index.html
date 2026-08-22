@@ -13,7 +13,8 @@
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Dr. Lohith J.J. Academic Portfolio" />
   <meta property="og:title" content="Dr. Lohith J.J. — Academic &amp; Research Portfolio" />
-  <meta property="og:description" content="Professor &amp; Head, Dept. of CSE (IoT &amp; Cybersecurity including Blockchain), NCET Bengaluru. Ph.D. NIT Trichy. 20+ years of academic and research excellence." />
+  <meta property="og:description"
+    content="Professor &amp; Head, Dept. of CSE (IoT &amp; Cybersecurity including Blockchain), NCET Bengaluru. Ph.D. NIT Trichy. 20+ years of academic and research excellence." />
   <meta property="og:url" content="https://drlohithjj.in/" />
   <meta property="og:image" content="https://drlohithjj.in/assets/Dr%20Lohith%20J%20J.jpeg" />
   <meta property="profile:first_name" content="Lohith" />
@@ -22,7 +23,8 @@
   <!-- Twitter Card Metadata -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Dr. Lohith J.J. — Academic &amp; Research Portfolio" />
-  <meta name="twitter:description" content="Professor &amp; Head, Dept. of CSE (IoT &amp; Cybersecurity including Blockchain), NCET Bengaluru." />
+  <meta name="twitter:description"
+    content="Professor &amp; Head, Dept. of CSE (IoT &amp; Cybersecurity including Blockchain), NCET Bengaluru." />
   <meta name="twitter:image" content="https://drlohithjj.in/assets/Dr%20Lohith%20J%20J.jpeg" />
 
   <!-- Schema.org Person Structured Data -->
@@ -78,14 +80,15 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <div class="nav-links" id="nav-links">
+        <a href="#talks-marquee" class="nav-link">Featured Talks</a>
         <a href="#hero" class="nav-link active">Home</a>
         <a href="#about" class="nav-link">About</a>
-        <a href="#career" class="nav-link">Journey</a>
-        <a href="#research-focus" class="nav-link">Explore Research</a>
+        <a href="#career" class="nav-link">Academic Journey</a>
         <a href="#publications" class="nav-link">Publications</a>
-        <a href="#achievements" class="nav-link">Recognition</a>
+        <a href="#research-focus" class="nav-link">Explore Research</a>
+        <a href="#achievements" class="nav-link">Awards</a>
         <a href="#skills" class="nav-link">Expertise</a>
-        <a href="#talks" class="nav-link">Talks &amp; Outreach</a>
+        <a href="#talks" class="nav-link">Talks / Outreach</a>
         <a href="#contact" class="nav-link">Contact</a>
       </div>
       <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Toggle Menu">
@@ -93,6 +96,17 @@
       </button>
     </div>
   </nav>
+
+  <!-- ============================================================ FEATURED TALKS MARQUEE ============================================================ -->
+  <aside class="talks-marquee-section" id="talks-marquee" aria-label="Featured Academic Talks and Keynotes">
+    <div class="container talks-marquee-header-container">
+    </div>
+    <div class="talks-marquee-viewport" id="talks-marquee-viewport">
+      <div class="talks-marquee-track" id="talks-marquee-track">
+        <!-- Rendered dynamically by talks-marquee.js -->
+      </div>
+    </div>
+  </aside>
 
   <!-- ============================================================ HERO ============================================================ -->
   <section class="hero" id="hero">
@@ -107,27 +121,15 @@
             <span class="hero-name-text">Dr. Lohith J.J.</span>
           </h1>
           <div class="hero-credential">
-            <span class="credential-phd">Ph.D.</span><span class="credential-sep"> · </span><span
-              class="credential-inst">National Institute of Technology, Tiruchirappalli</span>
+            <span class="credential-mark">Ph.D.</span>
+            <span class="credential-divider" aria-hidden="true"></span>
+            <span class="credential-inst">NIT Tiruchirappalli</span>
           </div>
           <p class="hero-eyebrow">
             Professor &amp; Head of Department — Computer Science &amp; Engineering (IoT &amp; Cybersecurity including
             Blockchain Technology)
             <span class="hero-institution">Nagarjuna College of Engineering &amp; Technology, Bengaluru</span>
           </p>
-        </div>
-
-        <!-- Research Domains -->
-        <div class="hero-domains" aria-label="Primary Research Domains">
-          <span class="hero-domain-item">Research &amp; Academic Computing</span>
-          <span class="hero-domain-sep">·</span>
-          <span class="hero-domain-item">Cybersecurity</span>
-          <span class="hero-domain-sep">·</span>
-          <span class="hero-domain-item">AI &amp; ML</span>
-          <span class="hero-domain-sep">·</span>
-          <span class="hero-domain-item">IoT &amp; Wireless Sensor Networks</span>
-          <span class="hero-domain-sep">·</span>
-          <span class="hero-domain-item">Computer Networks</span>
         </div>
 
         <!-- Academic Identity Rail -->
@@ -238,33 +240,6 @@
           </div>
         </div>
       </div>
-
-    </div>
-
-    <!-- FULL-WIDTH HERO STATS STRIP -->
-    <div class="hero-stats-strip">
-      <div class="container stats-container">
-        <div class="hero-stat">
-          <div class="hero-stat-number stat-experience" data-count="20">0</div>
-          <div class="hero-stat-label">Years Experience</div>
-        </div>
-
-        <div class="hero-stat">
-          <div class="hero-stat-number stat-citations" data-count="170">0</div>
-          <div class="hero-stat-label">Citations</div>
-        </div>
-
-        <div class="hero-stat">
-          <div class="hero-stat-number stat-talks" data-count="60">0</div>
-          <div class="hero-stat-label">FDPs &amp; Talks</div>
-        </div>
-
-        <div class="hero-stat">
-          <div class="hero-stat-number stat-papers" data-count="4">0</div>
-          <div class="hero-stat-label">SCIE Papers</div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ============================================================ ACADEMIC PHOTO RIBBON ============================================================ -->
@@ -572,109 +547,6 @@
     </div>
   </section>
 
-  <!-- ============================================================ RESEARCH EXPLORER ============================================================ -->
-  <section class="research-focus" id="research-focus">
-    <div class="container">
-      <div class="reveal">
-        <span class="section-eyebrow">Interactive Hub</span>
-        <div class="accent-bar"></div>
-        <h2 class="section-title">Explore Research</h2>
-        <p class="section-subtitle">Explore research interests, publications and academic conversations across key areas
-          of computer science.</p>
-      </div>
-
-      <!-- Domain Entry Points Grid (4 Key Areas) -->
-      <div class="research-domains-cards reveal" id="research-domain-cards">
-        <!-- Rendered dynamically by research-explorer.js -->
-      </div>
-
-      <!-- Interactive Area Selector Bar -->
-      <div class="research-selector-wrapper reveal" id="research-selector-wrapper">
-        <div class="research-tabs" role="tablist" aria-label="Research Areas">
-          <button class="research-tab-btn active" role="tab" aria-selected="true" aria-controls="research-results-panel"
-            data-area="all">All Areas</button>
-          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
-            data-area="blockchain-security">Blockchain &amp; Smart Contracts</button>
-          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
-            data-area="cybersecurity-forensics">Cybersecurity &amp; Forensics</button>
-          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
-            data-area="ai-ml">AI &amp; ML</button>
-          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
-            data-area="iot-networks">IoT &amp; Networks</button>
-        </div>
-      </div>
-
-      <!-- Active Area Overview & Live Stats Banner -->
-      <div class="research-overview-card reveal" id="research-overview-card">
-        <div class="research-overview-header">
-          <div class="research-overview-info">
-            <div class="research-area-meta">
-              <span class="research-area-badge" id="research-area-badge">Comprehensive</span>
-              <span class="research-area-indicator">● Active Explorer</span>
-            </div>
-            <h3 class="research-area-title" id="research-area-title">All Research Areas</h3>
-            <p class="research-area-desc" id="research-area-desc">Explore Dr. Lohith’s complete scholarly portfolio
-              spanning blockchain security, artificial intelligence, IoT communications, and cryptographic systems.</p>
-          </div>
-          <div class="research-stats-pill">
-            <div class="r-stat-item">
-              <span class="r-stat-val" id="r-stat-pubs">13</span>
-              <span class="r-stat-lbl">Publications</span>
-            </div>
-            <div class="r-stat-divider"></div>
-            <div class="r-stat-item">
-              <span class="r-stat-val" id="r-stat-talks">53</span>
-              <span class="r-stat-lbl">Invited Talks</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Featured Highlights (2-3 items) -->
-      <div class="research-featured-section reveal" id="research-featured-section">
-        <div class="research-subheading">
-          <span class="research-subheading-icon">✦</span>
-          <h4>Featured Highlights</h4>
-        </div>
-        <div class="research-featured-grid" id="research-featured-grid">
-          <!-- Rendered dynamically by research-explorer.js -->
-        </div>
-      </div>
-
-      <!-- Results Grid: Publications & Invited Talks side-by-side -->
-      <div class="research-results-grid reveal" id="research-results-panel">
-
-        <!-- Left Column: Filtered Publications -->
-        <div class="research-results-col">
-          <div class="research-col-header">
-            <div class="research-col-title-group">
-              <h4 class="research-col-title">Related Publications</h4>
-              <span class="research-count-badge" id="research-pubs-count">13</span>
-            </div>
-          </div>
-          <div class="pub-list" id="explorer-pubs-list">
-            <!-- Filtered publication cards -->
-          </div>
-        </div>
-
-        <!-- Right Column: Filtered Invited Talks -->
-        <div class="research-results-col">
-          <div class="research-col-header">
-            <div class="research-col-title-group">
-              <h4 class="research-col-title">Related Talks &amp; Sessions</h4>
-              <span class="research-count-badge" id="research-talks-count">53</span>
-            </div>
-          </div>
-          <div class="explorer-talks-list" id="explorer-talks-list">
-            <!-- Filtered talk items -->
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
   <!-- ============================================================ PUBLICATIONS ============================================================ -->
   <section class="publications" id="publications">
     <div class="container">
@@ -689,27 +561,27 @@
       <!-- Live Scholar Metrics Banner -->
       <div class="stats-bar reveal">
         <div class="stat-item">
-          <span class="stat-number stat-citations" id="scholar-citations">170+</span>
+          <span class="stat-number stat-citations" id="scholar-citations">172</span>
           <span class="stat-label">Citations</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-number stat-hindex" id="scholar-hindex">7</span>
+          <span class="stat-number stat-hindex" id="scholar-hindex">8</span>
           <span class="stat-label">h-index</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-number" id="scholar-i10index">5</span>
+          <span class="stat-number stat-i10index" id="scholar-i10index">8</span>
           <span class="stat-label">i10-index</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-number" id="scholar-scie">4</span>
+          <span class="stat-number stat-papers" id="scholar-scie">4</span>
           <span class="stat-label">SCIE Journals</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat-item">
-          <span class="stat-number" id="scholar-ieee">6</span>
+          <span class="stat-number stat-ieee" id="scholar-ieee">6</span>
           <span class="stat-label">IEEE Conferences</span>
         </div>
       </div>
@@ -907,6 +779,115 @@
       </div>
     </div>
   </section>
+
+  <!-- ============================================================ RESEARCH EXPLORER ============================================================ -->
+  <section class="research-focus" id="research-focus">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-eyebrow">Interactive Hub</span>
+        <div class="accent-bar"></div>
+        <h2 class="section-title">Explore Research</h2>
+        <p class="section-subtitle">Explore research interests, publications and academic conversations across key areas
+          of computer science.</p>
+      </div>
+
+      <!-- Domain Entry Points Grid (4 Key Areas) -->
+      <div class="research-domains-cards reveal" id="research-domain-cards">
+        <!-- Rendered dynamically by research-explorer.js -->
+      </div>
+
+      <!-- Interactive Area Selector Bar -->
+      <div class="research-selector-wrapper reveal" id="research-selector-wrapper">
+        <div class="research-tabs" role="tablist" aria-label="Research Areas">
+          <button class="research-tab-btn active" role="tab" aria-selected="true" aria-controls="research-results-panel"
+            data-area="all">All Areas</button>
+          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
+            data-area="blockchain-security">Blockchain &amp; Smart Contracts</button>
+          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
+            data-area="cybersecurity-forensics">Cybersecurity &amp; Forensics</button>
+          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
+            data-area="ai-ml">AI &amp; ML</button>
+          <button class="research-tab-btn" role="tab" aria-selected="false" aria-controls="research-results-panel"
+            data-area="iot-networks">IoT &amp; Networks</button>
+        </div>
+      </div>
+
+      <!-- Active Area Overview & Live Stats Banner -->
+      <div class="research-overview-card reveal" id="research-overview-card">
+        <div class="research-overview-header">
+          <div class="research-overview-info">
+            <div class="research-area-meta">
+              <span class="research-area-badge" id="research-area-badge">Comprehensive</span>
+              <span class="research-area-indicator">● Active Explorer</span>
+            </div>
+            <h3 class="research-area-title" id="research-area-title">All Research Areas</h3>
+            <p class="research-area-desc" id="research-area-desc">Explore Dr. Lohith’s complete scholarly portfolio
+              spanning blockchain security, artificial intelligence, IoT communications, and cryptographic systems.</p>
+          </div>
+          <div class="research-stats-pill">
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="r-stat-pubs">13</span>
+              <span class="r-stat-lbl">Publications</span>
+            </div>
+            <div class="r-stat-divider"></div>
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="r-stat-talks">53</span>
+              <span class="r-stat-lbl">Invited Talks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Highlights (2-3 items) -->
+      <div class="research-featured-section reveal" id="research-featured-section">
+        <div class="research-subheading">
+          <span class="research-subheading-icon">✦</span>
+          <h4>Featured Highlights</h4>
+        </div>
+        <div class="research-featured-grid" id="research-featured-grid">
+          <!-- Rendered dynamically by research-explorer.js -->
+        </div>
+      </div>
+
+      <!-- Results Grid: Publications & Invited Talks side-by-side -->
+      <div class="research-results-grid reveal" id="research-results-panel">
+
+        <!-- Left Column: Filtered Publications -->
+        <div class="research-results-col">
+          <div class="research-col-header">
+            <div class="research-col-title-group">
+              <h4 class="research-col-title">Related Publications</h4>
+              <span class="research-count-badge" id="research-pubs-count">13</span>
+            </div>
+          </div>
+          <div class="pub-list" id="explorer-pubs-list">
+            <!-- Filtered publication cards -->
+          </div>
+        </div>
+
+        <!-- Right Column: Filtered Invited Talks -->
+        <div class="research-results-col">
+          <div class="research-col-header">
+            <div class="research-col-title-group">
+              <h4 class="research-col-title">Related Talks &amp; Sessions</h4>
+              <span class="research-count-badge" id="research-talks-count">53</span>
+            </div>
+          </div>
+          <div class="explorer-talks-list" id="explorer-talks-list">
+            <!-- Filtered talk items -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+
+
 
   <!-- ============================================================ ACHIEVEMENTS ============================================================ -->
   <section class="achievements" id="achievements">

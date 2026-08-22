@@ -9,7 +9,7 @@ import { publicApi } from './public-api.js';
 import { fallbackData } from './fallback.js';
 import { setTalksData } from '../talks.js';
 import { setResearchExplorerData } from '../research-explorer.js';
-import { updateScholarHealthUI } from '../scholar-health.js';
+import { updateTalksMarquee } from '../talks-marquee.js';
 
 export function getDataSourceMode() {
   if (typeof window !== 'undefined' && window.PORTFOLIO_CONFIG?.dataSource) {
@@ -152,26 +152,40 @@ async function hydrateProfile() {
   }
   if (data.credential) {
     document.querySelectorAll('.hero-credential').forEach(el => {
-      // If structured spans exist, keep structured format
-      const phdSpan = el.querySelector('.credential-phd');
+      // Support structured credential spans (.credential-mark, .credential-phd, .credential-inst)
+      const markSpan = el.querySelector('.credential-mark, .credential-phd');
       const instSpan = el.querySelector('.credential-inst');
-      if (phdSpan && instSpan) {
+      if (markSpan && instSpan) {
+        let markText = 'Ph.D.';
+        let instText = 'NIT Tiruchirappalli';
+
         if (data.credential.includes('·')) {
           const parts = data.credential.split('·');
-          phdSpan.textContent = parts[0].trim();
-          instSpan.textContent = parts[1].trim();
+          markText = parts[0].trim();
+          instText = parts[1].trim();
         } else if (data.credential.includes('—')) {
           const parts = data.credential.split('—');
-          phdSpan.textContent = parts[0].trim();
-          instSpan.textContent = parts[1].trim();
+          markText = parts[0].trim();
+          instText = parts[1].trim();
         }
+
+        if (instText.includes('National Institute of Technology') || instText.includes('NIT')) {
+          instText = 'NIT Tiruchirappalli';
+        }
+
+        markSpan.textContent = markText;
+        instSpan.textContent = instText;
       } else {
         el.textContent = data.credential;
       }
     });
   }
   if (data.designation) {
-    document.querySelectorAll('.hero-eyebrow').forEach(el => el.textContent = data.designation);
+    document.querySelectorAll('.hero-eyebrow').forEach(el => {
+      const instSpan = el.querySelector('.hero-institution');
+      const instText = data.currentInstitution || (instSpan ? instSpan.textContent.trim() : 'Nagarjuna College of Engineering & Technology, Bengaluru');
+      el.innerHTML = `${sanitizeControlledHtml(data.designation)} <span class="hero-institution">${escapeHtml(instText)}</span>`;
+    });
   }
   if (data.heroDescriptionLine1 && !data.heroDescriptionLine1.includes('Welcome to my portfolio')) {
     const line1 = document.querySelector('.hero-desc-1');
@@ -238,23 +252,34 @@ async function hydrateScholarStats() {
   if (!stats) return;
 
   if (stats.citations && stats.citations > 0) {
-    document.querySelectorAll('.stat-citations').forEach(el => {
+    document.querySelectorAll('.stat-citations, #scholar-citations').forEach(el => {
       el.textContent = `${stats.citations}`;
       el.setAttribute('data-count', stats.citations);
     });
   }
   if (stats.hIndex && stats.hIndex > 0) {
-    document.querySelectorAll('.stat-hindex').forEach(el => el.textContent = stats.hIndex);
+    document.querySelectorAll('.stat-hindex, #scholar-hindex').forEach(el => {
+      el.textContent = stats.hIndex;
+      el.setAttribute('data-count', stats.hIndex);
+    });
+  }
+  if (stats.i10Index && stats.i10Index > 0) {
+    document.querySelectorAll('.stat-i10index, #scholar-i10index').forEach(el => {
+      el.textContent = stats.i10Index;
+      el.setAttribute('data-count', stats.i10Index);
+    });
   }
   if (stats.sciePapersCount && stats.sciePapersCount > 0) {
-    document.querySelectorAll('.stat-papers').forEach(el => {
+    document.querySelectorAll('.stat-papers, #scholar-scie').forEach(el => {
       el.textContent = stats.sciePapersCount;
       el.setAttribute('data-count', stats.sciePapersCount);
     });
   }
-
-  if (typeof updateScholarHealthUI === 'function') {
-    updateScholarHealthUI(stats);
+  if (stats.ieeeConferencesCount && stats.ieeeConferencesCount > 0) {
+    document.querySelectorAll('.stat-ieee, #scholar-ieee').forEach(el => {
+      el.textContent = stats.ieeeConferencesCount;
+      el.setAttribute('data-count', stats.ieeeConferencesCount);
+    });
   }
 }
 
@@ -319,6 +344,9 @@ async function hydrateTalks() {
     }
     if (typeof setResearchExplorerData === 'function') {
       setResearchExplorerData({ talks });
+    }
+    if (typeof updateTalksMarquee === 'function') {
+      updateTalksMarquee(talks);
     }
   }
 }

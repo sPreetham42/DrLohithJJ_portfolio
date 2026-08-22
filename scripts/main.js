@@ -1,7 +1,7 @@
 import { initPublicDataAdapter } from './data/adapter.js';
 import { initTalksController } from './talks.js';
 import { initResearchExplorer } from './research-explorer.js';
-import { initScholarHealth } from './scholar-health.js';
+import { initTalksMarquee } from './talks-marquee.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initContactForm();
   initGoogleScholarSync();
-  initScholarHealth();
+  initTalksMarquee();
   initHeroCounters();
   initTalksController();
   initResearchExplorer();
@@ -37,7 +37,7 @@ window.refreshScrollReveal = function () {
 function initNavbar() {
   const navbar = document.getElementById('navbar');
   const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section[id]');
+  const sections = document.querySelectorAll('section[id], aside[id]');
 
   if (!navbar) return;
 
@@ -50,7 +50,7 @@ function initNavbar() {
 
     let currentSection = '';
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
+      const sectionTop = section.offsetTop - 120;
       if (window.scrollY >= sectionTop) {
         currentSection = section.getAttribute('id');
       }
