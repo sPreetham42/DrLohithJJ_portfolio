@@ -402,39 +402,47 @@ section {
   gap: 12px;
 }
 
+/* Editorial Academic Credential Typography Lockup (Pure Editorial - No Box/Plaque) */
 .hero-credential {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3px;
+  gap: 4px;
   margin-top: 14px;
   margin-bottom: var(--space-md);
-  padding: 10px 16px 11px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--navy-muted);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  max-width: fit-content;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
   opacity: 0;
   transform: translateY(15px);
   animation: fadeUp 0.7s var(--ease-out) 0.3s forwards;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.hero-credential:hover {
-  border-left-color: var(--navy);
-  box-shadow: var(--shadow-md);
+.credential-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--navy-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.credential-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .credential-mark {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
   font-weight: 700;
-  color: var(--navy-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  line-height: 1.2;
+  color: var(--navy);
+  line-height: 1.35;
   border: none;
   background: none;
   padding: 0;
@@ -442,15 +450,18 @@ section {
   border-radius: 0;
 }
 
-.credential-divider {
-  display: none;
+.credential-dot {
+  font-size: 1rem;
+  color: var(--navy-muted);
+  opacity: 0.6;
+  user-select: none;
 }
 
 .credential-inst {
-  font-family: var(--font-display);
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: var(--navy);
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--navy-muted);
   letter-spacing: -0.01em;
   line-height: 1.35;
 }
@@ -2549,15 +2560,21 @@ body.nav-open {
   }
 
   .hero-credential {
-    align-items: center;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: flex-start;
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
     margin-top: var(--space-xs);
-    width: fit-content;
-    max-width: min(440px, 92vw);
-    border-left: 1px solid var(--border);
-    border-top: 3px solid var(--navy-muted);
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    background: none;
+    box-shadow: none;
+  }
+
+  .credential-body {
+    justify-content: flex-start;
+    text-align: left;
   }
 
   .hero-domains {
