@@ -437,11 +437,41 @@ async function hydrateSocialLinks() {
   const container = document.querySelector('.hero-social-links');
   if (!container) return;
 
-  const visibleLinks = links.filter(l => l.published !== false && l.visible !== false);
+  let visibleLinks = links.filter(l => l.published !== false && l.visible !== false);
   if (visibleLinks.length === 0) return;
 
+  // Guarantee canonical Email (soc-8) and YouTube (soc-9) are present
+  const hasEmail = visibleLinks.some(l => (l.platform && l.platform.toLowerCase().includes('email')) || (l.url && l.url.startsWith('mailto:')));
+  if (!hasEmail) {
+    visibleLinks.push({
+      id: 'soc-8',
+      platform: 'Email',
+      url: 'mailto:lohithjj@gmail.com',
+      icon: 'gmail.svg',
+      order: 8
+    });
+  }
+
+  const hasYouTube = visibleLinks.some(l => (l.platform && l.platform.toLowerCase().includes('youtube')) || (l.url && l.url.includes('youtube.com')));
+  if (!hasYouTube) {
+    visibleLinks.push({
+      id: 'soc-9',
+      platform: 'YouTube',
+      url: 'https://www.youtube.com/@shreyajj',
+      icon: 'youtube.svg',
+      order: 9
+    });
+  }
+
+  // Sort by display order
+  visibleLinks.sort((a, b) => (a.order ?? a.display_order ?? 0) - (b.order ?? b.display_order ?? 0));
+
   container.innerHTML = visibleLinks.map(l => {
-    const iconSrc = l.icon ? (l.icon.startsWith('assets/') ? l.icon : `assets/${l.icon}`) : 'assets/gmail.svg';
+    let rawIcon = l.icon || '';
+    if (l.platform && l.platform.toLowerCase().includes('email') && (!rawIcon || rawIcon.includes('gmail'))) rawIcon = 'gmail.svg';
+    if (l.platform && l.platform.toLowerCase().includes('youtube') && (!rawIcon || rawIcon.includes('youtube'))) rawIcon = 'youtube.svg';
+    const iconSrc = rawIcon ? (rawIcon.startsWith('assets/') ? rawIcon : `assets/${rawIcon}`) : 'assets/gmail.svg';
+
     const tooltip = escapeHtml(l.platform || '');
     const isEmail = l.url && l.url.startsWith('mailto:');
     const targetAttr = isEmail ? '' : ' target="_blank" rel="noopener noreferrer"';

@@ -344,9 +344,9 @@ function initAcademicPhotoRibbon() {
 
   function getPixelsPerSecond() {
     const width = window.innerWidth;
-    if (width <= 768) return 90;
-    if (width <= 1024) return 100;
-    return 110;
+    if (width <= 768) return 65; // Calmer, premium mobile glide (~28% slower)
+    if (width <= 1024) return 95;
+    return 110; // Unchanged desktop speed
   }
 
   let pixelsPerSecond = getPixelsPerSecond();
