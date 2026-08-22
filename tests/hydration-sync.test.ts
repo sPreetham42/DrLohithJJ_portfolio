@@ -32,12 +32,24 @@ describe('Hydration & Data Source Synchronization Guarantee', () => {
     expect(fallbackData.education[0].institution).toContain('National Institute of Technology');
   });
 
-  it('verifies fallbackData socialLinks match canonical URLs in index.html including Email and YouTube', () => {
+  it('verifies fallbackData socialLinks match canonical URLs in index.html for all platforms', () => {
     const scholar = fallbackData.socialLinks.find(s => s.platform === 'Google Scholar');
     expect(scholar?.url).toBe('https://scholar.google.com/citations?user=dmSdWtEAAAAJ&hl=en');
 
     const orcid = fallbackData.socialLinks.find(s => s.platform === 'ORCID');
     expect(orcid?.url).toBe('https://orcid.org/0000-0003-2117-2250');
+
+    const scopus = fallbackData.socialLinks.find(s => s.platform.includes('Scopus'));
+    expect(scopus?.url).toBe('https://www.scopus.com/authid/detail.uri?authorId=56857581400');
+
+    const vidwan = fallbackData.socialLinks.find(s => s.platform.includes('Vidwan'));
+    expect(vidwan?.url).toBe('https://vidwan.inflibnet.ac.in/profile/158563');
+
+    const wos = fallbackData.socialLinks.find(s => s.platform.includes('Web of Science'));
+    expect(wos?.url).toBe('https://www.webofscience.com/wos/author/record/E-2696-2017');
+
+    const crsi = fallbackData.socialLinks.find(s => s.platform.includes('CRSI'));
+    expect(crsi?.url).toBe('http://crsind.in/members/life-members/?q=L/0889');
 
     const email = fallbackData.socialLinks.find(s => s.platform === 'Email');
     expect(email?.url).toBe('mailto:lohithjj@gmail.com');

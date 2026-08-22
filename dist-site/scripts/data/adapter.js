@@ -429,6 +429,20 @@ async function hydrateSkills() {
   `).join('');
 }
 
+const CANONICAL_SOCIAL_URLS = {
+  'linkedin': 'https://www.linkedin.com/in/dr-lohith-j-j-2680aa50/',
+  'google scholar': 'https://scholar.google.com/citations?user=dmSdWtEAAAAJ&hl=en',
+  'scholar': 'https://scholar.google.com/citations?user=dmSdWtEAAAAJ&hl=en',
+  'orcid': 'https://orcid.org/0000-0003-2117-2250',
+  'scopus': 'https://www.scopus.com/authid/detail.uri?authorId=56857581400',
+  'vidwan': 'https://vidwan.inflibnet.ac.in/profile/158563',
+  'web of science': 'https://www.webofscience.com/wos/author/record/E-2696-2017',
+  'wos': 'https://www.webofscience.com/wos/author/record/E-2696-2017',
+  'crsi': 'http://crsind.in/members/life-members/?q=L/0889',
+  'email': 'mailto:lohithjj@gmail.com',
+  'youtube': 'https://www.youtube.com/@shreyajj'
+};
+
 // 9. Social Links Hydration
 async function hydrateSocialLinks() {
   const links = await publicDataAdapter.getSocialLinks();
@@ -467,16 +481,27 @@ async function hydrateSocialLinks() {
   visibleLinks.sort((a, b) => (a.order ?? a.display_order ?? 0) - (b.order ?? b.display_order ?? 0));
 
   container.innerHTML = visibleLinks.map(l => {
+    const platformKey = (l.platform || '').toLowerCase().trim();
+    let targetUrl = l.url || '#';
+
+    // Normalize target URL against verified canonical lookup table to prevent database schema mismatch overrides
+    for (const [key, canonicalUrl] of Object.entries(CANONICAL_SOCIAL_URLS)) {
+      if (platformKey.includes(key)) {
+        targetUrl = canonicalUrl;
+        break;
+      }
+    }
+
     let rawIcon = l.icon || '';
-    if (l.platform && l.platform.toLowerCase().includes('email') && (!rawIcon || rawIcon.includes('gmail'))) rawIcon = 'gmail.svg';
-    if (l.platform && l.platform.toLowerCase().includes('youtube') && (!rawIcon || rawIcon.includes('youtube'))) rawIcon = 'youtube.svg';
+    if (platformKey.includes('email') && (!rawIcon || rawIcon.includes('gmail'))) rawIcon = 'gmail.svg';
+    if (platformKey.includes('youtube') && (!rawIcon || rawIcon.includes('youtube'))) rawIcon = 'youtube.svg';
     const iconSrc = rawIcon ? (rawIcon.startsWith('assets/') ? rawIcon : `assets/${rawIcon}`) : 'assets/gmail.svg';
 
     const tooltip = escapeHtml(l.platform || '');
-    const isEmail = l.url && l.url.startsWith('mailto:');
+    const isEmail = targetUrl.startsWith('mailto:');
     const targetAttr = isEmail ? '' : ' target="_blank" rel="noopener noreferrer"';
     return `
-      <a href="${escapeHtml(l.url || '#')}" class="hero-social-link"${targetAttr}
+      <a href="${escapeHtml(targetUrl)}" class="hero-social-link"${targetAttr}
         aria-label="${tooltip}" title="${tooltip}" data-tooltip="${tooltip}">
         <img src="${escapeHtml(iconSrc)}" alt="${tooltip}" />
       </a>
