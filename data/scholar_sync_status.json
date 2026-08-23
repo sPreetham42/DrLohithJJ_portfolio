@@ -1,18 +1,18 @@
 {
   "status": "success",
   "target": "d1",
-  "source": "google_scholar",
-  "startedAt": "2026-08-22T05:26:35.516895+00:00",
-  "completedAt": "2026-08-22T05:26:39.802704+00:00",
-  "durationMs": 4285,
+  "source": "openalex",
+  "startedAt": "2026-08-23T02:08:16.977280+00:00",
+  "completedAt": "2026-08-23T02:08:32.692954+00:00",
+  "durationMs": 15715,
   "citations": 172,
   "hIndex": 8,
   "i10Index": 8,
   "persisted": true,
   "persistenceStatus": "VERIFIED",
-  "syncRunId": "scholar-sync-1787376399-0e211f36",
+  "syncRunId": "scholar-sync-1787450912-4a2304d0",
   "idempotencyResult": "applied",
   "error": null,
   "isDryRun": false,
-  "lastSyncDate": "2026-08-22T05:26:39.802704+00:00"
+  "lastSyncDate": "2026-08-23T02:08:32.692954+00:00"
 }
