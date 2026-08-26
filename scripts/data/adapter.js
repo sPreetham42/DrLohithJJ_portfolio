@@ -551,9 +551,15 @@ async function hydratePatents() {
       }
     }
 
+    const statusKey = (p.status || 'published').toLowerCase();
+    const statusLabel = statusKey.toUpperCase();
+
     return `
       <div class="pub-card">
         <span class="pub-number">P${idx + 1}</span>
+        <div class="pub-header">
+          <span class="pub-status-badge ${escapeHtml(statusKey)}">${escapeHtml(statusLabel)}</span>
+        </div>
         <div class="pub-title">${escapeHtml(p.title || '')}</div>
         <div class="pub-authors">${escapeHtml(p.domain || '')}</div>
         <div class="pub-venue">

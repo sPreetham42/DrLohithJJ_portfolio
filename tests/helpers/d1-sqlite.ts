@@ -434,8 +434,8 @@ export async function seedLocalTestD1(d1: LocalD1Database): Promise<void> {
 
   // 11. Patents
   const insertPatent = d1.rawDb.prepare(`
-    INSERT OR IGNORE INTO patents (id, title, domain, publication_date, application_number, published, display_order, version, created_at, updated_at, metadata)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT OR IGNORE INTO patents (id, title, domain, publication_date, application_number, status, published, display_order, version, created_at, updated_at, metadata)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const defaultPatents = [
     {
@@ -444,6 +444,7 @@ export async function seedLocalTestD1(d1: LocalD1Database): Promise<void> {
       domain: 'Electronics',
       publication_date: '2026-07-31',
       application_number: '202641091778',
+      status: 'published',
       display_order: 1
     },
     {
@@ -452,6 +453,7 @@ export async function seedLocalTestD1(d1: LocalD1Database): Promise<void> {
       domain: 'Electronics',
       publication_date: '2026-02-13',
       application_number: '202641009664',
+      status: 'published',
       display_order: 2
     }
   ];
@@ -462,6 +464,7 @@ export async function seedLocalTestD1(d1: LocalD1Database): Promise<void> {
       pat.domain,
       pat.publicationDate || pat.publication_date,
       pat.applicationNumber || pat.application_number,
+      pat.status || 'published',
       pat.published !== undefined ? (pat.published ? 1 : 0) : 1,
       pat.order || pat.display_order || 1,
       pat.version || 1,

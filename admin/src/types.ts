@@ -168,6 +168,7 @@ export interface PatentAdminRecord {
   domain: string;
   publication_date: string;
   application_number: string;
+  status: 'published' | 'granted';
   published: number; // 0 or 1
   display_order: number;
   version: number;

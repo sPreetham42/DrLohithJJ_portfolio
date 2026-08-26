@@ -764,6 +764,7 @@ export async function handleAdminCreatePatent(request: Request, env: Env, user: 
       domain: parse.data.domain,
       publication_date: parse.data.publicationDate,
       application_number: parse.data.applicationNumber,
+      status: parse.data.status || 'published',
       published: parse.data.published !== false ? 1 : 0,
       display_order: parse.data.order,
       metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null
@@ -791,6 +792,7 @@ export async function handleAdminUpdatePatent(id: string, request: Request, env:
       domain: parse.data.domain,
       publication_date: parse.data.publicationDate,
       application_number: parse.data.applicationNumber,
+      status: parse.data.status || 'published',
       published: parse.data.published !== false ? 1 : 0,
       display_order: parse.data.order,
       metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null

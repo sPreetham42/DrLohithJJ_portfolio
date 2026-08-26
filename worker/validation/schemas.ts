@@ -133,6 +133,7 @@ export const PatentSchema = z.object({
   domain: z.string().min(1),
   publicationDate: z.string().min(1),
   applicationNumber: z.string().min(1),
+  status: z.enum(['published', 'granted']).default('published'),
   published: z.boolean().optional().default(true),
   order: z.number().int().nonnegative(),
   metadata: MetadataSchema,

@@ -374,6 +374,7 @@ export const fallbackData = {
       domain: 'Electronics',
       publicationDate: '2026-07-31',
       applicationNumber: '202641091778',
+      status: 'published',
       order: 1
     },
     {
@@ -382,6 +383,7 @@ export const fallbackData = {
       domain: 'Electronics',
       publicationDate: '2026-02-13',
       applicationNumber: '202641009664',
+      status: 'published',
       order: 2
     }
   ],

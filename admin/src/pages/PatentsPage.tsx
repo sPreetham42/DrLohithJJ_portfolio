@@ -3,6 +3,7 @@ import { Plus, Edit2, Trash2, Award } from 'lucide-react';
 import { adminApi, ApiClientError } from '../api/client';
 import { PatentAdminRecord } from '../types';
 import { TextField } from '../components/common/TextField';
+import { Select } from '../components/common/Select';
 import { Toggle } from '../components/common/Toggle';
 import { Badge } from '../components/common/Badge';
 import { ConfirmDialog } from '../components/common/ConfirmDialog';
@@ -47,6 +48,7 @@ export const PatentsPage: React.FC = () => {
       domain: 'Electronics',
       publicationDate: new Date().toISOString().split('T')[0],
       applicationNumber: '',
+      status: 'published',
       published: true,
       order: items.length + 1
     });
@@ -61,6 +63,7 @@ export const PatentsPage: React.FC = () => {
       domain: item.domain,
       publicationDate: item.publication_date,
       applicationNumber: item.application_number,
+      status: item.status || 'published',
       published: Boolean(item.published),
       order: item.display_order
     });
@@ -79,6 +82,7 @@ export const PatentsPage: React.FC = () => {
         domain: modalFormData.domain,
         publicationDate: modalFormData.publicationDate,
         applicationNumber: modalFormData.applicationNumber,
+        status: modalFormData.status || 'published',
         published: Boolean(modalFormData.published),
         order: Number(modalFormData.order)
       };
@@ -126,7 +130,7 @@ export const PatentsPage: React.FC = () => {
         <div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--navy)' }}>Patents</h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-            Manage published patent records displayed in the Publications section
+            Manage published and granted patent records displayed in the Patents section
           </p>
         </div>
         <button className="btn btn-primary" onClick={handleOpenCreate}>
@@ -151,6 +155,7 @@ export const PatentsPage: React.FC = () => {
                 <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Publication Date</th>
                 <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Application No.</th>
                 <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Status</th>
+                <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Visibility</th>
                 <th style={{ padding: '0.75rem 1rem', fontWeight: 600, textAlign: 'right' }}>Actions</th>
               </tr>
             </thead>
@@ -158,10 +163,15 @@ export const PatentsPage: React.FC = () => {
               {items.map((item, idx) => (
                 <tr key={item.id} style={{ borderBottom: '1px solid var(--border)' }}>
                   <td style={{ padding: '0.75rem 1rem', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>P{idx + 1}</td>
-                  <td style={{ padding: '0.75rem 1rem', fontWeight: 500, maxWidth: '360px' }}>{item.title}</td>
+                  <td style={{ padding: '0.75rem 1rem', fontWeight: 500, maxWidth: '320px' }}>{item.title}</td>
                   <td style={{ padding: '0.75rem 1rem' }}>{item.domain}</td>
                   <td style={{ padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)' }}>{item.publication_date}</td>
                   <td style={{ padding: '0.75rem 1rem', fontFamily: 'var(--font-mono)' }}>{item.application_number}</td>
+                  <td style={{ padding: '0.75rem 1rem' }}>
+                    <Badge variant={item.status === 'granted' ? 'warning' : 'info'}>
+                      {(item.status || 'published').toUpperCase()}
+                    </Badge>
+                  </td>
                   <td style={{ padding: '0.75rem 1rem' }}>
                     <Badge variant={item.published ? 'success' : 'neutral'}>
                       {item.published ? 'Published' : 'Draft'}
@@ -206,13 +216,25 @@ export const PatentsPage: React.FC = () => {
                 onChange={(e) => setModalFormData({ ...modalFormData, title: e.target.value })}
                 placeholder="e.g. Intelli-Port: An Autonomous Multi-Functional Service Robot..."
               />
-              <TextField
-                label="Domain"
-                required
-                value={modalFormData.domain || ''}
-                onChange={(e) => setModalFormData({ ...modalFormData, domain: e.target.value })}
-                placeholder="e.g. Electronics"
-              />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <TextField
+                  label="Domain"
+                  required
+                  value={modalFormData.domain || ''}
+                  onChange={(e) => setModalFormData({ ...modalFormData, domain: e.target.value })}
+                  placeholder="e.g. Electronics"
+                />
+                <Select
+                  label="Status"
+                  required
+                  value={modalFormData.status || 'published'}
+                  onChange={(e) => setModalFormData({ ...modalFormData, status: e.target.value })}
+                  options={[
+                    { value: 'published', label: 'Published' },
+                    { value: 'granted', label: 'Granted' }
+                  ]}
+                />
+              </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <TextField
                   label="Publication Date"

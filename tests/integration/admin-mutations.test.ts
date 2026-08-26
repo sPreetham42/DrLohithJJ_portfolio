@@ -118,16 +118,31 @@ describe('Real Worker + D1 Integration: Admin Mutations', () => {
     expect(updatedPub.venue).toContain('Information Forensics and Security');
   });
 
-  it('executes POST, PUT, DELETE for /api/v1/admin/patents with atomic D1 revisions', async () => {
+  it('executes POST, PUT, DELETE for /api/v1/admin/patents with atomic D1 revisions and status validation', async () => {
     const newPatent = {
       id: 'pat-test-1',
       title: 'Autonomous Drone Swarm Communication System',
       domain: 'Robotics',
       publicationDate: '2026-08-01',
       applicationNumber: '202641099999',
+      status: 'published',
       published: true,
       order: 3
     };
+
+    // 0. Invalid Status Rejection Test
+    const invalidStatusReq = new Request('https://drlohithjj.in/api/v1/admin/patents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      },
+      body: JSON.stringify({ ...newPatent, id: 'pat-bad-status', status: 'invalid-status' })
+    });
+    const invalidStatusRes = await routeRequest(invalidStatusReq, testEnv);
+    expect(invalidStatusRes.status).toBe(400);
 
     // 1. Create
     const createReq = new Request('https://drlohithjj.in/api/v1/admin/patents', {
@@ -142,15 +157,19 @@ describe('Real Worker + D1 Integration: Admin Mutations', () => {
     });
     const createRes = await routeRequest(createReq, testEnv);
     expect(createRes.status).toBe(201);
+    const createdBody = (await createRes.json()) as any;
+    expect(createdBody.status).toBe('published');
 
     // 2. Read Back Public
     const publicReq = new Request('https://drlohithjj.in/api/v1/public/patents');
     const publicRes = await routeRequest(publicReq, testEnv);
     expect(publicRes.status).toBe(200);
     const patents = (await publicRes.json()) as any[];
-    expect(patents.some((p: any) => p.id === 'pat-test-1')).toBe(true);
+    const found = patents.find((p: any) => p.id === 'pat-test-1');
+    expect(found).toBeDefined();
+    expect(found.status).toBe('published');
 
-    // 3. Update
+    // 3. Update status from published -> granted
     const updateReq = new Request('https://drlohithjj.in/api/v1/admin/patents/pat-test-1', {
       method: 'PUT',
       headers: {
@@ -159,15 +178,22 @@ describe('Real Worker + D1 Integration: Admin Mutations', () => {
         'X-Admin-Request': '1',
         'Sec-Fetch-Site': 'same-origin'
       },
-      body: JSON.stringify({ ...newPatent, title: 'Updated Autonomous Drone Swarm System', version: 1 })
+      body: JSON.stringify({ ...newPatent, title: 'Updated Autonomous Drone Swarm System', status: 'granted', version: 1 })
     });
     const updateRes = await routeRequest(updateReq, testEnv);
     expect(updateRes.status).toBe(200);
     const updatedBody = (await updateRes.json()) as any;
     expect(updatedBody.title).toBe('Updated Autonomous Drone Swarm System');
+    expect(updatedBody.status).toBe('granted');
     expect(updatedBody.version).toBe(2);
 
-    // 4. Delete
+    // 4. Verify public API returns updated status 'granted'
+    const publicRes2 = await routeRequest(new Request('https://drlohithjj.in/api/v1/public/patents'), testEnv);
+    const patents2 = (await publicRes2.json()) as any[];
+    const found2 = patents2.find((p: any) => p.id === 'pat-test-1');
+    expect(found2.status).toBe('granted');
+
+    // 5. Delete
     const deleteReq = new Request('https://drlohithjj.in/api/v1/admin/patents/pat-test-1?version=2', {
       method: 'DELETE',
       headers: {

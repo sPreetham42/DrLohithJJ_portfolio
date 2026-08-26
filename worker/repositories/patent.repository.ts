@@ -38,10 +38,10 @@ export class PatentRepository {
     return this.db
       .prepare(`
         INSERT INTO patents (
-          id, title, domain, publication_date, application_number,
+          id, title, domain, publication_date, application_number, status,
           published, display_order, version, created_at, updated_at, metadata
         ) VALUES (
-          ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?
+          ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?
         )
       `)
       .bind(
@@ -50,6 +50,7 @@ export class PatentRepository {
         data.domain,
         data.publication_date,
         data.application_number,
+        data.status || 'published',
         data.published ? 1 : 0,
         data.display_order,
         now,
@@ -71,6 +72,7 @@ export class PatentRepository {
           domain = ?,
           publication_date = ?,
           application_number = ?,
+          status = ?,
           published = ?,
           display_order = ?,
           version = version + 1,
@@ -83,6 +85,7 @@ export class PatentRepository {
         data.domain,
         data.publication_date,
         data.application_number,
+        data.status || 'published',
         data.published ? 1 : 0,
         data.display_order,
         now,

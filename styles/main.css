@@ -1831,6 +1831,31 @@ section {
   letter-spacing: 0.06em;
 }
 
+.pub-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+}
+
+.pub-status-badge.published {
+  background-color: var(--sage);
+  color: var(--emerald);
+  border: 1px solid var(--sage-border);
+}
+
+.pub-status-badge.granted {
+  background-color: rgba(196, 154, 74, 0.15);
+  color: #926A18;
+  border: 1px solid rgba(196, 154, 74, 0.35);
+}
+
 .pub-list {
   display: flex;
   flex-direction: column;

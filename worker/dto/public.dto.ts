@@ -135,6 +135,7 @@ export function toPublicPatentDto(record: PatentRecord) {
     domain: record.domain,
     publicationDate: record.publication_date,
     applicationNumber: record.application_number,
+    status: record.status || 'published',
     order: record.display_order
   };
 }

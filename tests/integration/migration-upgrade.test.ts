@@ -19,7 +19,7 @@ describe('Real D1 Migration Upgrade Progression', () => {
     db.pragma('foreign_keys = ON');
 
     const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
-    expect(files.length).toBe(6);
+    expect(files.length).toBe(7);
 
     for (const file of files) {
       expect(() => db.exec(readMigration(file))).not.toThrow();
@@ -50,7 +50,7 @@ describe('Real D1 Migration Upgrade Progression', () => {
     expect(tables).toContain('research_scholars');
   });
 
-  it('Upgrade Path: migrates state from 0001 baseline through 0005 without data loss', () => {
+  it('Upgrade Path: migrates state from 0001 baseline through 0007 without data loss', () => {
     const db = new Database(':memory:');
     db.pragma('foreign_keys = ON');
 
@@ -88,12 +88,22 @@ describe('Real D1 Migration Upgrade Progression', () => {
     // 5. Apply Migration 0005 (photo asset FK normalization)
     expect(() => db.exec(readMigration('0005_fix_profile_photo_asset_fk.sql'))).not.toThrow();
 
+    // 6. Apply Migration 0006 (patents & research_scholars)
+    expect(() => db.exec(readMigration('0006_create_patents_and_research_scholars.sql'))).not.toThrow();
+
+    // 7. Apply Migration 0007 (add_patent_status)
+    expect(() => db.exec(readMigration('0007_add_patent_status.sql'))).not.toThrow();
+
     // Enable strict foreign keys and verify normalization
     db.pragma('foreign_keys = ON');
 
     // Verify Migration 0005 normalized photo_asset_id from 'assets/Dr Lohith J J.jpeg' to 'asset-headshot'
     const profile = db.prepare('SELECT photo_asset_id FROM profile WHERE id = ?').get('profile') as any;
     expect(profile.photo_asset_id).toBe('asset-headshot');
+
+    // Verify Migration 0007 added status column to patents
+    const patentCols = db.prepare("PRAGMA table_info('patents')").all() as any[];
+    expect(patentCols.some((c: any) => c.name === 'status')).toBe(true);
 
     // Verify foreign key integrity
     const fkCheck = db.prepare('PRAGMA foreign_key_check').all();
