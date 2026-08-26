@@ -431,4 +431,85 @@ export async function seedLocalTestD1(d1: LocalD1Database): Promise<void> {
       sl.metadata ? JSON.stringify(sl.metadata) : null
     );
   }
+
+  // 11. Patents
+  const insertPatent = d1.rawDb.prepare(`
+    INSERT OR IGNORE INTO patents (id, title, domain, publication_date, application_number, published, display_order, version, created_at, updated_at, metadata)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  const defaultPatents = [
+    {
+      id: 'pat-1',
+      title: 'Intelli-Port: An Autonomous Multi-Functional Service Robot with Intelligent Navigation, Human Following, and Environmental Mapping',
+      domain: 'Electronics',
+      publication_date: '2026-07-31',
+      application_number: '202641091778',
+      display_order: 1
+    },
+    {
+      id: 'pat-2',
+      title: 'AI-Enabled Robotic Wardrobe System for Automated Garment Care',
+      domain: 'Electronics',
+      publication_date: '2026-02-13',
+      application_number: '202641009664',
+      display_order: 2
+    }
+  ];
+  for (const pat of snapshot.patents || defaultPatents) {
+    insertPatent.run(
+      pat.id,
+      pat.title,
+      pat.domain,
+      pat.publicationDate || pat.publication_date,
+      pat.applicationNumber || pat.application_number,
+      pat.published !== undefined ? (pat.published ? 1 : 0) : 1,
+      pat.order || pat.display_order || 1,
+      pat.version || 1,
+      pat.createdAt || pat.created_at || now,
+      pat.updatedAt || pat.updated_at || now,
+      pat.metadata ? JSON.stringify(pat.metadata) : null
+    );
+  }
+
+  // 12. Research Scholars
+  const insertScholar = d1.rawDb.prepare(`
+    INSERT OR IGNORE INTO research_scholars (id, name, scholar_id, badge, affiliation, guidance, published, display_order, version, created_at, updated_at, metadata)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  const defaultScholars = [
+    {
+      id: 'rs-1',
+      name: 'Ms. Shyla Moses',
+      scholar_id: '251589001019',
+      badge: 'Co-guided',
+      affiliation: 'MAHE Bangalore',
+      guidance: 'Co-guided by Dr. Lohith J.J.',
+      display_order: 1
+    },
+    {
+      id: 'rs-2',
+      name: 'Ms. Bhavana Subhash Gujarkar',
+      scholar_id: '252589001045',
+      badge: 'Co-guided',
+      affiliation: 'MAHE Bangalore',
+      guidance: 'Co-guided by Dr. Lohith J.J.',
+      display_order: 2
+    }
+  ];
+  for (const rs of snapshot.researchScholars || snapshot.research_scholars || defaultScholars) {
+    insertScholar.run(
+      rs.id,
+      rs.name,
+      rs.scholarId || rs.scholar_id || null,
+      rs.badge || 'Co-guided',
+      rs.affiliation,
+      rs.guidance || null,
+      rs.published !== undefined ? (rs.published ? 1 : 0) : 1,
+      rs.order || rs.display_order || 1,
+      rs.version || 1,
+      rs.createdAt || rs.created_at || now,
+      rs.updatedAt || rs.updated_at || now,
+      rs.metadata ? JSON.stringify(rs.metadata) : null
+    );
+  }
 }

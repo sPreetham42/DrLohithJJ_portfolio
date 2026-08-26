@@ -12,6 +12,8 @@ import {
   handleGetAwards,
   handleGetSkills,
   handleGetSocialLinks,
+  handleGetPatents,
+  handleGetResearchScholars,
   jsonResponse
 } from './handlers/public.handler';
 import {
@@ -54,6 +56,16 @@ import {
   handleAdminCreateSocialLink,
   handleAdminUpdateSocialLink,
   handleAdminDeleteSocialLink,
+  handleAdminGetPatents,
+  handleAdminGetPatentById,
+  handleAdminCreatePatent,
+  handleAdminUpdatePatent,
+  handleAdminDeletePatent,
+  handleAdminGetResearchScholars,
+  handleAdminGetResearchScholarById,
+  handleAdminCreateResearchScholar,
+  handleAdminUpdateResearchScholar,
+  handleAdminDeleteResearchScholar,
   handleAdminPresignedUrl
 } from './handlers/admin.handler';
 import { handleScholarSyncAutomation } from './handlers/automation.handler';
@@ -106,6 +118,12 @@ export async function routeRequest(request: Request, env: Env): Promise<Response
     }
     if (path === '/api/v1/public/social-links' && method === 'GET') {
       return await handleGetSocialLinks(request, env);
+    }
+    if (path === '/api/v1/public/patents' && method === 'GET') {
+      return await handleGetPatents(request, env);
+    }
+    if (path === '/api/v1/public/research-scholars' && method === 'GET') {
+      return await handleGetResearchScholars(request, env);
     }
 
     // ----------------------------------------------------------------
@@ -238,6 +256,32 @@ export async function routeRequest(request: Request, env: Env): Promise<Response
         if (method === 'GET') return await handleAdminGetSocialLinkById(id, request, env, user);
         if (method === 'PUT') return await handleAdminUpdateSocialLink(id, request, env, user);
         if (method === 'DELETE') return await handleAdminDeleteSocialLink(id, request, env, user);
+      }
+
+      // Patents
+      if (path === '/api/v1/admin/patents') {
+        if (method === 'GET') return await handleAdminGetPatents(request, env, user);
+        if (method === 'POST') return await handleAdminCreatePatent(request, env, user);
+      }
+      const patMatch = path.match(/^\/api\/v1\/admin\/patents\/([^/]+)$/);
+      if (patMatch) {
+        const id = decodeURIComponent(patMatch[1]);
+        if (method === 'GET') return await handleAdminGetPatentById(id, request, env, user);
+        if (method === 'PUT') return await handleAdminUpdatePatent(id, request, env, user);
+        if (method === 'DELETE') return await handleAdminDeletePatent(id, request, env, user);
+      }
+
+      // Research Scholars
+      if (path === '/api/v1/admin/research-scholars') {
+        if (method === 'GET') return await handleAdminGetResearchScholars(request, env, user);
+        if (method === 'POST') return await handleAdminCreateResearchScholar(request, env, user);
+      }
+      const rsMatch = path.match(/^\/api\/v1\/admin\/research-scholars\/([^/]+)$/);
+      if (rsMatch) {
+        const id = decodeURIComponent(rsMatch[1]);
+        if (method === 'GET') return await handleAdminGetResearchScholarById(id, request, env, user);
+        if (method === 'PUT') return await handleAdminUpdateResearchScholar(id, request, env, user);
+        if (method === 'DELETE') return await handleAdminDeleteResearchScholar(id, request, env, user);
       }
 
       // Assets Presigned URL (Phase 3 contract)

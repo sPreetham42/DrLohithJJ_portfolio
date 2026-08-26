@@ -12,6 +12,8 @@ import {
   AwardAdminRecord,
   SkillCategoryAdminRecord,
   SocialLinkAdminRecord,
+  PatentAdminRecord,
+  ResearchScholarAdminRecord,
   RevisionHistoryItem,
   AuthMeResponse
 } from '../types';
@@ -241,6 +243,44 @@ export const adminApi = {
   deleteSocialLink: (id: string, version: number) =>
     request<{ success: boolean; deletedId: string }>(
       `/admin/social-links/${encodeURIComponent(id)}?version=${version}`,
+      { method: 'DELETE' }
+    ),
+
+  // Patents
+  getPatents: () => request<PatentAdminRecord[]>('/admin/patents'),
+  getPatentById: (id: string) => request<PatentAdminRecord>(`/admin/patents/${encodeURIComponent(id)}`),
+  createPatent: (data: any) =>
+    request<PatentAdminRecord>('/admin/patents', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }),
+  updatePatent: (id: string, data: any, version: number) =>
+    request<PatentAdminRecord>(`/admin/patents/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ version, data })
+    }),
+  deletePatent: (id: string, version: number) =>
+    request<{ success: boolean; deletedId: string }>(
+      `/admin/patents/${encodeURIComponent(id)}?version=${version}`,
+      { method: 'DELETE' }
+    ),
+
+  // Research Scholars
+  getResearchScholars: () => request<ResearchScholarAdminRecord[]>('/admin/research-scholars'),
+  getResearchScholarById: (id: string) => request<ResearchScholarAdminRecord>(`/admin/research-scholars/${encodeURIComponent(id)}`),
+  createResearchScholar: (data: any) =>
+    request<ResearchScholarAdminRecord>('/admin/research-scholars', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }),
+  updateResearchScholar: (id: string, data: any, version: number) =>
+    request<ResearchScholarAdminRecord>(`/admin/research-scholars/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ version, data })
+    }),
+  deleteResearchScholar: (id: string, version: number) =>
+    request<{ success: boolean; deletedId: string }>(
+      `/admin/research-scholars/${encodeURIComponent(id)}?version=${version}`,
       { method: 'DELETE' }
     ),
 

@@ -137,4 +137,28 @@ describe('Real Worker + D1 Integration: Public Read Endpoints', () => {
     expect(body[0].platform).toBeDefined();
     expect(body[0].url).toBeDefined();
   });
+
+  it('GET /api/v1/public/patents returns published patents in display order', async () => {
+    const request = new Request('https://drlohithjj.in/api/v1/public/patents');
+    const response = await routeRequest(request, testEnv);
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as any;
+    expect(body.length).toBe(2);
+    expect(body[0].title).toBe('Intelli-Port: An Autonomous Multi-Functional Service Robot with Intelligent Navigation, Human Following, and Environmental Mapping');
+    expect(body[0].domain).toBe('Electronics');
+    expect(body[0].applicationNumber).toBe('202641091778');
+    expect(body[1].applicationNumber).toBe('202641009664');
+  });
+
+  it('GET /api/v1/public/research-scholars returns co-guided research scholars', async () => {
+    const request = new Request('https://drlohithjj.in/api/v1/public/research-scholars');
+    const response = await routeRequest(request, testEnv);
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as any;
+    expect(body.length).toBe(2);
+    expect(body[0].name).toBe('Ms. Shyla Moses');
+    expect(body[0].scholarId).toBe('251589001019');
+    expect(body[1].name).toBe('Ms. Bhavana Subhash Gujarkar');
+    expect(body[1].scholarId).toBe('252589001045');
+  });
 });

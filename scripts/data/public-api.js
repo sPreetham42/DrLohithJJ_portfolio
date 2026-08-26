@@ -86,5 +86,7 @@ export const publicApi = {
   fetchEducation: () => fetchWithTimeout('/education', isValidArray),
   fetchAwards: () => fetchWithTimeout('/awards', isValidArray),
   fetchSkills: () => fetchWithTimeout('/skills', isValidArray),
-  fetchSocialLinks: () => fetchWithTimeout('/social-links', isValidArray)
+  fetchSocialLinks: () => fetchWithTimeout('/social-links', isValidArray),
+  fetchPatents: () => fetchWithTimeout('/patents', isValidArray),
+  fetchResearchScholars: () => fetchWithTimeout('/research-scholars', isValidArray)
 };

@@ -127,6 +127,29 @@ export const AssetSchema = z.object({
   metadata: MetadataSchema,
 });
 
+export const PatentSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  domain: z.string().min(1),
+  publicationDate: z.string().min(1),
+  applicationNumber: z.string().min(1),
+  published: z.boolean().optional().default(true),
+  order: z.number().int().nonnegative(),
+  metadata: MetadataSchema,
+});
+
+export const ResearchScholarSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  scholarId: z.string().nullable().optional(),
+  badge: z.string().min(1).default('Co-guided'),
+  affiliation: z.string().min(1),
+  guidance: z.string().nullable().optional(),
+  published: z.boolean().optional().default(true),
+  order: z.number().int().nonnegative(),
+  metadata: MetadataSchema,
+});
+
 export const CanonicalSnapshotSchema = z.object({
   version: z.string().min(1),
   generatedAt: z.string().min(1),
@@ -140,6 +163,9 @@ export const CanonicalSnapshotSchema = z.object({
   skillCategories: z.array(SkillCategorySchema).min(1),
   socialLinks: z.array(SocialLinkSchema).min(1),
   assets: z.array(AssetSchema).min(1),
+  patents: z.array(PatentSchema).optional(),
+  researchScholars: z.array(ResearchScholarSchema).optional(),
 });
 
 export type CanonicalSnapshot = z.infer<typeof CanonicalSnapshotSchema>;
+

@@ -365,5 +365,45 @@ export const fallbackData = {
     { id: 'soc-7', platform: 'CRSI Member Directory', url: 'http://crsind.in/members/life-members/?q=L/0889', icon: 'crsi.svg', order: 7 },
     { id: 'soc-8', platform: 'Email', url: 'mailto:lohithjj@gmail.com', icon: 'gmail.svg', order: 8 },
     { id: 'soc-9', platform: 'YouTube', url: 'https://www.youtube.com/@shreyajj', icon: 'youtube.svg', order: 9 }
+  ],
+
+  patents: [
+    {
+      id: 'pat-1',
+      title: 'Intelli-Port: An Autonomous Multi-Functional Service Robot with Intelligent Navigation, Human Following, and Environmental Mapping',
+      domain: 'Electronics',
+      publicationDate: '2026-07-31',
+      applicationNumber: '202641091778',
+      order: 1
+    },
+    {
+      id: 'pat-2',
+      title: 'AI-Enabled Robotic Wardrobe System for Automated Garment Care',
+      domain: 'Electronics',
+      publicationDate: '2026-02-13',
+      applicationNumber: '202641009664',
+      order: 2
+    }
+  ],
+
+  researchScholars: [
+    {
+      id: 'rs-1',
+      name: 'Ms. Shyla Moses',
+      scholarId: '251589001019',
+      badge: 'Co-guided',
+      affiliation: 'MAHE Bangalore',
+      guidance: 'Co-guided by Dr. Lohith J.J.',
+      order: 1
+    },
+    {
+      id: 'rs-2',
+      name: 'Ms. Bhavana Subhash Gujarkar',
+      scholarId: '252589001045',
+      badge: 'Co-guided',
+      affiliation: 'MAHE Bangalore',
+      guidance: 'Co-guided by Dr. Lohith J.J.',
+      order: 2
+    }
   ]
 };

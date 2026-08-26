@@ -112,6 +112,22 @@ export const publicDataAdapter = {
       if (data) return data;
     }
     return fallbackData.socialLinks;
+  },
+
+  async getPatents() {
+    if (getDataSourceMode() === 'api') {
+      const data = await publicApi.fetchPatents();
+      if (data) return data;
+    }
+    return fallbackData.patents;
+  },
+
+  async getResearchScholars() {
+    if (getDataSourceMode() === 'api') {
+      const data = await publicApi.fetchResearchScholars();
+      if (data) return data;
+    }
+    return fallbackData.researchScholars;
   }
 };
 
@@ -130,7 +146,9 @@ export async function initPublicDataAdapter() {
       hydrateEducation(),
       hydrateAwards(),
       hydrateSkills(),
-      hydrateSocialLinks()
+      hydrateSocialLinks(),
+      hydratePatents(),
+      hydrateResearchScholars()
     ]);
 
     if (window.refreshScrollReveal) {
@@ -509,4 +527,63 @@ async function hydrateSocialLinks() {
     `;
   }).join('');
 }
+
+// 10. Patents Hydration
+async function hydratePatents() {
+  const container = document.getElementById('patents-list');
+  if (!container) return;
+
+  const items = await publicDataAdapter.getPatents();
+  if (!items || items.length === 0) return;
+
+  container.innerHTML = items.map((p, idx) => {
+    let pubDateFormatted = p.publicationDate || p.publication_date || '';
+    if (pubDateFormatted.includes('T')) {
+      pubDateFormatted = pubDateFormatted.split('T')[0];
+    }
+    // If YYYY-MM-DD format, convert to natural date string (e.g. 31 July 2026)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(pubDateFormatted)) {
+      const [year, month, day] = pubDateFormatted.split('-');
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const mIdx = parseInt(month, 10) - 1;
+      if (mIdx >= 0 && mIdx < 12) {
+        pubDateFormatted = `${parseInt(day, 10)} ${monthNames[mIdx]} ${year}`;
+      }
+    }
+
+    return `
+      <div class="pub-card">
+        <span class="pub-number">P${idx + 1}</span>
+        <div class="pub-title">${escapeHtml(p.title || '')}</div>
+        <div class="pub-authors">${escapeHtml(p.domain || '')}</div>
+        <div class="pub-venue">
+          <span class="pub-meta">Published ${escapeHtml(pubDateFormatted)}</span>
+          <span class="pub-application-no">Application No. ${escapeHtml(p.applicationNumber || p.application_number || '')}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// 11. Research Scholars Hydration
+async function hydrateResearchScholars() {
+  const container = document.getElementById('scholars-list');
+  if (!container) return;
+
+  const items = await publicDataAdapter.getResearchScholars();
+  if (!items || items.length === 0) return;
+
+  container.innerHTML = items.map(s => `
+    <div class="scholar-card">
+      <div class="scholar-header">
+        <span class="scholar-badge">${escapeHtml(s.badge || 'Co-guided')}</span>
+        ${s.scholarId || s.scholar_id ? `<span class="scholar-id">ID: ${escapeHtml(s.scholarId || s.scholar_id)}</span>` : ''}
+      </div>
+      <h3 class="scholar-name">${escapeHtml(s.name || '')}</h3>
+      <div class="scholar-affiliation">${escapeHtml(s.affiliation || '')}</div>
+      ${s.guidance ? `<div class="scholar-guidance">${escapeHtml(s.guidance)}</div>` : ''}
+    </div>
+  `).join('');
+}
+
 

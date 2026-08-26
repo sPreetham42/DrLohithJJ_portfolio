@@ -9,7 +9,9 @@ import {
   Code2,
   Share2,
   BarChart3,
-  HardDrive
+  HardDrive,
+  FileText,
+  Users
 } from 'lucide-react';
 import { AdminTab } from '../../types';
 
@@ -43,6 +45,8 @@ const NAV_SECTIONS: NavSection[] = [
     label: 'Academic Content',
     items: [
       { id: 'publications', label: 'Publications', icon: BookOpen },
+      { id: 'patents', label: 'Patents', icon: FileText },
+      { id: 'scholars', label: 'Research Scholars', icon: Users },
       { id: 'talks', label: 'Invited Talks', icon: Mic },
       { id: 'experience', label: 'Experience', icon: Briefcase },
       { id: 'education', label: 'Education', icon: GraduationCap },

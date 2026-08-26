@@ -9,6 +9,8 @@ import { AwardRepository } from '../repositories/award.repository';
 import { SkillCategoryRepository } from '../repositories/skill.repository';
 import { SocialLinkRepository } from '../repositories/social.repository';
 import { AssetRepository } from '../repositories/asset.repository';
+import { PatentRepository } from '../repositories/patent.repository';
+import { ResearchScholarRepository } from '../repositories/research_scholar.repository';
 import {
   toPublicProfileDto,
   toPublicScholarStatsDto,
@@ -18,7 +20,9 @@ import {
   toPublicEducationDto,
   toPublicAwardDto,
   toPublicSkillCategoryDto,
-  toPublicSocialLinkDto
+  toPublicSocialLinkDto,
+  toPublicPatentDto,
+  toPublicResearchScholarDto
 } from '../dto/public.dto';
 import { getPublicCacheHeaders } from '../middleware/cache';
 import { NotFoundError } from '../errors';
@@ -138,4 +142,18 @@ export async function handleGetSocialLinks(request: Request, env: Env): Promise<
   const list = await repo.getAllPublic();
   const dtos = list.map(toPublicSocialLinkDto);
   return jsonResponse(dtos, 200, getPublicCacheHeaders('social-links'));
+}
+
+export async function handleGetPatents(request: Request, env: Env): Promise<Response> {
+  const repo = new PatentRepository(env.DB);
+  const list = await repo.getAllPublic();
+  const dtos = list.map(toPublicPatentDto);
+  return jsonResponse(dtos, 200, getPublicCacheHeaders('patents'));
+}
+
+export async function handleGetResearchScholars(request: Request, env: Env): Promise<Response> {
+  const repo = new ResearchScholarRepository(env.DB);
+  const list = await repo.getAllPublic();
+  const dtos = list.map(toPublicResearchScholarDto);
+  return jsonResponse(dtos, 200, getPublicCacheHeaders('research-scholars'));
 }

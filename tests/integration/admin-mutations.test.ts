@@ -117,4 +117,112 @@ describe('Real Worker + D1 Integration: Admin Mutations', () => {
     expect(updatedPub.title).toBe(updatedTitle);
     expect(updatedPub.venue).toContain('Information Forensics and Security');
   });
+
+  it('executes POST, PUT, DELETE for /api/v1/admin/patents with atomic D1 revisions', async () => {
+    const newPatent = {
+      id: 'pat-test-1',
+      title: 'Autonomous Drone Swarm Communication System',
+      domain: 'Robotics',
+      publicationDate: '2026-08-01',
+      applicationNumber: '202641099999',
+      published: true,
+      order: 3
+    };
+
+    // 1. Create
+    const createReq = new Request('https://drlohithjj.in/api/v1/admin/patents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      },
+      body: JSON.stringify(newPatent)
+    });
+    const createRes = await routeRequest(createReq, testEnv);
+    expect(createRes.status).toBe(201);
+
+    // 2. Read Back Public
+    const publicReq = new Request('https://drlohithjj.in/api/v1/public/patents');
+    const publicRes = await routeRequest(publicReq, testEnv);
+    expect(publicRes.status).toBe(200);
+    const patents = (await publicRes.json()) as any[];
+    expect(patents.some((p: any) => p.id === 'pat-test-1')).toBe(true);
+
+    // 3. Update
+    const updateReq = new Request('https://drlohithjj.in/api/v1/admin/patents/pat-test-1', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      },
+      body: JSON.stringify({ ...newPatent, title: 'Updated Autonomous Drone Swarm System', version: 1 })
+    });
+    const updateRes = await routeRequest(updateReq, testEnv);
+    expect(updateRes.status).toBe(200);
+    const updatedBody = (await updateRes.json()) as any;
+    expect(updatedBody.title).toBe('Updated Autonomous Drone Swarm System');
+    expect(updatedBody.version).toBe(2);
+
+    // 4. Delete
+    const deleteReq = new Request('https://drlohithjj.in/api/v1/admin/patents/pat-test-1?version=2', {
+      method: 'DELETE',
+      headers: {
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      }
+    });
+    const deleteRes = await routeRequest(deleteReq, testEnv);
+    expect(deleteRes.status).toBe(200);
+  });
+
+  it('executes POST, PUT, DELETE for /api/v1/admin/research-scholars with atomic D1 revisions', async () => {
+    const newScholar = {
+      id: 'rs-test-1',
+      name: 'Mr. Rohan Sharma',
+      scholarId: '251589009999',
+      badge: 'Primary',
+      affiliation: 'NCET Bengaluru',
+      guidance: 'Guided by Dr. Lohith J.J.',
+      published: true,
+      order: 3
+    };
+
+    // 1. Create
+    const createReq = new Request('https://drlohithjj.in/api/v1/admin/research-scholars', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      },
+      body: JSON.stringify(newScholar)
+    });
+    const createRes = await routeRequest(createReq, testEnv);
+    expect(createRes.status).toBe(201);
+
+    // 2. Read Back Public
+    const publicReq = new Request('https://drlohithjj.in/api/v1/public/research-scholars');
+    const publicRes = await routeRequest(publicReq, testEnv);
+    expect(publicRes.status).toBe(200);
+    const scholars = (await publicRes.json()) as any[];
+    expect(scholars.some((s: any) => s.id === 'rs-test-1')).toBe(true);
+
+    // 3. Delete
+    const deleteReq = new Request('https://drlohithjj.in/api/v1/admin/research-scholars/rs-test-1?version=1', {
+      method: 'DELETE',
+      headers: {
+        'Cookie': `__Host-admin_session=${rawSessionToken}`,
+        'X-Admin-Request': '1',
+        'Sec-Fetch-Site': 'same-origin'
+      }
+    });
+    const deleteRes = await routeRequest(deleteReq, testEnv);
+    expect(deleteRes.status).toBe(200);
+  });
 });

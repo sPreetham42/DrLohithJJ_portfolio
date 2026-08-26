@@ -162,10 +162,41 @@ export interface RevisionHistoryItem {
   created_at: string;
 }
 
+export interface PatentAdminRecord {
+  id: string;
+  title: string;
+  domain: string;
+  publication_date: string;
+  application_number: string;
+  published: number; // 0 or 1
+  display_order: number;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  metadata?: string | null;
+}
+
+export interface ResearchScholarAdminRecord {
+  id: string;
+  name: string;
+  scholar_id: string | null;
+  badge: string;
+  affiliation: string;
+  guidance: string | null;
+  published: number; // 0 or 1
+  display_order: number;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  metadata?: string | null;
+}
+
 export type AdminTab =
   | 'profile'
   | 'scholar'
   | 'publications'
+  | 'patents'
+  | 'scholars'
   | 'talks'
   | 'experience'
   | 'education'

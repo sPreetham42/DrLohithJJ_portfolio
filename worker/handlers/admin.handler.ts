@@ -14,6 +14,8 @@ import { AwardRepository } from '../repositories/award.repository';
 import { SkillCategoryRepository } from '../repositories/skill.repository';
 import { SocialLinkRepository } from '../repositories/social.repository';
 import { AssetRepository } from '../repositories/asset.repository';
+import { PatentRepository } from '../repositories/patent.repository';
+import { ResearchScholarRepository } from '../repositories/research_scholar.repository';
 import {
   ProfileSchema,
   ScholarStatsSchema,
@@ -23,7 +25,9 @@ import {
   EducationSchema,
   AwardSchema,
   SkillCategorySchema,
-  SocialLinkSchema
+  SocialLinkSchema,
+  PatentSchema,
+  ResearchScholarSchema
 } from '../validation/schemas';
 import { ValidationError, NotFoundError, ApiError } from '../errors';
 import { getNoCacheHeaders, invalidateCache } from '../middleware/cache';
@@ -732,7 +736,177 @@ export async function handleAdminDeleteSocialLink(id: string, request: Request, 
 }
 
 // ----------------------------------------------------------------
-// 10. Asset Pre-signed URL Boundary (Status & Real Binding Check)
+// 10. Patents
+// ----------------------------------------------------------------
+export async function handleAdminGetPatents(request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const repo = new PatentRepository(env.DB);
+  const list = await repo.getAllAdmin();
+  return jsonResponse(list, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminGetPatentById(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const repo = new PatentRepository(env.DB);
+  const item = await repo.getById(id);
+  if (!item) throw new NotFoundError('Patent', id);
+  return jsonResponse(item, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminCreatePatent(request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const body = (await request.json()) as any;
+  const parse = PatentSchema.safeParse(body);
+  if (!parse.success) throw new ValidationError(parse.error.format());
+
+  const repo = new PatentRepository(env.DB);
+  const created = await repo.createWithRevision(
+    {
+      id: parse.data.id,
+      title: parse.data.title,
+      domain: parse.data.domain,
+      publication_date: parse.data.publicationDate,
+      application_number: parse.data.applicationNumber,
+      published: parse.data.published !== false ? 1 : 0,
+      display_order: parse.data.order,
+      metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null
+    },
+    user.email
+  );
+
+  await invalidateCache('patents', env);
+  return jsonResponse(created, 201, getNoCacheHeaders());
+}
+
+export async function handleAdminUpdatePatent(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const body = (await request.json()) as any;
+  const parse = PatentSchema.safeParse(body.data || body);
+  if (!parse.success) throw new ValidationError(parse.error.format());
+
+  const expectedVersion = Number(body.version);
+  if (isNaN(expectedVersion)) throw new ValidationError('Missing or invalid expected version number');
+
+  const repo = new PatentRepository(env.DB);
+  const updated = await repo.updateWithRevision(
+    id,
+    {
+      title: parse.data.title,
+      domain: parse.data.domain,
+      publication_date: parse.data.publicationDate,
+      application_number: parse.data.applicationNumber,
+      published: parse.data.published !== false ? 1 : 0,
+      display_order: parse.data.order,
+      metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null
+    },
+    expectedVersion,
+    user.email
+  );
+
+  await invalidateCache('patents', env);
+  return jsonResponse(updated, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminDeletePatent(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const url = new URL(request.url);
+  const versionParam = url.searchParams.get('version');
+  const expectedVersion = versionParam ? parseInt(versionParam, 10) : NaN;
+  if (isNaN(expectedVersion)) throw new ValidationError('Missing required version query parameter for deletion');
+
+  const repo = new PatentRepository(env.DB);
+  const existing = await repo.getById(id);
+  if (!existing) throw new NotFoundError('Patent', id);
+
+  await repo.deleteWithRevision(id, expectedVersion, user.email);
+  await invalidateCache('patents', env);
+
+  return jsonResponse({ success: true, deletedId: id }, 200, getNoCacheHeaders());
+}
+
+// ----------------------------------------------------------------
+// 11. Research Scholars
+// ----------------------------------------------------------------
+export async function handleAdminGetResearchScholars(request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const repo = new ResearchScholarRepository(env.DB);
+  const list = await repo.getAllAdmin();
+  return jsonResponse(list, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminGetResearchScholarById(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const repo = new ResearchScholarRepository(env.DB);
+  const item = await repo.getById(id);
+  if (!item) throw new NotFoundError('ResearchScholar', id);
+  return jsonResponse(item, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminCreateResearchScholar(request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const body = (await request.json()) as any;
+  const parse = ResearchScholarSchema.safeParse(body);
+  if (!parse.success) throw new ValidationError(parse.error.format());
+
+  const repo = new ResearchScholarRepository(env.DB);
+  const created = await repo.createWithRevision(
+    {
+      id: parse.data.id,
+      name: parse.data.name,
+      scholar_id: parse.data.scholarId || null,
+      badge: parse.data.badge || 'Co-guided',
+      affiliation: parse.data.affiliation,
+      guidance: parse.data.guidance || null,
+      published: parse.data.published !== false ? 1 : 0,
+      display_order: parse.data.order,
+      metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null
+    },
+    user.email
+  );
+
+  await invalidateCache('research-scholars', env);
+  return jsonResponse(created, 201, getNoCacheHeaders());
+}
+
+export async function handleAdminUpdateResearchScholar(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const body = (await request.json()) as any;
+  const parse = ResearchScholarSchema.safeParse(body.data || body);
+  if (!parse.success) throw new ValidationError(parse.error.format());
+
+  const expectedVersion = Number(body.version);
+  if (isNaN(expectedVersion)) throw new ValidationError('Missing or invalid expected version number');
+
+  const repo = new ResearchScholarRepository(env.DB);
+  const updated = await repo.updateWithRevision(
+    id,
+    {
+      name: parse.data.name,
+      scholar_id: parse.data.scholarId || null,
+      badge: parse.data.badge || 'Co-guided',
+      affiliation: parse.data.affiliation,
+      guidance: parse.data.guidance || null,
+      published: parse.data.published !== false ? 1 : 0,
+      display_order: parse.data.order,
+      metadata: parse.data.metadata ? JSON.stringify(parse.data.metadata) : null
+    },
+    expectedVersion,
+    user.email
+  );
+
+  await invalidateCache('research-scholars', env);
+  return jsonResponse(updated, 200, getNoCacheHeaders());
+}
+
+export async function handleAdminDeleteResearchScholar(id: string, request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
+  const url = new URL(request.url);
+  const versionParam = url.searchParams.get('version');
+  const expectedVersion = versionParam ? parseInt(versionParam, 10) : NaN;
+  if (isNaN(expectedVersion)) throw new ValidationError('Missing required version query parameter for deletion');
+
+  const repo = new ResearchScholarRepository(env.DB);
+  const existing = await repo.getById(id);
+  if (!existing) throw new NotFoundError('ResearchScholar', id);
+
+  await repo.deleteWithRevision(id, expectedVersion, user.email);
+  await invalidateCache('research-scholars', env);
+
+  return jsonResponse({ success: true, deletedId: id }, 200, getNoCacheHeaders());
+}
+
+// ----------------------------------------------------------------
+// 12. Asset Pre-signed URL Boundary (Status & Real Binding Check)
 // ----------------------------------------------------------------
 export async function handleAdminPresignedUrl(request: Request, env: Env, user: AuthenticatedUser): Promise<Response> {
   const body = (await request.json()) as any;

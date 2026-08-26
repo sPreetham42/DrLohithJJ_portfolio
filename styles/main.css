@@ -1950,6 +1950,27 @@ section {
   text-transform: uppercase;
 }
 
+.pub-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.pub-application-no {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--fw-bold);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--sage);
+  color: var(--emerald);
+  margin-left: var(--space-sm);
+  letter-spacing: 0.06em;
+}
+
 /* ================================================================
    10. ACHIEVEMENTS & AWARDS
    ================================================================ */

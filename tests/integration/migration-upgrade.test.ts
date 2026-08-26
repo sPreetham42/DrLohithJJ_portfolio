@@ -19,7 +19,7 @@ describe('Real D1 Migration Upgrade Progression', () => {
     db.pragma('foreign_keys = ON');
 
     const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
-    expect(files.length).toBe(5);
+    expect(files.length).toBe(6);
 
     for (const file of files) {
       expect(() => db.exec(readMigration(file))).not.toThrow();
@@ -46,6 +46,8 @@ describe('Real D1 Migration Upgrade Progression', () => {
     expect(tables).toContain('revisions');
     expect(tables).toContain('scholar_sync_runs');
     expect(tables).toContain('admin_sessions');
+    expect(tables).toContain('patents');
+    expect(tables).toContain('research_scholars');
   });
 
   it('Upgrade Path: migrates state from 0001 baseline through 0005 without data loss', () => {

@@ -7,7 +7,9 @@ import {
   EducationRecord,
   AwardRecord,
   SkillCategoryRecord,
-  SocialLinkRecord
+  SocialLinkRecord,
+  PatentRecord,
+  ResearchScholarRecord
 } from '../types';
 
 export function toPublicProfileDto(record: ProfileRecord, photoUrl: string | null = null) {
@@ -125,3 +127,27 @@ export function toPublicSocialLinkDto(record: SocialLinkRecord) {
     visible: Boolean(record.visible)
   };
 }
+
+export function toPublicPatentDto(record: PatentRecord) {
+  return {
+    id: record.id,
+    title: record.title,
+    domain: record.domain,
+    publicationDate: record.publication_date,
+    applicationNumber: record.application_number,
+    order: record.display_order
+  };
+}
+
+export function toPublicResearchScholarDto(record: ResearchScholarRecord) {
+  return {
+    id: record.id,
+    name: record.name,
+    scholarId: record.scholar_id,
+    badge: record.badge,
+    affiliation: record.affiliation,
+    guidance: record.guidance,
+    order: record.display_order
+  };
+}
+

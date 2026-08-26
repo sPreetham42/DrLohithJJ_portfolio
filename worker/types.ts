@@ -145,6 +145,58 @@ export interface SkillCategoryRecord {
   metadata?: string | null;
 }
 
+export interface PatentRecord {
+  id: string;
+  title: string;
+  domain: string;
+  publication_date: string;
+  application_number: string;
+  published: number; // 0 or 1
+  display_order: number;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  metadata?: string | null;
+}
+
+export interface PublicPatentDto {
+  id: string;
+  title: string;
+  domain: string;
+  publicationDate: string;
+  applicationNumber: string;
+  published?: boolean;
+  order: number;
+  metadata?: Record<string, any> | null;
+}
+
+export interface ResearchScholarRecord {
+  id: string;
+  name: string;
+  scholar_id: string | null;
+  badge: string;
+  affiliation: string;
+  guidance: string | null;
+  published: number; // 0 or 1
+  display_order: number;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  metadata?: string | null;
+}
+
+export interface PublicResearchScholarDto {
+  id: string;
+  name: string;
+  scholarId: string | null;
+  badge: string;
+  affiliation: string;
+  guidance: string | null;
+  published?: boolean;
+  order: number;
+  metadata?: Record<string, any> | null;
+}
+
 export interface SocialLinkRecord {
   id: string;
   platform: string;

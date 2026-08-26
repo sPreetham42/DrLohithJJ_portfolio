@@ -13,6 +13,8 @@ import { AwardsPage } from './pages/AwardsPage';
 import { SkillsPage } from './pages/SkillsPage';
 import { SocialLinksPage } from './pages/SocialLinksPage';
 import { AssetsPage } from './pages/AssetsPage';
+import { PatentsPage } from './pages/PatentsPage';
+import { ResearchScholarsPage } from './pages/ResearchScholarsPage';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<AdminTab>('profile');
@@ -104,6 +106,10 @@ export const App: React.FC = () => {
         return <ScholarStatsPage />;
       case 'publications':
         return <PublicationsPage />;
+      case 'patents':
+        return <PatentsPage />;
+      case 'scholars':
+        return <ResearchScholarsPage />;
       case 'talks':
         return <TalksPage />;
       case 'experience':
