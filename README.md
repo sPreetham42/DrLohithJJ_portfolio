@@ -280,7 +280,6 @@ DrLohithJJ_portfolio/
 ├── assets/
 │
 ├── data/
-│   ├── archive/
 │   ├── scholar.json
 │   └── scholar_sync_status.json
 │
@@ -293,7 +292,6 @@ DrLohithJJ_portfolio/
 │   ├── drill_database_restore.js
 │   ├── verify_fallback_sync.js
 │   ├── research-explorer.js
-│   ├── scholar-health.js
 │   └── sync_scholar.py
 │
 ├── styles/
