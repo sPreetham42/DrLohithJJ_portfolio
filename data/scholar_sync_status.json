@@ -2,17 +2,17 @@
   "status": "success",
   "target": "d1",
   "source": "openalex",
-  "startedAt": "2026-09-11T04:57:19.181299+00:00",
-  "completedAt": "2026-09-11T04:57:20.214955+00:00",
-  "durationMs": 1033,
+  "startedAt": "2026-09-12T04:50:22.767667+00:00",
+  "completedAt": "2026-09-12T04:50:23.951168+00:00",
+  "durationMs": 1183,
   "citations": 172,
   "hIndex": 8,
   "i10Index": 8,
   "persisted": true,
   "persistenceStatus": "VERIFIED",
-  "syncRunId": "scholar-sync-1789102640-7bd7a894",
+  "syncRunId": "scholar-sync-1789188623-6e0fb600",
   "idempotencyResult": "applied",
   "error": null,
   "isDryRun": false,
-  "lastSyncDate": "2026-09-11T04:57:20.214955+00:00"
+  "lastSyncDate": "2026-09-12T04:50:23.951168+00:00"
 }
